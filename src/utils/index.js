@@ -8,7 +8,7 @@ export const getLocal = (key) => {
     return JSON.parse(data)
 }
 
-export const getOneFromList = (list,key,value) => {
+export const getOneFromList = (list=[],key,value) => {
     let resulte = ''
     for(let i = 0; i < list.length; i++){
         let item = list[i]

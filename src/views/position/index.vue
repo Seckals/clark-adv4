@@ -1,6 +1,7 @@
 <template>
-    <div>position</div>
-    
+<IMain>
+
+</IMain>  
 </template>
 <script>
 export default {
