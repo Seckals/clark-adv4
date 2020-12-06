@@ -1,9 +1,14 @@
 import Vue from 'vue'
+import './plugins/axios'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import util from './utils'
+import './plugins/ant-design-vue.js'
+import './assets/css/index.less'
 
 Vue.config.productionTip = false
+Vue.prototype.$utils = util
 
 new Vue({
   router,
