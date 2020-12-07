@@ -3,27 +3,57 @@
 		<div class="i-content-title">{{ $route.meta.title }}</div>
 		<div class="i-content-wrap">
 			<div class="i-content-search">
-				<slot name="search" />
+				<a-form-model layout="inline" :model="searchData">
+					<template v-for="(item, index) in searchs">
+						<a-form-model-item :label="item.title" :key="index">
+							<a-input
+								v-model="searchData[item.key]"
+								:placeholder="item.placeholder"
+								v-if="item.type === 'input'"
+							/>
+							<a-select
+								v-model="searchData[item.key]"
+								:placeholder="item.placeholder"
+								v-if="item.type === 'select'"
+								style="width: 170px"
+							>
+								<a-select-option
+									v-for="(ite, idx) in item.list"
+									:key="idx"
+									:value="ite[item.listvalue]"
+									>{{ ite[item.listkey] }}</a-select-option
+								>
+							</a-select>
+						</a-form-model-item>
+					</template>
+					<a-form-model-item>
+						<a-button
+							type="primary"
+							@click="operation('search', searchData)"
+						>
+							查询
+						</a-button>
+					</a-form-model-item>
+					<a-form-model-item>
+						<a-button @click="reset" v-if="hasReset">
+							重置
+						</a-button>
+					</a-form-model-item>
+				</a-form-model>
 				<div class="i-content-btns">
-					<a-button @click="add">新 增</a-button>
-					<a-button :disabled="!selectedRowKeys.length" @click="del"
-						>删 除</a-button
+					<a-button @click="operation('add')">新 增</a-button>
+					<a-popconfirm
+						:title="delTip"
+						ok-text="确定"
+						cancel-text="取消"
+						:disabled="!hasSelected"
+						@confirm="operation('del')"
 					>
+						<a-button :disabled="!hasSelected">删 除</a-button>
+					</a-popconfirm>
 				</div>
 			</div>
-			<div class="i-content-table">
-				<a-table
-					:loading="loading"
-					:row-key="record => {console.log(record)}"
-					:row-selection="{
-						selectedRowKeys: selectedRowKeys,
-						onChange: onSelectChange,
-					}"
-					:pagination="pagination"
-					:columns="columns"
-					:data-source="data"
-				/>
-			</div>
+			<slot name="table" />
 		</div>
 	</div>
 </template>
@@ -31,30 +61,43 @@
 export default {
 	data() {
 		return {
-			loading:false,
-			pagination:{},
-			selectedRowKeys: [],
+			searchData: {},
 		};
 	},
 	props: {
-		columns: {
+		searchs: {
 			type: Array,
 			default: () => [],
 		},
-		data: {
-			type: Array,
-			default: () => [],
+		hasAddOrDel: {
+			type: Boolean,
+			default: true,
+		},
+		hasSelected: {
+			default: false,
+		},
+		hasReset: {
+			default: false,
+		},
+		delTip: {
+			default: "确定要删除吗？",
 		},
 	},
 	methods: {
-		onSelectChange(selectedRowKeys) {
-			this.selectedRowKeys = selectedRowKeys;
+		operation(type, data) {
+			this.$emit("operation", {
+				type,
+				data,
+			});
 		},
-		add() {
-			this.$emit("add");
-		},
-		del() {
-			this.$emit("delete", this.selectedRowKeys);
+		reset() {
+			for (let i in this.searchData) {
+				this.searchData[i] = "";
+			}
+			this.$emit("operation", {
+				type: "reset",
+				data: this.searchData,
+			});
 		},
 	},
 };
@@ -72,9 +115,16 @@ export default {
 	padding: 24px;
 }
 .i-content-search {
-	margin-bottom: 20px;
+	margin-bottom: 24px;
 }
 .i-content-btns > button {
 	margin-right: 20px;
+}
+</style>
+<style lang="less">
+.i-content-wrap {
+	.ant-form-item {
+		margin-bottom: 24px;
+	}
 }
 </style>

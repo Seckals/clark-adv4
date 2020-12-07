@@ -89,4 +89,9 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to,from,next)=>{
+  document.title = to.meta.title || '主数据'
+  next()
+})
+
 export default router

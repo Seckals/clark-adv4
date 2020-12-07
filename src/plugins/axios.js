@@ -4,28 +4,18 @@ import { message } from 'ant-design-vue';
 
 // 请求超时
 const TIMEOUT = 10000
-// 请求队列
-const fetchQueue = {}
-// 是否开启请求锁。
-let fetchLock = true
-// 忽略请求锁接口列表
-const LOCK_DISABLED_LIST = []
 
 // 创建axios实例
 const fetch = axios.create({
   // baseURL: `//${window.location.hostname !== '192.168.195.131' ? '49.235.30.187' : '192.168.195.131'}:9001/md/`,
 
-  baseURL: `//${window.location.hostname}:9001/md/`,
+  baseURL: `/md/`,
 
   // 超时
   timeout: TIMEOUT,
 
   // 是否跨域携带cookie
   withCredentials: true,
-
-  headers: {
-    
-  }
 })
 
 // 请求拦截器
@@ -60,33 +50,6 @@ fetch.interceptors.request.use(
       config.data = qs.stringify(config.data)
     }
 
-    // 特殊接口处理请求锁
-    if (LOCK_DISABLED_LIST.includes(config.url)) {
-      fetchLock = false
-    }
-
-    // 请求锁
-    const lock =
-      config.fetchLock !== undefined && config.fetchLock !== null
-        ? config.fetchLock
-        : fetchLock
-
-    if (lock) {
-      // 如果有同个请求在队列中，则取消即将发送的请求
-      if (fetchQueue[config.baseURL + config.url]) {
-        config.cancelToken = new axios.CancelToken(c => {
-          c('cancel')
-        })
-      } else {
-        // 添加入请求队列
-        fetchQueue[config.baseURL + config.url] = 1
-      }
-    }
-
-    /**
-     * 在发送请求之前做些什么
-     */
-
     return config
   },
   function (error) {
@@ -98,8 +61,6 @@ fetch.interceptors.request.use(
 // 添加请求返回拦截器
 fetch.interceptors.response.use(
   function (res) {
-    responseLock(res.config)
-
     const {data} = res
     const code = +data.code
 
@@ -127,9 +88,6 @@ fetch.interceptors.response.use(
     return Promise.reject(data)
   },
   function (error) {
-    if (error.config) {
-      responseLock(error.config)
-    }
     if (error.message !== 'cancel') {
       message.error(error.message)
     }
@@ -138,10 +96,5 @@ fetch.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
-function responseLock (config) {
-  // 移除出请求队列
-  delete fetchQueue[config.baseURL + config.url]
-}
 
 export default fetch
