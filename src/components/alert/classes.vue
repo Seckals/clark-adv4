@@ -1,7 +1,7 @@
 <template>
 	<a-modal
 		v-model="visible"
-		:title="form.id ? '编辑职位' : '新增职位'"
+		:title="form.id ? '编辑班次' : '新增班次'"
 		:confirmLoading="loading"
 		:width="500"
 		@ok="ok"
@@ -17,40 +17,49 @@
 			:label-col="{ span: 4 }"
 			:wrapper-col="{ span: 18 }"
 		>
-			<a-form-model-item label="职位编号" prop="code">
+			<a-form-model-item label="班次编号" prop="code">
 				<a-input v-model="form.code" placeholder="" />
 			</a-form-model-item>
-			<a-form-model-item label="职位名称" prop="name">
+			<a-form-model-item label="班次名称" prop="name">
 				<a-input v-model="form.name" placeholder="" />
+			</a-form-model-item>
+			<a-form-model-item label="开始时间">
+				<ITimepicker :data="form.shiftStartTime" @change="e=>form.shiftStartTime=e" placeholder="请选择"/>
+			</a-form-model-item>
+			<a-form-model-item label="结束时间">
+				<ITimepicker :data="form.shiftEndTime" @change="e=>form.shiftEndTime=e" placeholder="请选择"/>
 			</a-form-model-item>
 		</a-form-model>
 	</a-modal>
 </template>
 <script>
-import { add_post, modify_post } from "../../api/hrPositionController";
+import { add_post, modify_post } from "../../api/comShiftController";
 import mixins from "../../mixins/editor";
+
 export default {
 	data() {
 		return {
 			form: {
 				code: "",
 				name: "",
+				shiftStartTime: "",
+                shiftEndTime: ""
 			},
 			rules: {
 				name: [
 					{
 						required: true,
-						message: "请输入职位名称",
+						message: "请输入班次名称",
 						trigger: "blur",
 					},
 				],
 				code: [
 					{
 						required: true,
-						message: "请输入职位编号",
+						message: "请输入班次编号",
 						trigger: "blur",
 					},
-				],
+				]
 			},
 		};
 	},
@@ -83,7 +92,7 @@ export default {
 				.catch(() => {
 					this.loading = false;
 				});
-		},
+		}
 	},
 };
 </script>

@@ -1,3 +1,4 @@
+import store from '../store'
 export const setLocal = (key,value)=>{
     localStorage.setItem(key,JSON.stringify(value))
 }
@@ -27,9 +28,15 @@ const getOneValueInOneArray = (list,key)=>{
     })
     return resulte
 }
+
+export const hasPermission = key => {
+    const permission = store.getters.getPermission || []
+    return permission.includes(key)
+}
 export default {
     setLocal,
     getLocal,
     getOneFromList,
-    getOneValueInOneArray
+    getOneValueInOneArray,
+    hasPermission
 }

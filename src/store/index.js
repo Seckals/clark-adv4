@@ -22,6 +22,11 @@ export default new Vuex.Store({
       return state.menu
     },
     getPermission(state){
+      if(!state.permission || state.permission.length === 0){
+        const detail = util.getLocal('auth-info') || {}
+        const menu = util.getOneFromList(detail.modules,'name','mainData') || []
+        state.permission =  util.getOneValueInOneArray(menu.categories||[],'name') || []  
+      }
       return state.permission
     }
   },
@@ -38,3 +43,4 @@ export default new Vuex.Store({
     }
   }
 })
+

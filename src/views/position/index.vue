@@ -6,6 +6,8 @@
 			delTip="确定删除选中的职位？"
 			@operation="operation"
 		>
+			<a-button slot="add" @click="operation({type:'add'})" v-permission="'mainData.mg-position.add'">新 增</a-button>
+			<a-button slot="delete" :disabled="!selected" v-permission="'mainData.mg-position.delete'">删 除</a-button>
 			<template slot="table">
 				<a-table
 					:loading="loading"
@@ -26,6 +28,7 @@
 					<a
 						slot="operation"
 						slot-scope="record"
+						v-permission="'mainData.mg-position.edit'"
 						@click="editor(record)"
 					>
 						编辑</a
@@ -41,6 +44,7 @@
 import { page_get, remove_post } from "../../api/hrPositionController";
 import Position from "../../components/alert/position";
 import LinkEmployee from "../../components/alert/linkEmployee";
+import mixins from '../../mixins/list'
 const columns = [
 	{
 		dataIndex: "id",
@@ -69,11 +73,9 @@ export default {
 	data() {
 		return {
 			columns,
-			data: [],
-			loading: false,
-            selected: "",
+			selected: "",
             linkId:'',
-			current: "",
+			current: {},
 			pagination: {
 				current: 1,
 				pageSize: 10,
@@ -85,40 +87,12 @@ export default {
 					title: "职位名称",
 					placeholder: "请输入职员名称",
 					key: "name",
-				},
-				{
-					type: "select",
-					title: "状态",
-					placeholder: "请选择",
-					key: "status",
-					list: [
-						{
-							name: "全部",
-							id: "",
-						},
-						{
-							name: "在职",
-							id: "1",
-						},
-						{
-							name: "离职",
-							id: "2",
-						},
-						{
-							name: "待定",
-							id: "3",
-						},
-					],
-					listkey: "name",
-					listvalue: "id",
-				},
+				}
 			],
 		};
 	},
 	components: { Position,LinkEmployee },
-	mounted() {
-		this.getList();
-	},
+	mixins:[mixins],
 	methods: {
 		operation({ type, data }) {
 			switch (type) {
@@ -140,15 +114,7 @@ export default {
 		tableChange(e) {
 			this.pagination = e;
 			this.getList();
-		},
-		editor(data) {
-			this.current = data;
-			this.$refs.alert.show();
-		},
-		freash() {
-			this.current = "";
-			this.getList();
-		},
+		},		
 		del(id) {
 			this.loading = true;
 			remove_post({
@@ -187,5 +153,3 @@ export default {
 	},
 };
 </script>
-<style lang="less" scoped>
-</style>
