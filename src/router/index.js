@@ -9,6 +9,7 @@ const routes = [
     path:'/',
     name:'Layout',
     component:Layout,
+    redirect:'/mg-position',
     children:[
       {
         path:'/mg-position',
