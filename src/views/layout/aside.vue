@@ -11,7 +11,7 @@
 		</div>
 		<a-menu theme="dark" mode="inline" :default-selected-keys="[$route.path]" @click="go">
 			<a-menu-item v-for="item in menu" :key="item.path">
-				<a-icon type="user" />
+				<a-icon :type="item.icon" />
 				<span>{{item.description}}</span>
 			</a-menu-item>
 		</a-menu>

@@ -9,7 +9,7 @@ const TIMEOUT = 10000
 const fetch = axios.create({
   // baseURL: `//${window.location.hostname !== '192.168.195.131' ? '49.235.30.187' : '192.168.195.131'}:9001/md/`,
 
-  baseURL: `/md/`,
+  baseURL: `//${window.location.hostname}:9001/md/`,
 
   // 超时
   timeout: TIMEOUT,

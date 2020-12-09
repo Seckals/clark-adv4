@@ -77,7 +77,7 @@ const routes = [
     ]
   },
   {
-    path:'/404',
+    path:'*',
     name:'404',
     component:()=>import(/* webpackChunkName: "404" */ '../views/404')
   }
