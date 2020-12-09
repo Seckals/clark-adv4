@@ -18,7 +18,7 @@
 			:wrapper-col="{ span: 18 }"
 		>
 			<a-form-model-item label="职位编号" prop="code">
-				<a-input v-model="form.code" placeholder="" />
+				<a-input v-model="form.code" placeholder=""  :disabled="!!form.id"/>
 			</a-form-model-item>
 			<a-form-model-item label="职位名称" prop="name">
 				<a-input v-model="form.name" placeholder="" />

@@ -1,7 +1,7 @@
 <template>
 	<a-modal
 		v-model="visible"
-		:title="form.id ? '编辑产线' : '新增产线'"
+		:title="form.id ? '编辑部门' : '新增部门'"
 		:confirmLoading="loading"
 		:width="500"
 		@ok="ok"
@@ -14,26 +14,35 @@
 			:model="form"
 			ref="ruleForm"
 			:rules="rules"
-			:label-col="{ span: 4 }"
+			:label-col="{ span: 5 }"
 			:wrapper-col="{ span: 18 }"
 		>
-			<a-form-model-item label="产线编号" prop="code">
+			<a-form-model-item label="部门编号" prop="code">
 				<a-input v-model="form.code" placeholder=""  :disabled="!!form.id"/>
 			</a-form-model-item>
-			<a-form-model-item label="产线名称" prop="name">
+			<a-form-model-item label="部门名称" prop="name">
 				<a-input v-model="form.name" placeholder="" />
 			</a-form-model-item>
-			<a-form-model-item label="显示位次" prop="seq">
-				<a-input v-model="form.seq" placeholder="" />
-			</a-form-model-item>
-			<a-form-model-item label="产线主管">
-				<a-select v-model="form.managerId" placeholder="请选择">
+			<a-form-model-item label="父部门" >
+				<a-select v-model="form.parentId" placeholder="请选择">
 					<a-select-option
-						v-for="(item, idx) in managers"
+						v-for="(item, idx) in preList.depts"
 						:key="idx"
 						:value="item.id"
 						>{{
-							item.name + "[" + item.empNo + "]"
+							item.name
+						}}</a-select-option
+					>
+				</a-select>
+			</a-form-model-item>
+			<a-form-model-item label="部门经理">
+				<a-select v-model="form.deptManager" placeholder="请选择">
+					<a-select-option
+						v-for="(item, idx) in preList.employes"
+						:key="idx"
+						:value="item.id"
+						>{{
+							item.empName + "[" + item.empNo + "]"
 						}}</a-select-option
 					>
 				</a-select>
@@ -42,46 +51,42 @@
 	</a-modal>
 </template>
 <script>
-import { add_post, modify_post, preAdd_get } from "../../api/comLineController";
+import { add_post, modify_post, preAdd_get } from "../../api/hrDeptController";
 import mixins from "../../mixins/editor";
 
 export default {
 	data() {
 		return {
-			managers: [],
+			preList:{
+				depts:[],
+				employes:[]
+			},
 			form: {
 				code: "",
 				name: "",
-				seq: "",
-				managerId: "",
+				status:'',
+				managerId: ""
 			},
 			rules: {
 				name: [
 					{
 						required: true,
-						message: "请输入产线名称",
+						message: "请输入部门名称",
 						trigger: "blur",
 					},
 				],
 				code: [
 					{
 						required: true,
-						message: "请输入产线编号",
+						message: "请输入部门编号",
 						trigger: "blur",
 					},
-				],
-				seq: [
-					{
-						required: true,
-						message: "请输入显示位次",
-						trigger: "blur",
-					},
-				],
+				]
 			},
 		};
 	},
 	mounted() {
-		this.getManagers();
+		this.getPreList();
 	},
 	mixins: [mixins],
 	methods: {
@@ -113,12 +118,12 @@ export default {
 					this.loading = false;
 				});
 		},
-		getManagers() {
+		getPreList() {
 			this.loading = true;
 			preAdd_get()
 				.then((res) => {
 					this.loading = false;
-					this.managers = res.managers || [];
+                    this.preList = res
 				})
 				.catch(() => {
 					this.loading = false;

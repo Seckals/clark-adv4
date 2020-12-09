@@ -12,7 +12,10 @@ export default{
     methods: {
         freash(e) {
 			this.current = {};
-			if(!e)this.getList();
+			if(!e){
+                this.getList();
+                if(this.getPreList)this.getPreList()
+            }
         },
         editor(data) {
 			this.current = Object.assign({},data);

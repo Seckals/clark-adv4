@@ -1,7 +1,7 @@
 <template>
 	<a-modal
 		v-model="visible"
-		:title="form.id ? '编辑产线' : '新增产线'"
+		:title="form.id ? '编辑客户' : '新增客户'"
 		:confirmLoading="loading"
 		:width="500"
 		@ok="ok"
@@ -14,26 +14,35 @@
 			:model="form"
 			ref="ruleForm"
 			:rules="rules"
-			:label-col="{ span: 4 }"
+			:label-col="{ span: 5 }"
 			:wrapper-col="{ span: 18 }"
 		>
-			<a-form-model-item label="产线编号" prop="code">
-				<a-input v-model="form.code" placeholder=""  :disabled="!!form.id"/>
+			<a-form-model-item label="客户编号" prop="code">
+				<a-input v-model="form.code" placeholder="" :disabled="!!form.id"/>
 			</a-form-model-item>
-			<a-form-model-item label="产线名称" prop="name">
+			<a-form-model-item label="客户名称" prop="name">
 				<a-input v-model="form.name" placeholder="" />
 			</a-form-model-item>
-			<a-form-model-item label="显示位次" prop="seq">
-				<a-input v-model="form.seq" placeholder="" />
-			</a-form-model-item>
-			<a-form-model-item label="产线主管">
+			<a-form-model-item label="客户经理" prop="managerId">
 				<a-select v-model="form.managerId" placeholder="请选择">
 					<a-select-option
-						v-for="(item, idx) in managers"
+						v-for="(item, idx) in preList.managers"
 						:key="idx"
-						:value="item.id"
+						:value="item.empId"
 						>{{
-							item.name + "[" + item.empNo + "]"
+							item.empName + "[" + item.empNo + "]"
+						}}</a-select-option
+					>
+				</a-select>
+			</a-form-model-item>
+			<a-form-model-item label="状态" prop="status">
+				<a-select v-model="form.status" placeholder="请选择">
+					<a-select-option
+						v-for="(item, idx) in preList.states"
+						:key="idx"
+						:value="item.code"
+						>{{
+							item.name
 						}}</a-select-option
 					>
 				</a-select>
@@ -42,46 +51,56 @@
 	</a-modal>
 </template>
 <script>
-import { add_post, modify_post, preAdd_get } from "../../api/comLineController";
+import { add_post, modify_post, prePage_get } from "../../api/comCustomerController";
 import mixins from "../../mixins/editor";
 
 export default {
 	data() {
 		return {
-			managers: [],
+			preList:{
+				managers:[],
+				states:[]
+			},
 			form: {
 				code: "",
 				name: "",
-				seq: "",
-				managerId: "",
+				status:'',
+				managerId: ""
 			},
 			rules: {
 				name: [
 					{
 						required: true,
-						message: "请输入产线名称",
+						message: "请输入客户名称",
 						trigger: "blur",
 					},
 				],
 				code: [
 					{
 						required: true,
-						message: "请输入产线编号",
+						message: "请输入客户编号",
 						trigger: "blur",
 					},
 				],
-				seq: [
+				status: [
 					{
 						required: true,
-						message: "请输入显示位次",
-						trigger: "blur",
+						message: "请选择状态",
+						trigger: "change",
 					},
 				],
+				managerId: [
+					{
+						required: true,
+						message: "请选择客户经理",
+						trigger: "change",
+					},
+				]
 			},
 		};
 	},
 	mounted() {
-		this.getManagers();
+		this.getPreList();
 	},
 	mixins: [mixins],
 	methods: {
@@ -113,12 +132,12 @@ export default {
 					this.loading = false;
 				});
 		},
-		getManagers() {
+		getPreList() {
 			this.loading = true;
-			preAdd_get()
+			prePage_get()
 				.then((res) => {
 					this.loading = false;
-					this.managers = res.managers || [];
+					this.preList = res
 				})
 				.catch(() => {
 					this.loading = false;

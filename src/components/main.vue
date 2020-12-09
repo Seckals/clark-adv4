@@ -3,7 +3,11 @@
 		<div class="i-content-title">{{ $route.meta.title }}</div>
 		<div class="i-content-wrap">
 			<div class="i-content-search">
-				<a-form-model layout="inline" :model="searchData" v-if="searchs && searchs.length>0">
+				<a-form-model
+					layout="inline"
+					:model="searchData"
+					v-if="searchs && searchs.length > 0"
+				>
 					<template v-for="(item, index) in searchs">
 						<a-form-model-item :label="item.title" :key="index">
 							<a-input
@@ -41,7 +45,7 @@
 					</a-form-model-item>
 				</a-form-model>
 				<div class="i-content-btns">
-					<slot name="add"/>
+					<slot name="add" />
 					<a-popconfirm
 						:title="delTip"
 						ok-text="确定"
@@ -53,7 +57,9 @@
 					</a-popconfirm>
 				</div>
 			</div>
-			<slot name="table" />
+			<div class="i-content-table">
+				<slot name="table" />	
+			</div>
 		</div>
 	</div>
 </template>
@@ -115,6 +121,10 @@ export default {
 }
 .i-content-btns > button {
 	margin-right: 20px;
+}
+.i-content-table{
+	width: 100%;
+	overflow-x: auto;
 }
 </style>
 <style lang="less">

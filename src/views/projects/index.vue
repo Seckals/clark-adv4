@@ -139,7 +139,7 @@ export default {
 	components: { Projects },
     mixins:[mixins],
     mounted(){
-        this.getSelects()
+        this.getPreList()
     },
 	methods: {
 		operation({ type, data }) {
@@ -194,7 +194,7 @@ export default {
 					this.loading = false;
 				});
         },
-        getSelects(){
+        getPreList(){
 			prePage_get()
 				.then((res) => {
 					this.searchs.map(item=>{
