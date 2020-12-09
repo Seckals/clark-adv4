@@ -8,7 +8,6 @@
 
 <script>
 import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
-import data from "./mock/userinfo";
 export default {
   name: "app",
   data() {
@@ -17,9 +16,11 @@ export default {
     }
   },
 	created() {
-		// const detail = localStorage.getItem('auth-info')
-		// if(!detail)this.toLogin()
-		window.localStorage.setItem("auth-info", JSON.stringify(data));
+		const detail = localStorage.getItem('auth-info')
+		if(!detail){
+			this.toLogin()
+			return
+		}
 		this.$store.commit("SET_DETAIL");
 	},
 	methods: {
