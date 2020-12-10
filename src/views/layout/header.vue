@@ -13,7 +13,7 @@
       <div class="right">
         <Notice />
         <div class="user">
-          下午好！
+          {{ noontip }}！
           <span>{{ $store.state.user }}</span>
         </div>
         <div class="out" @click="logout">退出</div>
@@ -25,7 +25,26 @@
 import Notice from '@/components/notice'
 export default {
   components: { Notice },
+  data() {
+    return {
+      noontip: '', // 上下午提示
+    }
+  },
+  created() {
+    this.mynoontip()
+  },
   methods: {
+    mynoontip() {
+      const that = this
+      const date = new Date()
+      if (date.getHours() >= 0 && date.getHours() < 12) {
+        that.noontip = '上午好'
+      } else if (date.getHours() >= 12 && date.getHours() < 18) {
+        that.noontip = '下午好'
+      } else {
+        that.noontip = '晚上好'
+      }
+    },
     logout() {
       document.title = '登录'
       localStorage.removeItem('auth-info')
