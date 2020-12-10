@@ -33,7 +33,7 @@
 					slot-scope="text, record,index"
 				>
 					<div :key="col">
-						<template v-if="!record.empNo&&hasAdd">
+						<template v-if="index===(notifyEmailContacts.length-1) && hasAdd">
 							<a-select
 								placeholder="请选择"
 								v-if="col === 'empName'"
@@ -102,7 +102,6 @@ export default {
 	props: ["id"],
 	watch: {
 		id(value) {
-            console.log(value)
 			if (value) {
 				this.getDetail(value);
 			}
@@ -122,20 +121,21 @@ export default {
             })
         },
         del(){
-            this.notifyEmailContacts = this.notifyEmailContacts.filter(item=>!this.selectedRowKeys.includes(item.id))
+            this.notifyEmailContacts = [...this.notifyEmailContacts.filter(item=>!this.selectedRowKeys.includes(item.empId))]
             this.selectedRowKeys = []
-            modify_post()
         },
         save(){
             let flag = this.notifyEmailContacts.every(item=>item.empId&&item.mobile&&item.email)
             if(flag){
                 this.hasAdd = false
             }
+            this.notifyEmailContacts = [...this.notifyEmailContacts]
         },
 		getCheckboxProps(record) {
+            let index = this.notifyEmailContacts.findIndex(item=>item.empId == record.empId)
 			return {
 				props: {
-					disabled: !record.empNo,
+					disabled: index===(this.notifyEmailContacts.length-1) && this.hasAdd,
 					name: record.name,
 				},
 			};
@@ -170,27 +170,25 @@ export default {
 				});
 		},
 		ok() {
-            console.log(this.notifyEmailContacts)
-            return
-			// let notifyEmailContacts = this.notifyEmailContacts.filter(
-			// 	(item) => item.empId
-			// );
-			// this.loading = true;
-			// modify_post({
-			// 	data: {
-			// 		notifyEmailId: this.id,
-			// 		notifyEmailContacts,
-			// 	},
-			// })
-			// 	.then(() => {
-			// 		this.loading = false;
-			// 		this.$message.success("操作成功");
-			// 		this.$emit("freash");
-			// 		this.visible = false;
-			// 	})
-			// 	.catch(() => {
-			// 		this.loading = false;
-			// 	});
+			let notifyEmailContacts = this.notifyEmailContacts.filter(
+				(item) => item.empId
+			);
+			this.loading = true;
+			modify_post({
+				data: {
+					notifyEmailId: this.id,
+					notifyEmailContacts,
+				},
+			})
+				.then(() => {
+					this.loading = false;
+					this.$message.success("操作成功");
+					this.$emit("freash");
+					this.visible = false;
+				})
+				.catch(() => {
+					this.loading = false;
+				});
 		},
 	},
 };

@@ -7,8 +7,7 @@
 </template>
 
 <script>
-import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
-// import data from './mock/userinfo'
+import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN';
 export default {
   name: 'app',
   data() {
@@ -16,22 +15,23 @@ export default {
       locale: zhCN,
     }
   },
-  created() {
-    const detail = localStorage.getItem('auth-info')
-    console.log(detail)
-    if (!detail) this.toLogin()
-    // window.localStorage.setItem('auth-info', JSON.stringify(data))
-    this.$store.commit('SET_DETAIL')
-  },
-  methods: {
-    toLogin() {
-      const loginURL = `http://${
-        window.location.hostname !== '172.23.2.17'
-          ? '49.235.30.187'
-          : '172.23.2.17'
-      }:8088/auth/#/user/login?from=${encodeURIComponent(location.href)}`
-      window.location.href = loginURL
-    },
-  },
-}
+	created() {
+		const detail = localStorage.getItem('auth-info')
+		if(!detail){
+			this.toLogin()
+			return
+		}
+		this.$store.commit("SET_DETAIL");
+	},
+	methods: {
+		toLogin() {
+			const loginURL = `http://${
+				window.location.hostname !== "172.23.2.17"
+					? "49.235.30.187"
+					: "172.23.2.17"
+			}:8088/auth/#/user/login?from=${encodeURIComponent(location.href)}`;
+			window.location.href = loginURL;
+		},
+	},
+};
 </script>

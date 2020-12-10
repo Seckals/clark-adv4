@@ -78,14 +78,14 @@ const routes = [
     ]
   },
   {
-    path:'/404',
+    path:'*',
     name:'404',
     component:()=>import(/* webpackChunkName: "404" */ '../views/404')
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })

@@ -27,7 +27,6 @@ export default {
         },
         setNow(){
             this.value = moment().format("HH:mm:ss")
-            console.log(this.data)
         },
         ok(){
             this.open = false

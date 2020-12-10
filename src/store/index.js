@@ -4,6 +4,17 @@ import util from '../utils'
 
 Vue.use(Vuex)
 
+const iconMatch = {
+  '/mg-position':'team',
+  '/warning-email':'mail',
+  '/mg-produce-line':'menu',
+  '/mg-classes':'swap',
+  '/mg-projects':'appstore',
+  '/mg-customers':'pay-circle',
+  '/mg-employees':'user',
+  '/mg-departments':'cluster'
+}
+
 export default new Vuex.Store({
   state: {
     user:'张三',
@@ -33,12 +44,20 @@ export default new Vuex.Store({
   mutations: {
     SET_DETAIL(state){
       const detail = util.getLocal('auth-info') || {}
-      const menu = util.getOneFromList(detail.modules,'name','mainData') || []
+      let menu = util.getOneFromList(detail.modules,'name','mainData') || {}
       const permission = util.getOneValueInOneArray(menu.categories||[],'name') || []
       
+      menu = menu.categories || []
+      
+      menu.map(item=>{
+        if(item.path){
+          item['icon'] = iconMatch[item.path]
+        }
+        return item
+      })
       state.user = detail.empName
       state.token = detail.token
-      state.menu = menu.categories || []
+      state.menu = menu
       state.permession = permission
     }
   }
