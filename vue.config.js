@@ -1,5 +1,7 @@
 module.exports = {
-    productionSourceMap:false,
+  configureWebpack: (config) => {
+    config.devtool = 'source-map'
+},
     publicPath:'./',
     devServer: {
         proxy: {
