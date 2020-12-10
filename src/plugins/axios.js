@@ -7,14 +7,7 @@ const TIMEOUT = 10000
 
 // 创建axios实例
 const fetch = axios.create({
-<<<<<<< HEAD
   baseURL:  process.env.VUE_APP_BASE_URL,
-=======
-  // baseURL: `//${window.location.hostname !== '192.168.195.131' ? '49.235.30.187' : '192.168.195.131'}:9001/md/`,
-
-  baseURL: `//${window.location.hostname}:9001/md/`,
-
->>>>>>> 959ca79be3c22b582f9c63ac1b3b4c8cf9f71184
   // 超时
   timeout: TIMEOUT,
   // 是否跨域携带cookie
