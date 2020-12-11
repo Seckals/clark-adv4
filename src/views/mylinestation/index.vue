@@ -2,22 +2,9 @@
   <div>
     <IMain
       :searchs="searchs"
-      :hasSelected="selected"
-      delTip="确定删除选中的工位？"
+      permission="mainData.production.mg-line-station.add"
       @operation="operation"
     >
-      <a-button
-        slot="add"
-        @click="operation({ type: 'add' })"
-        v-permission="'mainData.personnel.mg-position.add'"
-        >新 增</a-button
-      >
-      <a-button
-        slot="delete"
-        :disabled="!selected"
-        v-permission="'mainData.personnel.mg-position.delete'"
-        >删 除</a-button
-      >
       <template slot="table">
         <a-table
           :loading="loading"
@@ -27,57 +14,47 @@
           :data-source="data"
           @change="tableChange"
         >
-          <a-radio
-            slot="id"
-            slot-scope="id"
-            :checked="selected == id"
-            :value="id"
-            @click="selected = id"
-          ></a-radio>
-          <a
-            slot="linkUserCount"
-            slot-scope="data"
-            @click="showLink(data.id)"
-            >{{ data.linkUserCount }}</a
-          >
-          <a
-            slot="operation"
-            slot-scope="record"
-            v-permission="'mainData.personnel.mg-position.edit'"
-            @click="editor(record)"
-          >
-            编辑</a
-          >
+          <template slot="operation" slot-scope="record">
+						<a-space size="small">
+							<a
+								v-permission="
+									'mainData.production.mg-line-station.edit'
+								"
+								@click="editor(record)"
+							>
+								编辑</a
+							>
+							<a-popconfirm
+								title="确定删除选中的工位?"
+								ok-text="确定"
+								cancel-text="取消"
+								@confirm="del(record.id)"
+								v-permission="
+									'mainData.production.mg-line-station.edit'
+								"
+							>
+								<a> 删除</a>
+							</a-popconfirm>
+						</a-space>
+					</template>
         </a-table>
       </template>
     </IMain>
-    <Position ref="alert" :data="current" @freash="freash" />
-    <LinkEmployee ref="alertLink" :id="linkId" />
+    <LineStation ref="alert" :data="current" @freash="freash" />
   </div>
 </template>
 <script>
-import { page_get, remove_post } from '../../api/hrPositionController'
-import Position from '../../components/alert/position'
-import LinkEmployee from '../../components/alert/linkEmployee'
+import { page_get, remove_get,prePage_get } from '../../api/comLineStationRefController'
+import LineStation from '../../components/alert/lineStation'
 import mixins from '../../mixins/list'
 const columns = [
   {
-    dataIndex: 'id',
-    title: '',
-    width: 50,
-    scopedSlots: { customRender: 'id' },
+    dataIndex: 'projectCode',
+    title: '项目编号',
   },
   {
-    dataIndex: 'code',
-    title: '工位编号',
-  },
-  {
-    dataIndex: 'name',
-    title: '工位名称',
-  },
-  {
-    title: '显示位次',
-    scopedSlots: { customRender: 'linkUserCount' },
+    dataIndex: 'projectName',
+    title: '项目名称',
   },
   {
     title: '操作',
@@ -88,8 +65,6 @@ export default {
   data() {
     return {
       columns,
-      selected: '',
-      linkId: '',
       current: {},
       pagination: {
         current: 1,
@@ -98,39 +73,39 @@ export default {
       },
       searchs: [
         {
-          type: 'input',
+          type: 'select',
           title: '产线编号',
-          placeholder: '请输入职员名称',
-          key: 'name',
+          placeholder: '请输入产线编号',
+          key: 'lineCode',
+          listDataKey: 'lineList',
+          list: [{ code: '全部', id: '' }],
+          listkey: 'code',
+          listvalue: 'code',
         },
         {
           type: 'input',
-          title: '职位名称',
-          placeholder: '请输入职员名称',
-          key: 'code',
+          title: '产线名称',
+          placeholder: '请输入产线名称',
+          key: 'lineName',
         },
       ],
     }
   },
-  components: { Position, LinkEmployee },
+  components: { LineStation },
   mixins: [mixins],
+  mounted() {
+    this.getPreList()
+  },
   methods: {
     operation({ type, data }) {
       switch (type) {
         case 'add':
           this.$refs.alert.show()
           break
-        case 'del':
-          this.del(this.selected)
-          break
         case 'search':
           this.getList(data)
           break
       }
-    },
-    showLink(id) {
-      this.linkId = id
-      this.$refs.alertLink.show()
     },
     tableChange(e) {
       this.pagination = e
@@ -138,7 +113,7 @@ export default {
     },
     del(id) {
       this.loading = true
-      remove_post({
+      remove_get({
         data: { id },
       })
         .then(() => {
@@ -171,6 +146,16 @@ export default {
           this.loading = false
         })
     },
+    getPreList() {
+      prePage_get().then((res) => {
+        this.searchs.map((item) => {
+          if (item.listDataKey) {
+            item.list = item.list.concat(res[item.listDataKey])
+          }
+          return item
+        })
+      })
+    }
   },
 }
 </script>

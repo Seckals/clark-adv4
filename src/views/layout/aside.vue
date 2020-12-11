@@ -50,7 +50,6 @@ export default {
       return this.$store.getters.getMenu || []
     },
     menu1() {
-      console.log(this.$store.getters.getMenu1)
       return this.$store.getters.getMenu1 || []
     },
   },

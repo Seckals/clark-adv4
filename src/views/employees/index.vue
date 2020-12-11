@@ -3,22 +3,9 @@
     <IMain
       :searchs="searchs"
       :hasReset="true"
-      :hasSelected="selected"
-      delTip="确认删除选中的员工?"
+      permission="mainData.production.mg-employees.add"
       @operation="operation"
     >
-      <a-button
-        slot="add"
-        @click="operation({ type: 'add' })"
-        v-permission="'mainData.personnel.mg-employees.add'"
-        >新 增</a-button
-      >
-      <a-button
-        slot="delete"
-        :disabled="!selected"
-        v-permission="'mainData.personnel.mg-employees.delete'"
-        >删 除</a-button
-      >
       <template slot="table">
         <a-table
           :loading="loading"
@@ -28,21 +15,29 @@
           :data-source="data"
           @change="tableChange"
         >
-          <a-radio
-            slot="id"
-            slot-scope="id"
-            :checked="selected == id"
-            :value="id"
-            @click="selected = id"
-          ></a-radio>
-          <a
-            slot="operation"
-            slot-scope="record"
-            v-permission="'mainData.personnel.mg-employees.edit'"
-            @click="editor(record)"
-          >
-            编辑</a
-          >
+          <template slot="operation" slot-scope="record">
+						<a-space size="small">
+							<a
+								v-permission="
+									'mainData.production.mg-employees.edit'
+								"
+								@click="editor(record)"
+							>
+								编辑</a
+							>
+							<a-popconfirm
+								title="确认删除选中的员工?"
+								ok-text="确定"
+								cancel-text="取消"
+								@confirm="del(record.id)"
+								v-permission="
+									'mainData.production.mg-employees.edit'
+								"
+							>
+								<a> 删除</a>
+							</a-popconfirm>
+						</a-space>
+					</template>
         </a-table>
       </template>
     </IMain>
@@ -58,12 +53,6 @@ import {
 import Employee from '../../components/alert/employee'
 import mixins from '../../mixins/list'
 const columns = [
-  {
-    dataIndex: 'id',
-    title: '',
-    width: 50,
-    scopedSlots: { customRender: 'id' },
-  },
   {
     dataIndex: 'empNo',
     title: '员工工号',
@@ -110,7 +99,6 @@ export default {
   data() {
     return {
       columns,
-      selected: '',
       current: {},
       pagination: {
         current: 1,
@@ -193,9 +181,6 @@ export default {
       switch (type) {
         case 'add':
           this.$refs.alert.show()
-          break
-        case 'del':
-          this.del(this.selected)
           break
         case 'search':
           this.getList(data)

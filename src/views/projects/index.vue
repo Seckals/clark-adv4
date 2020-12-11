@@ -2,22 +2,9 @@
   <div>
     <IMain
       :searchs="searchs"
-      :hasSelected="selected"
-      delTip="确认删除选中的项目?"
+      permission="mainData.production.mg-projects.add"
       @operation="operation"
     >
-      <a-button
-        slot="add"
-        @click="operation({ type: 'add' })"
-        v-permission="'mainData.project.mg-projects.add'"
-        >新 增</a-button
-      >
-      <a-button
-        slot="delete"
-        :disabled="!selected"
-        v-permission="'mainData.project.mg-projects.delete'"
-        >删 除</a-button
-      >
       <template slot="table">
         <a-table
           :loading="loading"
@@ -27,21 +14,29 @@
           :data-source="data"
           @change="tableChange"
         >
-          <a-radio
-            slot="id"
-            slot-scope="id"
-            :checked="selected == id"
-            :value="id"
-            @click="selected = id"
-          ></a-radio>
-          <a
-            slot="operation"
-            slot-scope="record"
-            v-permission="'mainData.project.mg-projects.edit'"
-            @click="editor(record)"
-          >
-            编辑</a
-          >
+          <template slot="operation" slot-scope="record">
+						<a-space size="small">
+							<a
+								v-permission="
+									'mainData.production.mg-projects.edit'
+								"
+								@click="editor(record)"
+							>
+								编辑</a
+							>
+							<a-popconfirm
+								title="确认删除选中的项目?"
+								ok-text="确定"
+								cancel-text="取消"
+								@confirm="del(record.id)"
+								v-permission="
+									'mainData.production.mg-projects.edit'
+								"
+							>
+								<a> 删除</a>
+							</a-popconfirm>
+						</a-space>
+					</template>
         </a-table>
       </template>
     </IMain>
@@ -57,12 +52,6 @@ import {
 import Projects from '../../components/alert/projects'
 import mixins from '../../mixins/list'
 const columns = [
-  {
-    dataIndex: 'id',
-    title: '',
-    width: 50,
-    scopedSlots: { customRender: 'id' },
-  },
   {
     dataIndex: 'code',
     title: '项目编号',
@@ -100,7 +89,6 @@ export default {
   data() {
     return {
       columns,
-      selected: '',
       current: {},
       pagination: {
         current: 1,

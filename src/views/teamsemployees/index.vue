@@ -2,22 +2,9 @@
   <div>
     <IMain
       :searchs="searchs"
-      :hasSelected="selected"
-      delTip="确定删除选中的项目？"
+      permission="mainData.production.mg-teams-employees.add"
       @operation="operation"
     >
-      <a-button
-        slot="add"
-        @click="operation({ type: 'add' })"
-        v-permission="'mainData.personnel.mg-position.add'"
-        >新 增</a-button
-      >
-      <a-button
-        slot="delete"
-        :disabled="!selected"
-        v-permission="'mainData.personnel.mg-position.delete'"
-        >删 除</a-button
-      >
       <template slot="table">
         <a-table
           :loading="loading"
@@ -27,46 +14,40 @@
           :data-source="data"
           @change="tableChange"
         >
-          <a-radio
-            slot="id"
-            slot-scope="id"
-            :checked="selected == id"
-            :value="id"
-            @click="selected = id"
-          ></a-radio>
-          <a
-            slot="linkUserCount"
-            slot-scope="data"
-            @click="showLink(data.id)"
-            >{{ data.linkUserCount }}</a
-          >
-          <a
-            slot="operation"
-            slot-scope="record"
-            v-permission="'mainData.personnel.mg-position.edit'"
-            @click="editor(record)"
-          >
-            编辑</a
-          >
+          <template slot="operation" slot-scope="record">
+						<a-space size="small">
+							<a
+								v-permission="
+									'mainData.production.mg-teams-employees.edit'
+								"
+								@click="editor(record)"
+							>
+								编辑</a
+							>
+							<a-popconfirm
+								title="确认删除选中的团队?"
+								ok-text="确定"
+								cancel-text="取消"
+								@confirm="del(record.id)"
+								v-permission="
+									'mainData.production.mg-teams-employees.edit'
+								"
+							>
+								<a> 删除</a>
+							</a-popconfirm>
+						</a-space>
+					</template>
         </a-table>
       </template>
     </IMain>
     <Position ref="alert" :data="current" @freash="freash" />
-    <LinkEmployee ref="alertLink" :id="linkId" />
   </div>
 </template>
 <script>
-import { page_get, remove_post } from '../../api/hrPositionController'
+import { page_get, remove_get } from '../../api/comTeamEmployeRefController'
 import Position from '../../components/alert/position'
-import LinkEmployee from '../../components/alert/linkEmployee'
 import mixins from '../../mixins/list'
 const columns = [
-  {
-    dataIndex: 'id',
-    title: '',
-    width: 50,
-    scopedSlots: { customRender: 'id' },
-  },
   {
     dataIndex: 'code',
     title: '员工工号',
@@ -77,7 +58,7 @@ const columns = [
   },
   {
     title: '部门',
-    scopedSlots: { customRender: 'linkUserCount' },
+    dataIndex: 'name',
   },
   {
     title: '操作',
@@ -88,8 +69,6 @@ export default {
   data() {
     return {
       columns,
-      selected: '',
-      linkId: '',
       current: {},
       pagination: {
         current: 1,
@@ -112,7 +91,7 @@ export default {
       ],
     }
   },
-  components: { Position, LinkEmployee },
+  components: { Position },
   mixins: [mixins],
   methods: {
     operation({ type, data }) {
@@ -120,17 +99,10 @@ export default {
         case 'add':
           this.$refs.alert.show()
           break
-        case 'del':
-          this.del(this.selected)
-          break
         case 'search':
           this.getList(data)
           break
       }
-    },
-    showLink(id) {
-      this.linkId = id
-      this.$refs.alertLink.show()
     },
     tableChange(e) {
       this.pagination = e
@@ -138,7 +110,7 @@ export default {
     },
     del(id) {
       this.loading = true
-      remove_post({
+      remove_get({
         data: { id },
       })
         .then(() => {

@@ -2,22 +2,9 @@
   <div>
     <IMain
       :searchs="searchs"
-      :hasSelected="selected"
-      delTip="确定删除选中的职位？"
+      permission="mainData.production.mg-position.add"
       @operation="operation"
     >
-      <a-button
-        slot="add"
-        @click="operation({ type: 'add' })"
-        v-permission="'mainData.personnel.mg-position.add'"
-        >新 增</a-button
-      >
-      <a-button
-        slot="delete"
-        :disabled="!selected"
-        v-permission="'mainData.personnel.mg-position.delete'"
-        >删 除</a-button
-      >
       <template slot="table">
         <a-table
           :loading="loading"
@@ -27,26 +14,34 @@
           :data-source="data"
           @change="tableChange"
         >
-          <a-radio
-            slot="id"
-            slot-scope="id"
-            :checked="selected == id"
-            :value="id"
-            @click="selected = id"
-          ></a-radio>
+          <template slot="operation" slot-scope="record">
+						<a-space size="small">
+							<a
+								v-permission="
+									'mainData.production.mg-position.edit'
+								"
+								@click="editor(record)"
+							>
+								编辑</a
+							>
+							<a-popconfirm
+								title="确定删除选中的职位?"
+								ok-text="确定"
+								cancel-text="取消"
+								@confirm="del(record.id)"
+								v-permission="
+									'mainData.production.mg-position.edit'
+								"
+							>
+								<a> 删除</a>
+							</a-popconfirm>
+						</a-space>
+					</template>
           <a
             slot="linkUserCount"
             slot-scope="data"
             @click="showLink(data.id)"
             >{{ data.linkUserCount }}</a
-          >
-          <a
-            slot="operation"
-            slot-scope="record"
-            v-permission="'mainData.personnel.mg-position.edit'"
-            @click="editor(record)"
-          >
-            编辑</a
           >
         </a-table>
       </template>
@@ -61,12 +56,6 @@ import Position from '../../components/alert/position'
 import LinkEmployee from '../../components/alert/linkEmployee'
 import mixins from '../../mixins/list'
 const columns = [
-  {
-    dataIndex: 'id',
-    title: '',
-    width: 50,
-    scopedSlots: { customRender: 'id' },
-  },
   {
     dataIndex: 'code',
     title: '职位编号',
@@ -88,7 +77,6 @@ export default {
   data() {
     return {
       columns,
-      selected: '',
       linkId: '',
       current: {},
       pagination: {
