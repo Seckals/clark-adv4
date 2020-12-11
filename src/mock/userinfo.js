@@ -1,5 +1,5 @@
 const data = {
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqd3RBdXRoIjoie1widXNlcklkXCI6N30iLCJleHAiOjE2MDg1MzU1MTYsImlhdCI6MTYwNzY3MTUxNn0.zNkn4BrpZSc-87deUm6Ao5LTU8GWqE2In7vPS4akEBQ",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqd3RBdXRoIjoie1widXNlcklkXCI6N30iLCJleHAiOjE2MDg1NDA5MjcsImlhdCI6MTYwNzY3NjkyN30.hF3XSQdW31EVXEHOKdwHnNsKYBH_ozcbBOuzQ2XK0Tw",
   "empName": "Clark",
   "modules": [{
     "id": 1,
@@ -1582,7 +1582,7 @@ const data = {
         "name": "mainData.production.mg-station",
         "path": "/mg-station",
         "description": "维护工位",
-        "img": "menu",
+        "img": "import",
         "type": 1,
         "redirect": null,
         "hideChildrenInMenu": 1,
@@ -1710,7 +1710,7 @@ const data = {
         "name": "mainData.production.mg-line-project",
         "path": "/mg-line-project",
         "description": "产线项目",
-        "img": "menu",
+        "img": "file-protect",
         "type": 1,
         "redirect": null,
         "hideChildrenInMenu": 1,
@@ -1722,7 +1722,7 @@ const data = {
       "name": "mainData.production",
       "path": null,
       "description": "生产管理",
-      "img": "menu",
+      "img": "",
       "type": 3,
       "redirect": null,
       "hideChildrenInMenu": 1,
@@ -1982,7 +1982,7 @@ const data = {
         "name": "mainData.personnel.mg-teams",
         "path": "/mg-teams",
         "description": "维护团队",
-        "img": "teams",
+        "img": "usergroup-add",
         "type": 1,
         "redirect": null,
         "hideChildrenInMenu": 1,
@@ -2046,7 +2046,7 @@ const data = {
         "name": "mainData.personnel.mg-teams-employees",
         "path": "/mg-teams-employees",
         "description": "团队员工",
-        "img": "teams-employees",
+        "img": "solution",
         "type": 1,
         "redirect": null,
         "hideChildrenInMenu": 1,
@@ -2250,7 +2250,7 @@ const data = {
       "name": "mainData.email",
       "path": null,
       "description": "报警邮件设置",
-      "img": "mail",
+      "img": "",
       "type": 3,
       "redirect": null,
       "hideChildrenInMenu": 1,
@@ -3209,7 +3209,6 @@ const data = {
     "type": 0
   }]
 }
-
 
 
 

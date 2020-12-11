@@ -12,12 +12,12 @@
         v-permission="'mainData.production.mg-classes.add'"
         >新 增</a-button
       >
-      <a-button
+      <!-- <a-button
         slot="delete"
         :disabled="!selected"
         v-permission="'mainData.production.mg-classes.delete'"
         >删 除</a-button
-      >
+      > -->
       <template slot="table">
         <a-table
           :loading="loading"
@@ -25,21 +25,29 @@
           :columns="columns"
           :data-source="data"
         >
-          <a-radio
+          <!-- <a-radio
             slot="id"
             slot-scope="id"
             :checked="selected == id"
             :value="id"
             @click="selected = id"
-          ></a-radio>
-          <a
-            slot="operation"
-            slot-scope="record"
-            v-permission="'mainData.production.mg-classes.edit'"
-            @click="editor(record)"
-          >
-            编辑</a
-          >
+          ></a-radio> -->
+          <template slot="operation" slot-scope="record">
+            <a-space size="small">
+              <a
+                v-permission="'mainData.production.mg-classes.edit'"
+                @click="editor(record)"
+              >
+                编辑</a
+              >
+              <a
+                v-permission="'mainData.production.mg-classes.edit'"
+                @click="editor(record)"
+              >
+                删除</a
+              >
+            </a-space>
+          </template>
         </a-table>
       </template>
     </IMain>
@@ -51,12 +59,12 @@ import { list_get, remove_get } from '../../api/comShiftController'
 import Classes from '../../components/alert/classes'
 import mixins from '../../mixins/list'
 const columns = [
-  {
-    dataIndex: 'id',
-    title: '',
-    width: 50,
-    scopedSlots: { customRender: 'id' },
-  },
+  // {
+  //   dataIndex: 'id',
+  //   title: '',
+  //   width: 50,
+  //   scopedSlots: { customRender: 'id' },
+  // },
   {
     dataIndex: 'code',
     title: '班次编号',
