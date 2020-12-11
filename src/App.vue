@@ -17,7 +17,6 @@ export default {
     }
   },
   created() {
-    console.log(process.env.NODE_ENV == 'development')
     if (process.env.NODE_ENV == 'development') {
       window.localStorage.setItem('auth-info', JSON.stringify(data))
     } else {

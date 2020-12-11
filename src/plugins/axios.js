@@ -1,13 +1,15 @@
 import axios from 'axios'
 import qs from 'qs'
-import { message } from 'ant-design-vue';
+import {
+  message
+} from 'ant-design-vue';
 
 // 请求超时
 const TIMEOUT = 10000
 
 // 创建axios实例
 const fetch = axios.create({
-  baseURL:  process.env.VUE_APP_BASE_URL,
+  baseURL: process.env.VUE_APP_BASE_URL,
   // 超时
   timeout: TIMEOUT,
   // 是否跨域携带cookie
@@ -57,14 +59,16 @@ fetch.interceptors.request.use(
 // 添加请求返回拦截器
 fetch.interceptors.response.use(
   function (res) {
-    const {data} = res
+    const {
+      data
+    } = res
     const code = +data.code
 
     if (code === 200 || data.success) {
       // 约定code=200即为成功
       return data.result
     }
-    
+
     /**
      * 异常处理
      * 可以做统一的错误提示

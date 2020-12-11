@@ -1,25 +1,24 @@
-export default{
-    data() {
-        return {
-            data: [],
-			loading: false,
-            
-        }
+export default {
+  data() {
+    return {
+      data: [],
+      loading: false,
+    }
+  },
+  mounted() {
+    this.getList();
+  },
+  methods: {
+    freash(e) {
+      this.current = {};
+      if (!e) {
+        this.getList();
+        if (this.getPreList) this.getPreList()
+      }
     },
-    mounted() {
-		this.getList();
+    editor(data) {
+      this.current = Object.assign({}, data);
+      this.$refs.alert.show();
     },
-    methods: {
-        freash(e) {
-			this.current = {};
-			if(!e){
-                this.getList();
-                if(this.getPreList)this.getPreList()
-            }
-        },
-        editor(data) {
-			this.current = Object.assign({},data);
-			this.$refs.alert.show();
-		},
-    },
+  },
 }

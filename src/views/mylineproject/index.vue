@@ -3,7 +3,7 @@
     <IMain
       :searchs="searchs"
       :hasSelected="selected"
-      delTip="确定删除选中的职位？"
+      delTip="确定删除选中的项目？"
       @operation="operation"
     >
       <a-button
@@ -99,9 +99,15 @@ export default {
       searchs: [
         {
           type: 'input',
-          title: '职位名称',
-          placeholder: '请输入职员名称',
+          title: '产线编号',
+          placeholder: '请输入产线编号',
           key: 'name',
+        },
+        {
+          type: 'input',
+          title: '产线名称',
+          placeholder: '请输入产线名称',
+          key: 'code',
         },
       ],
     }

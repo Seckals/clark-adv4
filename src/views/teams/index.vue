@@ -3,7 +3,7 @@
     <IMain
       :searchs="searchs"
       :hasSelected="selected"
-      delTip="确定删除选中的职位？"
+      delTip="确定删除选中的项目？"
       @operation="operation"
     >
       <a-button
@@ -69,11 +69,11 @@ const columns = [
   },
   {
     dataIndex: 'code',
-    title: '职位编号',
+    title: '团队编号',
   },
   {
     dataIndex: 'name',
-    title: '职位名称',
+    title: '团队名称',
   },
   {
     title: '关联员工数',
@@ -99,8 +99,8 @@ export default {
       searchs: [
         {
           type: 'input',
-          title: '职位名称',
-          placeholder: '请输入职员名称',
+          title: '团队名称',
+          placeholder: '请输入团队名称',
           key: 'name',
         },
       ],

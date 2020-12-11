@@ -6,41 +6,51 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user:'张三',
-    token:'',
-    menu:[],
-    permission:[]
+    user: '张三',
+    token: '',
+    menu: [],
+    menu1: [],
+    permission: []
   },
-  getters:{
-    getUser(state){
+  getters: {
+    getUser(state) {
       return state.user
     },
-    getToken(state){
+    getToken(state) {
       return state.token
     },
-    getMenu(state){
+    getMenu(state) {
       return state.menu
     },
-    getPermission(state){
-      if(!state.permission || state.permission.length === 0){
+    getMenu1(state) {
+      return state.menu1
+    },
+    getPermission(state) {
+      if (!state.permission || state.permission.length === 0) {
         const detail = util.getLocal('auth-info') || {}
-        const menu = util.getOneFromList(detail.modules,'name','mainData') || []
-        state.permission =  util.getOneValueInOneArray(menu.categories||[],'name') || []  
+        const menu = util.getOneFromList(detail.modules, 'name', 'mainData') || []
+        console.log(menu)
+        state.permission = util.getOneValueInOneArray(menu.categories || [], 'name') || []
       }
       return state.permission
     }
   },
   mutations: {
-    SET_DETAIL(state){
+    SET_DETAIL(state) {
       const detail = util.getLocal('auth-info') || {}
-      const menu = util.getOneFromList(detail.modules,'name','mainData') || {}
-      const permission = util.getOneValueInOneArray(menu.categories||[],'name') || []
-      
+      const menu = util.getOneFromList(detail.modules, 'name', 'mainData') || {}
+      const permission = util.getOneValueInOneArray(menu.categories || [], 'name') || []
+      console.log(permission)
+
       state.user = detail.empName
       state.token = detail.token
-      state.menu = menu.categories||[]
+      state.menu = menu.categories.filter((i) => {
+        return i.type == 1
+      })
+      state.menu1 = menu.categories.filter((i) => {
+        return i.type == 3
+      })
       state.permession = permission
     }
   }
 })
-

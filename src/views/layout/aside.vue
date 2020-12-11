@@ -19,6 +19,15 @@
         <a-icon :type="item.img" />
         <span>{{ item.description }}</span>
       </a-menu-item>
+      <a-sub-menu
+        :title="item.description"
+        v-for="(item, index) in menu1"
+        :key="index"
+      >
+        <a-menu-item v-for="item1 in item.children" :key="item1.path">
+          <a-icon :type="item1.img" />{{ item1.description }}</a-menu-item
+        >
+      </a-sub-menu>
     </a-menu>
     <div class="menu-trigger">
       <a-icon
@@ -39,6 +48,10 @@ export default {
   computed: {
     menu() {
       return this.$store.getters.getMenu || []
+    },
+    menu1() {
+      console.log(this.$store.getters.getMenu1)
+      return this.$store.getters.getMenu1 || []
     },
   },
   methods: {
