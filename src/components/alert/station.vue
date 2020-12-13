@@ -17,11 +17,11 @@
 			:label-col="{ span: 5 }"
 			:wrapper-col="{ span: 18 }"
 		>
-			<a-form-model-item label="工位编号" prop="code">
-				<a-input v-model="form.code" placeholder=""  :disabled="!!form.id"/>
+			<a-form-model-item label="工位编号" prop="stationCode">
+				<a-input v-model="form.stationCode" placeholder=""  :disabled="!!form.id"/>
 			</a-form-model-item>
-			<a-form-model-item label="工位名称" prop="name">
-				<a-input v-model="form.name" placeholder="a" />
+			<a-form-model-item label="工位名称" prop="stationName">
+				<a-input v-model="form.stationName" placeholder="" />
 			</a-form-model-item>
 		</a-form-model>
 	</a-modal>
@@ -34,20 +34,18 @@ export default {
 	data() {
 		return {
 			form: {
-				code: "",
-				name: "",
-				status:'',
-				managerId: ""
+				stationCode: "",
+				stationName: ""
 			},
 			rules: {
-				name: [
+				stationName: [
 					{
 						required: true,
 						message: "请输入工位名称",
 						trigger: "blur",
 					},
 				],
-				code: [
+				stationCode: [
 					{
 						required: true,
 						message: "请输入工位编号",
@@ -62,7 +60,10 @@ export default {
 		add() {
 			this.loading = true;
 			add_post({
-				data: this.form,
+				data: {
+					code:this.form.stationCode,
+					name:this.form.stationName
+				},
 			})
 				.then(() => {
 					this.loading = false;
@@ -76,7 +77,11 @@ export default {
 		editor() {
 			this.loading = true;
 			modify_post({
-				data: this.form,
+				data: {
+					id:this.form.id,
+					code:this.form.stationCode,
+					name:this.form.stationName
+				},
 			})
 				.then(() => {
 					this.loading = false;

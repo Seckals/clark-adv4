@@ -17,11 +17,11 @@
 			:label-col="{ span: 5 }"
 			:wrapper-col="{ span: 18 }"
 		>
-			<a-form-model-item label="团队编号" prop="code">
-				<a-input v-model="form.code" placeholder=""  :disabled="!!form.id"/>
+			<a-form-model-item label="团队编号" prop="teamCode">
+				<a-input v-model="form.teamCode" placeholder=""  :disabled="!!form.id"/>
 			</a-form-model-item>
-			<a-form-model-item label="团队名称" prop="name">
-				<a-input v-model="form.name" placeholder="a" />
+			<a-form-model-item label="团队名称" prop="teamName">
+				<a-input v-model="form.teamName" placeholder="" />
 			</a-form-model-item>
 		</a-form-model>
 	</a-modal>
@@ -34,20 +34,18 @@ export default {
 	data() {
 		return {
 			form: {
-				code: "",
-				name: "",
-				status:'',
-				managerId: ""
+				teamCode: "",
+				teamName: ""
 			},
 			rules: {
-				name: [
+				teamName: [
 					{
 						required: true,
 						message: "请输入团队名称",
 						trigger: "blur",
 					},
 				],
-				code: [
+				teamCode: [
 					{
 						required: true,
 						message: "请输入团队编号",
@@ -62,7 +60,10 @@ export default {
 		add() {
 			this.loading = true;
 			add_post({
-				data: this.form,
+				data: {
+					code:this.form.teamCode,
+					name:this.form.teamName
+				},
 			})
 				.then(() => {
 					this.loading = false;
@@ -76,7 +77,11 @@ export default {
 		editor() {
 			this.loading = true;
 			modify_post({
-				data: this.form,
+				data: {
+					id:this.form.id,
+					code:this.form.teamCode,
+					name:this.form.teamName
+				},
 			})
 				.then(() => {
 					this.loading = false;

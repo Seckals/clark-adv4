@@ -94,7 +94,7 @@ const routes = [{
         name: 'mylineproject',
         component: () => import( /* webpackChunkName: "mg-departments" */ '../views/mylineproject'),
         meta: {
-          title: '产线工位'
+          title: '产线项目'
         }
       },
       {

@@ -39,14 +39,12 @@
         </a-table>
       </template>
     </IMain>
-    <Position ref="alert" :data="current" @freash="freash" />
-    <LinkEmployee ref="alertLink" :id="linkId" />
+    <Team ref="alert" :data="current" @freash="freash" />
   </div>
 </template>
 <script>
 import { page_get, remove_get } from '../../api/comTeamController'
-import Position from '../../components/alert/position'
-import LinkEmployee from '../../components/alert/linkEmployee'
+import Team from '../../components/alert/team'
 import mixins from '../../mixins/list'
 const columns = [
   {
@@ -70,7 +68,6 @@ export default {
   data() {
     return {
       columns,
-      linkId: '',
       current: {},
       pagination: {
         current: 1,
@@ -87,7 +84,7 @@ export default {
       ],
     }
   },
-  components: { Position, LinkEmployee },
+  components: { Team },
   mixins: [mixins],
   methods: {
     operation({ type, data }) {
@@ -101,14 +98,12 @@ export default {
       }
     },
     showLink(data) {
-      this.linkId = data.id
       this.$router.push({
         path: '/mg-teams-employees',
         query: {
           data: JSON.stringify(data),
         },
       })
-      // this.$refs.alertLink.show()
     },
     tableChange(e) {
       this.pagination = e

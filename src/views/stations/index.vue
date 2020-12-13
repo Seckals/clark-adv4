@@ -7,10 +7,12 @@
     >
       <template slot="table">
         <a-table
+          :pagination="pagination"
           :loading="loading"
           :row-key="(record) => record.id"
           :columns="columns"
           :data-source="data"
+          @change="tableChange"
         >
           <template slot="operation" slot-scope="record">
             <a-space size="small">
@@ -43,11 +45,11 @@ import Station from '../../components/alert/station'
 import mixins from '../../mixins/list'
 const columns = [
   {
-    dataIndex: 'code',
+    dataIndex: 'stationCode',
     title: '工位编号',
-  },
+  }, 
   {
-    dataIndex: 'name',
+    dataIndex: 'stationName',
     title: '工位名称 ',
   },
   {
@@ -60,6 +62,11 @@ export default {
     return {
       columns,
       current: {},
+      pagination: {
+        current: 1,
+        pageSize: 10,
+        total: 0,
+      },
     }
   },
   components: { Station },
@@ -87,13 +94,25 @@ export default {
           this.loading = false
         })
     },
-    getList() {
+    tableChange(e) {
+      this.pagination = e
+      this.getList()
+    },
+    getList(data = {}) {
       this.loading = true
-      page_get()
+      page_get({
+        data: Object.assign(
+          {
+            limit: this.pagination.pageSize,
+            page: this.pagination.current
+          },
+          data
+        ),
+      })
         .then((res) => {
-          console.log(res)
           this.loading = false
           this.data = res.result || []
+          this.pagination.total = res.count
         })
         .catch(() => {
           this.loading = false

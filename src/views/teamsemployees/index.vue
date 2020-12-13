@@ -29,19 +29,19 @@
                 @confirm="del(record.id)"
                 v-permission="'mainData.personnel.mg-teams-employees.delete'"
               >
-                <a> 删除1</a>
+                <a>删除</a>
               </a-popconfirm>
             </a-space>
           </template>
         </a-table>
       </template>
     </IMain>
-    <Position ref="alert" :data="current" @freash="freash" />
+    <TeamEmployee ref="alert" :data="current" @freash="freash" />
   </div>
 </template>
 <script>
 import { page_get, remove_get } from '../../api/comTeamEmployeRefController'
-import Position from '../../components/alert/position'
+import TeamEmployee from '../../components/alert/teamEmployee'
 import mixins from '../../mixins/list'
 const columns = [
   {
@@ -88,16 +88,20 @@ export default {
       ],
     }
   },
-  components: { Position },
+  components: { TeamEmployee },
   mixins: [mixins],
   created() {
     this.info = JSON.parse(this.$route.query.data)
-    console.log(this.info)
   },
   methods: {
     operation({ type, data }) {
       switch (type) {
         case 'add':
+          this.current = {
+            teamId:JSON.parse(this.$route.query.data).id,
+            teamCode:JSON.parse(this.$route.query.data).teamCode,
+            teamName:JSON.parse(this.$route.query.data).teamName
+          }
           this.$refs.alert.show()
           break
         case 'search':

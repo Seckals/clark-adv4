@@ -1,7 +1,7 @@
 <template>
 	<a-modal
 		v-model="visible"
-		title="按产线列出的工位"
+		title="按团队列出的员工"
 		:confirmLoading="loading"
 		:width="500"
 		@ok="ok"
@@ -17,63 +17,56 @@
 			:label-col="{ span: 5 }"
 			:wrapper-col="{ span: 18 }"
 		>
-			<a-form-model-item label="产线编号" >
-				<a-input v-model="form.lineCode" placeholder="" :disabled="true" />
+			<a-form-model-item label="团队编号">
+				<a-input v-model="form.teamCode" placeholder=""  :disabled="true"/>
 			</a-form-model-item>
-			<a-form-model-item label="产线名称">
-				<a-input v-model="form.lineName" placeholder="" :disabled="true" />
+			<a-form-model-item label="团队名称">
+				<a-input v-model="form.teamName" placeholder="" :disabled="true" />
 			</a-form-model-item>
-			<a-form-model-item label="工位编号" prop="lineId">
-				<a-select
+			<a-form-model-item label="员工姓名" prop="employeeId">
+				<a-select 
 					show-search
 					option-filter-prop="children"
 					:filter-option="filterOption"
-					v-model="form.stationId"
+					v-model="form.employeeId"
 					placeholder="请选择"
-					@change="selectData"
-				>
+					@change="selectData">
 					<a-select-option
 						v-for="(item, idx) in preList"
 						:key="idx"
-						:value="item.id"
-						>{{ item.stationCode }}</a-select-option
+						:value="item.epmId"
+						>{{
+							item.empName
+						}}</a-select-option
 					>
 				</a-select>
 			</a-form-model-item>
-			<a-form-model-item label="工位名称">
-				<a-input v-model="form.stationName" placeholder="" :disabled="true" />
-			</a-form-model-item>
-			<a-form-model-item label="显示位次">
-				<a-input v-model="form.sep" placeholder="请输入显示位次" />
+			<a-form-model-item label="员工部门">
+				<a-input v-model="form.deptName" placeholder="" :disabled="true" />
 			</a-form-model-item>
 		</a-form-model>
 	</a-modal>
 </template>
 <script>
-import {
-	add_post,
-	modify_post,
-	prePage_get,
-} from "../../api/comLineStationRefController";
+import { add_post, modify_post, prePage_get } from "../../api/comTeamEmployeRefController";
 import mixins from "../../mixins/editor";
 
 export default {
 	data() {
 		return {
-			preList: [],
+			preList:[],
 			form: {
-				lineId:"",
-				lineCode: "",
-				lineName: "",
-				sep: "",
-				stationId: "",
-				stationName:""
+				teamId:"",
+				teamCode: "",
+				teamName: "",
+				employeeId: "",
+				deptName:""
 			},
 			rules: {
-				lineId: [
+				employeeId: [
 					{
 						required: true,
-						message: "请选择工位编号",
+						message: "请选择员工姓名",
 						trigger: "change",
 					},
 				]
@@ -86,12 +79,12 @@ export default {
 	mixins: [mixins],
 	methods: {
 		add() {
+            console.log(this.form)
 			this.loading = true;
 			add_post({
 				data: {
-					lineId:this.form.lineId,
-					sep:this.form.sep,
-					stationId:this.form.stationId
+					teamId:this.form.teamId,
+					employeeId:this.form.employeeId
 				},
 			})
 				.then(() => {
@@ -108,9 +101,8 @@ export default {
 			modify_post({
 				data: {
 					id:this.form.id,
-					lineId:this.form.lineId,
-					sep:this.form.sep,
-					stationId:this.form.stationId
+					teamId:this.form.teamId,
+					employeeId:this.form.employeeId
 				},
 			})
 				.then(() => {
@@ -127,7 +119,7 @@ export default {
 			prePage_get()
 				.then((res) => {
 					this.loading = false;
-					this.preList = res.stationList || [];
+                    this.preList = res.employeeList || []
 				})
 				.catch(() => {
 					this.loading = false;
@@ -142,8 +134,8 @@ export default {
 		},
 		selectData(e){
 			this.preList.forEach(item=>{
-				if(item.id === e){
-					this.form.stationName = item.stationName
+				if(item.epmId === e){
+					this.form.deptName = item.deptName
 				}
 			})
 		}

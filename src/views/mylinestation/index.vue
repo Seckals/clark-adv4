@@ -43,18 +43,17 @@
 import {
   page_get,
   remove_get,
-  prePage_get,
 } from '../../api/comLineStationRefController'
 import LineStation from '../../components/alert/lineStation'
 import mixins from '../../mixins/list'
 const columns = [
   {
-    dataIndex: 'projectCode',
-    title: '项目编号',
+    dataIndex: 'stationCode',
+    title: '工位编号',
   },
   {
-    dataIndex: 'projectName',
-    title: '项目名称',
+    dataIndex: 'stationName',
+    title: '工位名称',
   },
   {
     title: '操作',
@@ -89,14 +88,15 @@ export default {
   },
   components: { LineStation },
   mixins: [mixins],
-  mounted() {
-    console.log(JSON.parse(this.$route.query.data))
-    // this.getPreList()
-  },
   methods: {
     operation({ type, data }) {
       switch (type) {
         case 'add':
+          this.current = {
+            lineCode:JSON.parse(this.$route.query.data).code,
+            lineName:JSON.parse(this.$route.query.data).name,
+            lineId:JSON.parse(this.$route.query.data).id
+          }
           this.$refs.alert.show()
           break
         case 'search':
@@ -143,17 +143,7 @@ export default {
         .catch(() => {
           this.loading = false
         })
-    },
-    getPreList() {
-      prePage_get().then((res) => {
-        this.searchs.map((item) => {
-          if (item.listDataKey) {
-            item.list = item.list.concat(res[item.listDataKey])
-          }
-          return item
-        })
-      })
-    },
+    }
   },
 }
 </script>

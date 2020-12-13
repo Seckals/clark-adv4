@@ -42,8 +42,7 @@
 <script>
 import {
   page_get,
-  remove_get,
-  prePage_get,
+  remove_get
 } from '../../api/comProjectLineRefController'
 import LineProject from '../../components/alert/lineProject'
 import mixins from '../../mixins/list'
@@ -89,13 +88,15 @@ export default {
   },
   components: { LineProject },
   mixins: [mixins],
-  mounted() {
-    // this.getPreList()
-  },
   methods: {
     operation({ type, data }) {
       switch (type) {
         case 'add':
+          this.current = {
+            lineCode:JSON.parse(this.$route.query.data).code,
+            lineName:JSON.parse(this.$route.query.data).name,
+            lineId:JSON.parse(this.$route.query.data).id
+          }
           this.$refs.alert.show()
           break
         case 'search':
@@ -142,17 +143,7 @@ export default {
         .catch(() => {
           this.loading = false
         })
-    },
-    getPreList() {
-      prePage_get().then((res) => {
-        this.searchs.map((item) => {
-          if (item.listDataKey) {
-            item.list = item.list.concat(res[item.listDataKey])
-          }
-          return item
-        })
-      })
-    },
+    }
   },
 }
 </script>

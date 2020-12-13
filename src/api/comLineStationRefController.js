@@ -2,7 +2,7 @@ import fetch from '@/plugins/axios'
 // 新增
 export function add_post(options) {
   return fetch({
-    url: 'comLineStationRefController/addd',
+    url: 'comLineStationRefController/add',
     method: 'post',
     headers: {'Content-Type': 'application/json', ...(options && options.headers ? options.headers : {})},
     data: (options && options.data) || {}
@@ -56,7 +56,7 @@ export function prePage_get(options) {
 // 删除
 export function remove_get(options) {
   return fetch({
-    url: 'comProjectLineRefController/remove',
+    url: 'comLineStationRefController/remove',
     method: 'get',
     headers: options && options.headers ? options.headers : {},
     data: (options && options.data) || {}
