@@ -2,7 +2,7 @@
   <div>
     <IMain
       :searchs="searchs"
-      permission="mainData.production.mg-position.add"
+      permission="mainData.personnel.mg-position.add"
       @operation="operation"
     >
       <template slot="table">
