@@ -13,28 +13,24 @@
           :data-source="data"
         >
           <template slot="operation" slot-scope="record">
-						<a-space size="small">
-							<a
-								v-permission="
-									'mainData.production.mg-station.edit'
-								"
-								@click="editor(record)"
-							>
-								编辑</a
-							>
-							<a-popconfirm
-								title="确认删除选中的工位?"
-								ok-text="确定"
-								cancel-text="取消"
-								@confirm="del(record.id)"
-								v-permission="
-									'mainData.production.mg-station.edit'
-								"
-							>
-								<a> 删除</a>
-							</a-popconfirm>
-						</a-space>
-					</template>
+            <a-space size="small">
+              <a
+                v-permission="'mainData.production.mg-station.edit'"
+                @click="editor(record)"
+              >
+                编辑</a
+              >
+              <a-popconfirm
+                title="确认删除选中的工位?"
+                ok-text="确定"
+                cancel-text="取消"
+                @confirm="del(record.id)"
+                v-permission="'mainData.production.mg-station.delete'"
+              >
+                <a> 删除</a>
+              </a-popconfirm>
+            </a-space>
+          </template>
         </a-table>
       </template>
     </IMain>
@@ -95,8 +91,9 @@ export default {
       this.loading = true
       page_get()
         .then((res) => {
+          console.log(res)
           this.loading = false
-          this.data = res || []
+          this.data = res.result || []
         })
         .catch(() => {
           this.loading = false

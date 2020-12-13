@@ -2,7 +2,7 @@
   <div>
     <IMain
       :searchs="searchs"
-      permission="mainData.production.mg-teams.add"
+      permission="mainData.personnel.mg-teams.add"
       @operation="operation"
     >
       <template slot="table">
@@ -15,34 +15,27 @@
           @change="tableChange"
         >
           <template slot="operation" slot-scope="record">
-						<a-space size="small">
-							<a
-								v-permission="
-									'mainData.production.mg-teams.edit'
-								"
-								@click="editor(record)"
-							>
-								编辑</a
-							>
-							<a-popconfirm
-								title="确认删除选中的团队?"
-								ok-text="确定"
-								cancel-text="取消"
-								@confirm="del(record.id)"
-								v-permission="
-									'mainData.production.mg-teams.edit'
-								"
-							>
-								<a> 删除</a>
-							</a-popconfirm>
-						</a-space>
-					</template>
-          <a
-            slot="linkUserCount"
-            slot-scope="data"
-            @click="showLink(data.id)"
-            >{{ data.linkUserCount }}</a
-          >
+            <a-space size="small">
+              <a
+                v-permission="'mainData.personnel.mg-teams.edit'"
+                @click="editor(record)"
+              >
+                编辑</a
+              >
+              <a-popconfirm
+                title="确认删除选中的团队?"
+                ok-text="确定"
+                cancel-text="取消"
+                @confirm="del(record.id)"
+                v-permission="'mainData.personnel.mg-teams.delete'"
+              >
+                <a> 删除</a>
+              </a-popconfirm>
+            </a-space>
+          </template>
+          <a slot="linkUserCount" slot-scope="data" @click="showLink(data)">{{
+            data.linkEmployeeCount
+          }}</a>
         </a-table>
       </template>
     </IMain>
@@ -57,11 +50,11 @@ import LinkEmployee from '../../components/alert/linkEmployee'
 import mixins from '../../mixins/list'
 const columns = [
   {
-    dataIndex: 'code',
+    dataIndex: 'teamCode',
     title: '团队编号',
   },
   {
-    dataIndex: 'name',
+    dataIndex: 'teamName',
     title: '团队名称',
   },
   {
@@ -107,9 +100,15 @@ export default {
           break
       }
     },
-    showLink(id) {
-      this.linkId = id
-      this.$refs.alertLink.show()
+    showLink(data) {
+      this.linkId = data.id
+      this.$router.push({
+        path: '/mg-teams-employees',
+        query: {
+          data: JSON.stringify(data),
+        },
+      })
+      // this.$refs.alertLink.show()
     },
     tableChange(e) {
       this.pagination = e

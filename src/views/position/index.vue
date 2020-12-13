@@ -15,28 +15,24 @@
           @change="tableChange"
         >
           <template slot="operation" slot-scope="record">
-						<a-space size="small">
-							<a
-								v-permission="
-									'mainData.production.mg-position.edit'
-								"
-								@click="editor(record)"
-							>
-								编辑</a
-							>
-							<a-popconfirm
-								title="确定删除选中的职位?"
-								ok-text="确定"
-								cancel-text="取消"
-								@confirm="del(record.id)"
-								v-permission="
-									'mainData.production.mg-position.edit'
-								"
-							>
-								<a> 删除</a>
-							</a-popconfirm>
-						</a-space>
-					</template>
+            <a-space size="small">
+              <a
+                v-permission="'mainData.personnel.mg-position.edit'"
+                @click="editor(record)"
+              >
+                编辑</a
+              >
+              <a-popconfirm
+                title="确定删除选中的职位?"
+                ok-text="确定"
+                cancel-text="取消"
+                @confirm="del(record.id)"
+                v-permission="'mainData.personnel.mg-position.delete'"
+              >
+                <a> 删除</a>
+              </a-popconfirm>
+            </a-space>
+          </template>
           <a
             slot="linkUserCount"
             slot-scope="data"

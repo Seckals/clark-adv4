@@ -24,7 +24,12 @@
         v-for="(item, index) in menu1"
         :key="index"
       >
-        <a-menu-item v-for="item1 in item.children" :key="item1.path">
+        <a-menu-item
+          v-for="item1 in item.children.filter((i) => {
+            return i.hidden == '1'
+          })"
+          :key="item1.path"
+        >
           <a-icon :type="item1.img" />{{ item1.description }}</a-menu-item
         >
       </a-sub-menu>

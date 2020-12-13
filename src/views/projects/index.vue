@@ -2,7 +2,7 @@
   <div>
     <IMain
       :searchs="searchs"
-      permission="mainData.production.mg-projects.add"
+      permission="mainData.project.mg-projects.add"
       @operation="operation"
     >
       <template slot="table">
@@ -15,28 +15,24 @@
           @change="tableChange"
         >
           <template slot="operation" slot-scope="record">
-						<a-space size="small">
-							<a
-								v-permission="
-									'mainData.production.mg-projects.edit'
-								"
-								@click="editor(record)"
-							>
-								编辑</a
-							>
-							<a-popconfirm
-								title="确认删除选中的项目?"
-								ok-text="确定"
-								cancel-text="取消"
-								@confirm="del(record.id)"
-								v-permission="
-									'mainData.production.mg-projects.edit'
-								"
-							>
-								<a> 删除</a>
-							</a-popconfirm>
-						</a-space>
-					</template>
+            <a-space size="small">
+              <a
+                v-permission="'mainData.project.mg-projects.edit'"
+                @click="editor(record)"
+              >
+                编辑</a
+              >
+              <a-popconfirm
+                title="确认删除选中的项目?"
+                ok-text="确定"
+                cancel-text="取消"
+                @confirm="del(record.id)"
+                v-permission="'mainData.project.mg-projects.delete'"
+              >
+                <a> 删除</a>
+              </a-popconfirm>
+            </a-space>
+          </template>
         </a-table>
       </template>
     </IMain>
@@ -59,6 +55,10 @@ const columns = [
   {
     dataIndex: 'name',
     title: '项目名称',
+  },
+  {
+    dataIndex: 'internalCode',
+    title: '内部项目号',
   },
   {
     dataIndex: 'customer',

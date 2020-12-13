@@ -1,8 +1,8 @@
 <template>
   <div>
     <IMain
-      :searchs="searchs"
-      permission="mainData.production.mg-teams-employees.add"
+      :infoData="infoData"
+      permission="mainData.personnel.mg-teams-employees.add"
       @operation="operation"
     >
       <template slot="table">
@@ -15,28 +15,24 @@
           @change="tableChange"
         >
           <template slot="operation" slot-scope="record">
-						<a-space size="small">
-							<a
-								v-permission="
-									'mainData.production.mg-teams-employees.edit'
-								"
-								@click="editor(record)"
-							>
-								编辑</a
-							>
-							<a-popconfirm
-								title="确认删除选中的团队?"
-								ok-text="确定"
-								cancel-text="取消"
-								@confirm="del(record.id)"
-								v-permission="
-									'mainData.production.mg-teams-employees.edit'
-								"
-							>
-								<a> 删除</a>
-							</a-popconfirm>
-						</a-space>
-					</template>
+            <a-space size="small">
+              <a
+                v-permission="'mainData.personnel.mg-teams-employees.edit'"
+                @click="editor(record)"
+              >
+                编辑</a
+              >
+              <a-popconfirm
+                title="确认删除选中的团队?"
+                ok-text="确定"
+                cancel-text="取消"
+                @confirm="del(record.id)"
+                v-permission="'mainData.personnel.mg-teams-employees.delete'"
+              >
+                <a> 删除1</a>
+              </a-popconfirm>
+            </a-space>
+          </template>
         </a-table>
       </template>
     </IMain>
@@ -49,16 +45,16 @@ import Position from '../../components/alert/position'
 import mixins from '../../mixins/list'
 const columns = [
   {
-    dataIndex: 'code',
+    dataIndex: 'empNo',
     title: '员工工号',
   },
   {
-    dataIndex: 'name',
+    dataIndex: 'empName',
     title: '员工姓名',
   },
   {
     title: '部门',
-    dataIndex: 'name',
+    dataIndex: 'teamName',
   },
   {
     title: '操作',
@@ -68,6 +64,7 @@ const columns = [
 export default {
   data() {
     return {
+      info: '',
       columns,
       current: {},
       pagination: {
@@ -75,17 +72,17 @@ export default {
         pageSize: 10,
         total: 0,
       },
-      searchs: [
+      infoData: [
         {
           type: 'input',
           title: '团队编号',
-          placeholder: '请输入团队编号',
+          value: JSON.parse(this.$route.query.data).teamCode,
           key: 'name',
         },
         {
           type: 'input',
           title: '团队名称',
-          placeholder: '请输入团队名称',
+          value: JSON.parse(this.$route.query.data).teamName,
           key: 'code',
         },
       ],
@@ -93,6 +90,10 @@ export default {
   },
   components: { Position },
   mixins: [mixins],
+  created() {
+    this.info = JSON.parse(this.$route.query.data)
+    console.log(this.info)
+  },
   methods: {
     operation({ type, data }) {
       switch (type) {
@@ -129,6 +130,7 @@ export default {
         data: Object.assign(
           {
             limit: this.pagination.pageSize,
+            teamId: this.info.id,
             page: this.pagination.current,
           },
           data

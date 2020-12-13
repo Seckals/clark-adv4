@@ -1,7 +1,7 @@
 <template>
   <div>
     <IMain
-      :searchs="searchs"
+      :infoData="infoData"
       permission="mainData.production.mg-line-project.add"
       @operation="operation"
     >
@@ -15,28 +15,24 @@
           @change="tableChange"
         >
           <template slot="operation" slot-scope="record">
-						<a-space size="small">
-							<a
-								v-permission="
-									'mainData.production.mg-line-project.edit'
-								"
-								@click="editor(record)"
-							>
-								编辑</a
-							>
-							<a-popconfirm
-								title="确定删除选中的项目?"
-								ok-text="确定"
-								cancel-text="取消"
-								@confirm="del(record.id)"
-								v-permission="
-									'mainData.production.mg-line-project.edit'
-								"
-							>
-								<a> 删除</a>
-							</a-popconfirm>
-						</a-space>
-					</template>
+            <a-space size="small">
+              <a
+                v-permission="'mainData.production.mg-line-project.edit'"
+                @click="editor(record)"
+              >
+                编辑</a
+              >
+              <a-popconfirm
+                title="确定删除选中的项目?"
+                ok-text="确定"
+                cancel-text="取消"
+                @confirm="del(record.id)"
+                v-permission="'mainData.production.mg-line-project.delete'"
+              >
+                <a> 删除</a>
+              </a-popconfirm>
+            </a-space>
+          </template>
         </a-table>
       </template>
     </IMain>
@@ -44,7 +40,11 @@
   </div>
 </template>
 <script>
-import { page_get, remove_get,prePage_get } from '../../api/comProjectLineRefController'
+import {
+  page_get,
+  remove_get,
+  prePage_get,
+} from '../../api/comProjectLineRefController'
 import LineProject from '../../components/alert/lineProject'
 import mixins from '../../mixins/list'
 const columns = [
@@ -71,22 +71,18 @@ export default {
         pageSize: 10,
         total: 0,
       },
-      searchs: [
+      infoData: [
         {
-          type: 'select',
-          title: '产线编号',
-          placeholder: '请输入产线编号',
-          key: 'lineCode',
-          listDataKey: 'lineList',
-          list: [{ code: '全部', id: '' }],
-          listkey: 'code',
-          listvalue: 'code',
+          type: 'input',
+          title: '团队编号',
+          value: JSON.parse(this.$route.query.data).code,
+          key: 'name',
         },
         {
           type: 'input',
-          title: '产线名称',
-          placeholder: '请输入产线名称',
-          key: 'lineName',
+          title: '团队名称',
+          value: JSON.parse(this.$route.query.data).name,
+          key: 'code',
         },
       ],
     }
@@ -94,7 +90,7 @@ export default {
   components: { LineProject },
   mixins: [mixins],
   mounted() {
-    this.getPreList()
+    // this.getPreList()
   },
   methods: {
     operation({ type, data }) {
@@ -133,6 +129,7 @@ export default {
           {
             limit: this.pagination.pageSize,
             page: this.pagination.current,
+            id: JSON.parse(this.$route.query.data).id,
           },
           data
         ),
@@ -155,7 +152,7 @@ export default {
           return item
         })
       })
-    }
+    },
   },
 }
 </script>

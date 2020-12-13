@@ -12,29 +12,39 @@
           :columns="columns"
           :data-source="data"
         >
+          <a
+            slot="stationCount"
+            slot-scope="record"
+            @click="tostationCount(record)"
+          >
+            {{ record.stationCount }}</a
+          >
+          <a
+            slot="projectCount"
+            slot-scope="record"
+            @click="toprojectCount(record)"
+          >
+            {{ record.stationCount }}</a
+          >
           <template slot="operation" slot-scope="record">
-						<a-space size="small">
-							<a
-								v-permission="
-									'mainData.production.mg-produce-line.edit'
-								"
-								@click="editor(record)"
-							>
-								编辑</a
-							>
-							<a-popconfirm
-								title="确认删除选中的产线?"
-								ok-text="确定"
-								cancel-text="取消"
-								@confirm="del(record.id)"
-								v-permission="
-									'mainData.production.mg-produce-line.edit'
-								"
-							>
-								<a> 删除</a>
-							</a-popconfirm>
-						</a-space>
-					</template>
+            <a-space size="small">
+              <a
+                v-permission="'mainData.production.mg-produce-line.edit'"
+                @click="editor(record)"
+              >
+                编辑</a
+              >
+              <a-popconfirm
+                title="确认删除选中的产线?"
+                ok-text="确定"
+                cancel-text="取消"
+                @confirm="del(record.id)"
+                v-permission="'mainData.production.mg-produce-line.delete'"
+              >
+                <a> 删除</a>
+              </a-popconfirm>
+            </a-space>
+          </template>
         </a-table>
       </template>
     </IMain>
@@ -59,6 +69,14 @@ const columns = [
     title: '显示位次',
   },
   {
+    title: '工位数量',
+    scopedSlots: { customRender: 'stationCount' },
+  },
+  {
+    title: '项目数量',
+    scopedSlots: { customRender: 'projectCount' },
+  },
+  {
     dataIndex: 'managerName',
     title: '产线主管',
   },
@@ -77,6 +95,24 @@ export default {
   components: { ProduceLine },
   mixins: [mixins],
   methods: {
+    toprojectCount(data) {
+      console.log(data)
+      this.$router.push({
+        path: '/mg-line-project',
+        query: {
+          data: JSON.stringify(data),
+        },
+      })
+    },
+    tostationCount(data) {
+      console.log(data)
+      this.$router.push({
+        path: '/mg-line-station',
+        query: {
+          data: JSON.stringify(data),
+        },
+      })
+    },
     operation({ type }) {
       switch (type) {
         case 'add':
