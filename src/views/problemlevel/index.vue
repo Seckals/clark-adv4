@@ -1,0 +1,135 @@
+<template>
+  <div>
+    <IMain
+      permission="mainData.personnel.mg-position.add"
+      @operation="operation"
+    >
+      <template slot="table">
+        <a-table
+          :loading="loading"
+          :row-key="(record) => record.id"
+          :pagination="pagination"
+          :columns="columns"
+          :data-source="data"
+          @change="tableChange"
+        >
+          <template slot="operation" slot-scope="record">
+            <a-space size="small">
+              <a
+                v-permission="'mainData.personnel.mg-position.edit'"
+                @click="editor(record)"
+              >
+                编辑</a
+              >
+              <a-popconfirm
+                title="确定删除选中的职位?"
+                ok-text="确定"
+                cancel-text="取消"
+                @confirm="del(record.id)"
+                v-permission="'mainData.personnel.mg-position.delete'"
+              >
+                <a> 删除</a>
+              </a-popconfirm>
+            </a-space>
+          </template>
+        </a-table>
+      </template>
+    </IMain>
+    <Position ref="alert" :data="current" @freash="freash" />
+    <LinkEmployee ref="alertLink" :id="linkId" />
+  </div>
+</template>
+<script>
+import { page_get, remove_post } from '../../api/hrPositionController'
+import Position from '../../components/alert/position'
+import LinkEmployee from '../../components/alert/linkEmployee'
+import mixins from '../../mixins/list'
+const columns = [
+  {
+    dataIndex: 'code',
+    title: '问题等级编号',
+  },
+  {
+    dataIndex: 'name',
+    title: '问题等级名称',
+  },
+  {
+    title: '操作',
+    scopedSlots: { customRender: 'operation' },
+  },
+]
+export default {
+  data() {
+    return {
+      columns,
+      linkId: '',
+      current: {},
+      pagination: {
+        current: 1,
+        pageSize: 10,
+        total: 0,
+      },
+    }
+  },
+  components: { Position, LinkEmployee },
+  mixins: [mixins],
+  methods: {
+    operation({ type, data }) {
+      switch (type) {
+        case 'add':
+          this.$refs.alert.show()
+          break
+        case 'del':
+          this.del(this.selected)
+          break
+        case 'search':
+          this.getList(data)
+          break
+      }
+    },
+    showLink(id) {
+      this.linkId = id
+      this.$refs.alertLink.show()
+    },
+    tableChange(e) {
+      this.pagination = e
+      this.getList()
+    },
+    del(id) {
+      this.loading = true
+      remove_post({
+        data: { id },
+      })
+        .then(() => {
+          this.loading = false
+          this.$message.success('删除成功')
+          this.selected = ''
+          this.getList()
+        })
+        .catch(() => {
+          this.loading = false
+        })
+    },
+    getList(data = {}) {
+      this.loading = true
+      page_get({
+        data: Object.assign(
+          {
+            limit: this.pagination.pageSize,
+            page: this.pagination.current,
+          },
+          data
+        ),
+      })
+        .then((res) => {
+          this.loading = false
+          this.data = res.result || []
+          this.pagination.total = res.count
+        })
+        .catch(() => {
+          this.loading = false
+        })
+    },
+  },
+}
+</script>

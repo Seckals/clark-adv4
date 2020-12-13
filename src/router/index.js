@@ -10,6 +10,21 @@ const routes = [{
     component: Layout,
     redirect: '/mg-position',
     children: [{
+        path: "/problem-type",
+        name: 'problemtype',
+        component: () => import( /* webpackChunkName: "mg-position" */ '../views/problemtype'),
+        meta: {
+          title: '问题类型'
+        }
+      },
+      {
+        path: '/problem-level',
+        name: 'problemlevel',
+        component: () => import( /* webpackChunkName: "warning-email" */ '../views/problemlevel'),
+        meta: {
+          title: '问题等级'
+        }
+      }, {
         path: '/mg-position',
         name: 'position',
         component: () => import( /* webpackChunkName: "mg-position" */ '../views/position'),

@@ -39,7 +39,7 @@ export default new Vuex.Store({
       const detail = util.getLocal('auth-info') || {}
       const menu = util.getOneFromList(detail.modules, 'name', 'mainData') || {}
       const permission = util.getOneValueInOneArray(menu.categories || [], 'name') || []
-
+      console.log(detail)
       state.user = detail.empName
       state.token = detail.token
       state.menu = menu.categories.filter((i) => {
