@@ -96,7 +96,6 @@ export default {
   mixins: [mixins],
   methods: {
     toprojectCount(data) {
-      console.log(data)
       this.$router.push({
         path: '/mg-line-project',
         query: {
@@ -105,7 +104,6 @@ export default {
       })
     },
     tostationCount(data) {
-      console.log(data)
       this.$router.push({
         path: '/mg-line-station',
         query: {

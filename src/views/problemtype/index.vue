@@ -35,22 +35,21 @@
         </a-table>
       </template>
     </IMain>
-    <Position ref="alert" :data="current" @freash="freash" />
-    <LinkEmployee ref="alertLink" :id="linkId" />
+    <problemtype ref="alert" :data="current" @freash="freash" />
+    <!-- <LinkEmployee ref="alertLink" :id="linkId" /> -->
   </div>
 </template>
 <script>
-import { page_get, remove_post } from '../../api/hrPositionController'
-import Position from '../../components/alert/position'
-import LinkEmployee from '../../components/alert/linkEmployee'
+import { page_get, remove_post } from '../../api/problemtype'
+import problemtype from '../../components/alert/problemtype'
 import mixins from '../../mixins/list'
 const columns = [
   {
-    dataIndex: 'code',
+    dataIndex: 'problemTypeCode',
     title: '问题类型编号',
   },
   {
-    dataIndex: 'name',
+    dataIndex: 'problemTypeName',
     title: '问题类型名称',
   },
 
@@ -72,7 +71,7 @@ export default {
       },
     }
   },
-  components: { Position, LinkEmployee },
+  components: { problemtype },
   mixins: [mixins],
   methods: {
     operation({ type, data }) {
