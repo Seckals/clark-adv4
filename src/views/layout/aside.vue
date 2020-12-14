@@ -16,6 +16,7 @@
       @click="go"
     >
       <a-menu-item v-for="item in menu" :key="item.path">
+<<<<<<< HEAD
         <a-icon :type="item.img" />
         <span>{{ item.description }}</span>
       </a-menu-item>
@@ -33,6 +34,11 @@
           <a-icon :type="item1.img" />{{ item1.description }}</a-menu-item
         >
       </a-sub-menu>
+=======
+        <a-icon type="team" />
+        <span>{{ item.description }}</span>
+      </a-menu-item>
+>>>>>>> 76af5f8bd44f28722792a182acfd70691d2ec9cc
     </a-menu>
     <div class="menu-trigger">
       <a-icon
@@ -52,11 +58,17 @@ export default {
   },
   computed: {
     menu() {
+<<<<<<< HEAD
       return this.$store.getters.getMenu || []
     },
     menu1() {
       return this.$store.getters.getMenu1 || []
     },
+=======
+      console.log(this.$store.getters.getMenu)
+      return this.$store.getters.getMenu || []
+    },
+>>>>>>> 76af5f8bd44f28722792a182acfd70691d2ec9cc
   },
   methods: {
     go(e) {

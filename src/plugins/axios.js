@@ -6,12 +6,6 @@ import {
 
 // 请求超时
 const TIMEOUT = 10000
-// 请求队列
-const fetchQueue = {}
-// 是否开启请求锁。
-let fetchLock = true
-// 忽略请求锁接口列表
-const LOCK_DISABLED_LIST = []
 
 // 创建axios实例
 const fetch = axios.create({
@@ -61,6 +55,8 @@ fetch.interceptors.request.use(
       config.data = qs.stringify(config.data)
     }
 
+    <<
+    << << < HEAD
     // 特殊接口处理请求锁
     if (LOCK_DISABLED_LIST.includes(config.url)) {
       fetchLock = false
@@ -88,6 +84,9 @@ fetch.interceptors.request.use(
      * 在发送请求之前做些什么
      */
 
+    ===
+    === = >>>
+    >>> > 76 af5f8bd44f28722792a182acfd70691d2ec9cc
     return config
   },
   function (error) {
@@ -98,49 +97,57 @@ fetch.interceptors.request.use(
 
 // 添加请求返回拦截器
 fetch.interceptors.response.use(
-  function (res) {
-    responseLock(res.config)
+    function (res) {
+      <<
+      << << < HEAD
+      responseLock(res.config)
 
-    const {
-      data
-    } = res
-    const code = +data.code
+      const {
+        data
+      } = res
+        ===
+        === =
+        const {
+          data
+        } = res >>>
+        >>> > 76 af5f8bd44f28722792a182acfd70691d2ec9cc
+      const code = +data.code
 
-    if (code === 200 || data.success) {
-      // 约定code=200即为成功
-      return data.result
+      if (code === 200 || data.success) {
+        // 约定code=200即为成功
+        return data.result
+      }
+
+      /**
+       * 异常处理
+       * 可以做统一的错误提示
+       */
+      // if (res.config.url.includes('/accountSafe/checkPassword') && code === 1021002) {
+      //   return Promise.reject(data)
+      // }
+
+      // 登录失效
+      if (code === 401) {
+        location.href = `//${location.host}/auth/#/user/login?from=${encodeURIComponent(location.href)}`
+        return false
+      }
+
+      message.error(data.message)
+      // console.log(data.message)
+      return Promise.reject(data)
+    },
+    function (error) {
+      if (error.message !== 'cancel') {
+        message.error(error.message)
+      }
+
+      // 对请求错误做些什么
+      return Promise.reject(error)
     }
+  )
 
-    /**
-     * 异常处理
-     * 可以做统一的错误提示
-     */
-    // if (res.config.url.includes('/accountSafe/checkPassword') && code === 1021002) {
-    //   return Promise.reject(data)
-    // }
-
-    // 登录失效
-    if (code === 401) {
-      location.href = `//${location.host}/auth/#/user/login?from=${encodeURIComponent(location.href)}`
-      return false
-    }
-
-    message.error(data.message)
-    // console.log(data.message)
-    return Promise.reject(data)
-  },
-  function (error) {
-    if (error.config) {
-      responseLock(error.config)
-    }
-    if (error.message !== 'cancel') {
-      message.error(error.message)
-    }
-
-    // 对请求错误做些什么
-    return Promise.reject(error)
-  }
-)
+  <<
+  << << < HEAD
 
 function responseLock(config) {
   // 移除出请求队列
@@ -148,3 +155,7 @@ function responseLock(config) {
 }
 
 export default fetch
+  ===
+  === =
+  export default fetch >>>
+  >>> > 76 af5f8bd44f28722792a182acfd70691d2ec9cc
