@@ -111,6 +111,7 @@ export default {
           list: [{ empName: '全部', id: '' }],
           listkey: 'empName',
           listvalue: 'empName',
+          showsearch: true,
         },
         {
           type: 'select',

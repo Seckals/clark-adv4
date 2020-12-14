@@ -16,6 +16,7 @@
                 v-if="item.type === 'input'"
               />
               <a-select
+                :show-search="item.showsearch || false"
                 v-model="searchData[item.key]"
                 :placeholder="item.placeholder"
                 v-if="item.type === 'select'"
