@@ -5,6 +5,7 @@ import router from './router'
 import store from './store'
 import util from './utils'
 import './plugins/ant-design-vue.js'
+import './directives'
 import './assets/css/index.less'
 import './components'
 

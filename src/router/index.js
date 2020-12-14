@@ -1,85 +1,90 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/views/layout'
-
+import user from '../views/user'
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path:'/',
-    name:'Layout',
-    component:Layout,
-    children:[
-      {
-        path:'/mg-position',
-        name:'position',
-        component:()=>import(/* webpackChunkName: "mg-position" */ '../views/position'),
-        meta:{
-          title:'职位管理'
-        }
+const routes = [{
+    path: '/',
+    name: 'user',
+    component: user,
+    redirect: 'login',
+    children: [{
+        path: 'login',
+        component: () => import('../views/user/login'),
+        name: 'login',
+        meta: {
+          title: '登录'
+        },
       },
       {
-        path:'/warning-email',
-        name:'warningemail',
-        component:()=>import(/* webpackChunkName: "warning-email" */ '../views/warningemail'),
-        meta:{
-          title:'维护警告通知'
-        }
+        path: 'regist',
+        component: () => import('../views/user/register'),
+        name: 'regist',
+        meta: {
+          title: '注册'
+        },
       },
       {
-        path:'/mg-produce-line',
-        name:'produceline',
-        component:()=>import(/* webpackChunkName: "mg-produce-line" */ '../views/produceline'),
-        meta:{
-          title:'维护产线'
-        }
+        path: 'register-result',
+        component: () => import('../views/user/register-result'),
+        name: 'register-result',
+        meta: {
+          title: '注册-规则'
+        },
       },
       {
-        path:'/mg-classes',
-        name:'classes',
-        component:()=>import(/* webpackChunkName: "mg-classes" */ '../views/classes'),
-        meta:{
-          title:'维护班次'
-        }
+        path: 'register-active',
+        component: () => import('../views/user/register-active'),
+        name: 'register-active',
+        meta: {
+          title: '注册-激活'
+        },
+
       },
       {
-        path:'/mg-projects',
-        name:'projects',
-        component:()=>import(/* webpackChunkName: "mg-projects" */ '../views/projects'),
-        meta:{
-          title:'维护项目'
-        }
+        path: 'resetpwd-sendmail',
+        component: () => import('../views/user/resetpwd-sendmail'),
+        name: 'resetpwd-sendmail',
+        meta: {
+          title: '重置密码-发送邮箱'
+        },
       },
+
       {
-        path:'/mg-customers',
-        name:'customers',
-        component:()=>import(/* webpackChunkName: "mg-customers" */ '../views/customers'),
-        meta:{
-          title:'维护客户'
-        }
+        path: 'resetpwd',
+        component: () => import('../views/user/resetpwd'),
+        name: 'resetpwd',
+        meta: {
+          title: '重置密码'
+        },
       },
-      {
-        path:'/mg-employees',
-        name:'employees',
-        component:()=>import(/* webpackChunkName: "mg-employees" */ '../views/employees'),
-        meta:{
-          title:'维护员工'
-        }
-      },
-      {
-        path:'/mg-departments',
-        name:'departments',
-        component:()=>import(/* webpackChunkName: "mg-departments" */ '../views/departments'),
-        meta:{
-          title:'维护部门'
-        }
-      }
     ]
   },
   {
-    path:'/404',
-    name:'404',
-    component:()=>import(/* webpackChunkName: "404" */ '../views/404')
+    path: '/Layout',
+    name: 'Layout',
+    component: Layout,
+    children: [{
+      path: '/mg-users',
+      name: 'mgusers',
+      component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgusers'),
+      meta: {
+        title: '维护用户'
+      }
+    }, {
+      path: '/mg-role',
+      name: 'mgrole',
+      component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgrole'),
+      meta: {
+        title: '维护角色'
+      }
+    }]
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import( /* webpackChunkName: "404" */ '../views/404')
   }
 ]
 

@@ -1,6 +1,8 @@
 import axios from 'axios'
 import qs from 'qs'
-import { message } from 'ant-design-vue';
+import {
+  message
+} from 'ant-design-vue';
 
 // 请求超时
 const TIMEOUT = 10000
@@ -13,9 +15,8 @@ const LOCK_DISABLED_LIST = []
 
 // 创建axios实例
 const fetch = axios.create({
-  // baseURL: `//${window.location.hostname !== '192.168.195.131' ? '49.235.30.187' : '192.168.195.131'}:9001/md/`,
 
-  baseURL: `//${window.location.hostname}:9001/md/`,
+  baseURL: process.env.VUE_APP_BASE_URL,
 
   // 超时
   timeout: TIMEOUT,
@@ -24,7 +25,7 @@ const fetch = axios.create({
   withCredentials: true,
 
   headers: {
-    
+
   }
 })
 
@@ -67,9 +68,9 @@ fetch.interceptors.request.use(
 
     // 请求锁
     const lock =
-      config.fetchLock !== undefined && config.fetchLock !== null
-        ? config.fetchLock
-        : fetchLock
+      config.fetchLock !== undefined && config.fetchLock !== null ?
+      config.fetchLock :
+      fetchLock
 
     if (lock) {
       // 如果有同个请求在队列中，则取消即将发送的请求
@@ -100,14 +101,16 @@ fetch.interceptors.response.use(
   function (res) {
     responseLock(res.config)
 
-    const {data} = res
+    const {
+      data
+    } = res
     const code = +data.code
 
     if (code === 200 || data.success) {
       // 约定code=200即为成功
       return data.result
     }
-    
+
     /**
      * 异常处理
      * 可以做统一的错误提示
@@ -139,7 +142,7 @@ fetch.interceptors.response.use(
   }
 )
 
-function responseLock (config) {
+function responseLock(config) {
   // 移除出请求队列
   delete fetchQueue[config.baseURL + config.url]
 }

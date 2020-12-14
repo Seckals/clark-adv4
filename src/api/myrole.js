@@ -2,25 +2,31 @@ import fetch from '@/plugins/axios'
 // 新增
 export function add_post(options) {
   return fetch({
-    url: 'comProjectController/add',
+    url: 'sysRoleController/add',
     method: 'post',
-    headers: {'Content-Type': 'application/json', ...(options && options.headers ? options.headers : {})},
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options && options.headers ? options.headers : {})
+    },
     data: (options && options.data) || {}
   })
 }
 // 修改
 export function modify_post(options) {
   return fetch({
-    url: 'comProjectController/modify',
+    url: 'sysRoleController/modify',
     method: 'post',
-    headers: {'Content-Type': 'application/json', ...(options && options.headers ? options.headers : {})},
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options && options.headers ? options.headers : {})
+    },
     data: (options && options.data) || {}
   })
 }
 // 分页
 export function page_get(options) {
   return fetch({
-    url: 'comProjectController/page',
+    url: '/sysRoleController/page',
     method: 'get',
     headers: options && options.headers ? options.headers : {},
     data: (options && options.data) || {}
@@ -29,7 +35,7 @@ export function page_get(options) {
 // 新增准备
 export function preAdd_get(options) {
   return fetch({
-    url: 'comProjectController/preAdd',
+    url: '/sysRoleController/add',
     method: 'get',
     headers: options && options.headers ? options.headers : {},
     data: (options && options.data) || {}
@@ -38,25 +44,7 @@ export function preAdd_get(options) {
 // 修改准备
 export function preModify_get(options) {
   return fetch({
-    url: 'comProjectController/preModify',
-    method: 'get',
-    headers: options && options.headers ? options.headers : {},
-    data: (options && options.data) || {}
-  })
-}
-// 分页准备
-export function prePage_get(options) {
-  return fetch({
-    url: 'comProjectController/prePage',
-    method: 'get',
-    headers: options && options.headers ? options.headers : {},
-    data: (options && options.data) || {}
-  })
-}
-// 删除
-export function remove_get(options) {
-  return fetch({
-    url: 'comProjectController/remove',
+    url: '/sysRoleController/modify',
     method: 'get',
     headers: options && options.headers ? options.headers : {},
     data: (options && options.data) || {}
