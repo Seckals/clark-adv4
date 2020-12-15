@@ -32,3 +32,13 @@ export function page_get(options) {
     data: (options && options.data) || {}
   })
 }
+
+// 分页前数据准备
+export function prePage_get(options) {
+  return fetch({
+    url: 'sysUserController/prePage',
+    method: 'get',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}

@@ -72,34 +72,16 @@ export default {
       type: Array,
       default: () => [],
     },
-<<<<<<< HEAD
     infoData: {
       type: Array,
       default: () => [],
-=======
-    ifedit: {
-      type: Boolean,
-      default: true,
-    },
-    hasAddOrDel: {
-      type: Boolean,
-      default: true,
-    },
-    hasSelected: {
-      default: false,
->>>>>>> 76af5f8bd44f28722792a182acfd70691d2ec9cc
     },
     hasReset: {
       default: false,
     },
-<<<<<<< HEAD
     permission: {
       type: String,
       default: '',
-=======
-    delTip: {
-      default: '确定要删除吗？',
->>>>>>> 76af5f8bd44f28722792a182acfd70691d2ec9cc
     },
   },
   methods: {
@@ -111,11 +93,7 @@ export default {
     },
     reset() {
       for (let i in this.searchData) {
-<<<<<<< HEAD
         this.searchData[i] = ''
-=======
-        this.searchData[i] = null
->>>>>>> 76af5f8bd44f28722792a182acfd70691d2ec9cc
       }
       this.$emit('operation', {
         type: 'reset',
@@ -143,13 +121,10 @@ export default {
 .i-content-btns > button {
   margin-right: 20px;
 }
-<<<<<<< HEAD
 .i-content-table {
   width: 100%;
   overflow-x: auto;
 }
-=======
->>>>>>> 76af5f8bd44f28722792a182acfd70691d2ec9cc
 </style>
 <style lang="less">
 .i-content-wrap {

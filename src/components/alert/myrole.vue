@@ -18,58 +18,26 @@
       :label-col="{ span: 4 }"
       :wrapper-col="{ span: 18 }"
     >
-      <a-form-model-item label="员工工号" prop="empNo">
-        <a-input v-model="form.empNo" placeholder="" />
+      <a-form-model-item label="角色名称" prop="name">
+        <a-input v-model="form.name" placeholder="" />
       </a-form-model-item>
-      <a-form-model-item label="员工姓名" prop="empName">
-        <a-input v-model="form.empName" placeholder="" />
-      </a-form-model-item>
-      <a-form-model-item label="上级" prop="parentId">
-        <a-select v-model="form.parentId" placeholder="请选择">
+      <a-form-model-item label="模块" prop="moduleId">
+        <a-select v-model="form.moduleId" placeholder="请选择">
           <a-select-option
-            v-for="(item, idx) in preList.employs"
+            v-for="(item, idx) in preList.modules"
             :key="idx"
             :value="item.id"
-            >{{ item.empName + '[' + item.empNo + ']' }}</a-select-option
-          >
-        </a-select>
-      </a-form-model-item>
-      <a-form-model-item label="职位" prop="positionId">
-        <a-select v-model="form.positionId" placeholder="请选择">
-          <a-select-option
-            v-for="(item, idx) in preList.positions"
-            :key="idx"
-            :value="item.id"
-            >{{ item.name }}</a-select-option
-          >
-        </a-select>
-      </a-form-model-item>
-      <a-form-model-item label="手机号码" prop="mobile">
-        <a-input v-model="form.mobile" placeholder="" />
-      </a-form-model-item>
-      <a-form-model-item label="邮箱" prop="email">
-        <a-input v-model="form.email" placeholder="" />
-      </a-form-model-item>
-      <a-form-model-item label="卡号" prop="cardNo">
-        <a-input v-model="form.cardNo" placeholder="" />
-      </a-form-model-item>
-      <a-form-model-item label="部门" prop="deptId">
-        <a-select v-model="form.deptId" placeholder="请选择">
-          <a-select-option
-            v-for="(item, idx) in preList.depts"
-            :key="idx"
-            :value="item.deptId"
-            >{{ item.deptName }}</a-select-option
+            >{{ item.description }}</a-select-option
           >
         </a-select>
       </a-form-model-item>
       <a-form-model-item label="状态" prop="status">
-        <a-select v-model="form.status" placeholder="请选择">
+        <a-select v-model="form.status" placeholder="请选择" disabled>
           <a-select-option
             v-for="(item, idx) in preList.states"
             :key="idx"
-            :value="item.code"
-            >{{ item.name }}</a-select-option
+            :value="item.id"
+            >{{ item.status }}</a-select-option
           >
         </a-select>
       </a-form-model-item>
@@ -77,91 +45,27 @@
   </a-modal>
 </template>
 <script>
-import { add_post, modify_post, page_get } from '../../api/myusers'
+import { add_post, modify_post, preAdd } from '../../api/myrole'
 import mixins from '../../mixins/editor'
 
 export default {
   data() {
     return {
       preList: {
-        depts: [],
-        employs: [],
-        positions: [],
-        states: [],
+        modules: [],
+        states: [{ status: '激活', id: 11 }],
       },
       form: {
-        cardNo: '',
-        empName: '',
-        deptId: '',
-        email: '',
-        empNo: '',
-        mobile: '',
-        parentId: '',
-        positionId: '',
-        status: '',
+        name: '',
+        moduleId: '',
+        status: '激活',
       },
       rules: {
-        cardNo: [
+        name: [
           {
             required: true,
-            message: '请输入卡号',
+            message: '请输入',
             trigger: 'blur',
-          },
-        ],
-        empName: [
-          {
-            required: true,
-            message: '请输入员工姓名',
-            trigger: 'blur',
-          },
-        ],
-        deptId: [
-          {
-            required: true,
-            message: '请选择部门',
-            trigger: 'change',
-          },
-        ],
-        email: [
-          {
-            required: true,
-            message: '请输入邮箱',
-            trigger: 'blur',
-          },
-        ],
-        empNo: [
-          {
-            required: true,
-            message: '请输入员工工号',
-            trigger: 'blur',
-          },
-        ],
-        mobile: [
-          {
-            required: true,
-            message: '请输入手机号',
-            trigger: 'blur',
-          },
-        ],
-        parentId: [
-          {
-            required: true,
-            message: '请选择上级',
-            trigger: 'change',
-          },
-        ],
-        positionId: [
-          {
-            required: true,
-            message: '请选择职位',
-            trigger: 'change',
-          },
-        ],
-        status: [
-          {
-            required: true,
-            message: '请选择状态',
-            trigger: 'change',
           },
         ],
       },
@@ -174,10 +78,10 @@ export default {
   methods: {
     getPreList() {
       this.loading = true
-      page_get()
+      preAdd()
         .then((res) => {
           this.loading = false
-          this.preList = res
+          this.preList.modules = res.modules
         })
         .catch(() => {
           this.loading = false

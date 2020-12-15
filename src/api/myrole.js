@@ -50,3 +50,12 @@ export function preModify_get(options) {
     data: (options && options.data) || {}
   })
 }
+// 分页前数据准备
+export function preAdd(options) {
+  return fetch({
+    url: '/sysRoleController/preAdd',
+    method: 'get',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}

@@ -65,6 +65,7 @@ const routes = [{
     path: '/Layout',
     name: 'Layout',
     component: Layout,
+    redirect: '/mg-role',
     children: [{
       path: '/mg-users',
       name: 'mgusers',

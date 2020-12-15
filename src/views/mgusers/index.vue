@@ -1,6 +1,7 @@
 <template>
   <div>
     <IMain
+      :searchs="searchs"
       :hasReset="true"
       permission="permission.mg-role-users.add"
       @operation="operation"
@@ -31,7 +32,7 @@
   </div>
 </template>
 <script>
-import { page_get } from '../../api/myusers'
+import { page_get, prePage_get } from '../../api/myusers'
 import myusers from '../../components/alert/myusers'
 import mixins from '../../mixins/list'
 const columns = [
@@ -78,12 +79,53 @@ export default {
         pageSize: 10,
         total: 0,
       },
-      searchs: [],
+      searchs: [
+        {
+          type: 'select',
+          title: '部门',
+          placeholder: '请选择',
+          key: 'deptId',
+          listDataKey: 'depts',
+          list: [{ name: '全部', id: '' }],
+          listkey: 'name',
+          listvalue: 'id',
+        },
+        {
+          type: 'input',
+          title: '员工名称',
+          placeholder: '请输入',
+          key: 'empNo',
+        },
+        {
+          type: 'select',
+          title: '状态',
+          placeholder: '请选择',
+          key: 'status',
+          listDataKey: 'states',
+          list: [{ name: '全部', code: '' }],
+          listkey: 'name',
+          listvalue: 'code',
+        },
+        {
+          type: 'input',
+          title: '邮箱地址',
+          placeholder: '请输入',
+          key: 'empNo',
+        },
+        {
+          type: 'input',
+          title: '手机号码',
+          placeholder: '请输入',
+          key: 'mobile',
+        },
+      ],
     }
   },
   components: { myusers },
   mixins: [mixins],
-  mounted() {},
+  mounted() {
+    this.getSelects()
+  },
   methods: {
     operation({ type, data }) {
       switch (type) {
@@ -118,6 +160,16 @@ export default {
         .catch(() => {
           this.loading = false
         })
+    },
+    getSelects() {
+      prePage_get().then((res) => {
+        this.searchs.map((item) => {
+          if (item.listDataKey) {
+            item.list = item.list.concat(res[item.listDataKey])
+          }
+          return item
+        })
+      })
     },
   },
 }
