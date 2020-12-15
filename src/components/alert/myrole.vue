@@ -1,7 +1,7 @@
 <template>
   <a-modal
     v-model="visible"
-    :title="form.id ? '编辑员工' : '新增员工'"
+    :title="form.id ? '编辑角色' : '新增角色'"
     :confirmLoading="loading"
     :width="500"
     @ok="ok"
@@ -32,12 +32,12 @@
         </a-select>
       </a-form-model-item>
       <a-form-model-item label="状态" prop="status">
-        <a-select v-model="form.status" placeholder="请选择" disabled>
+        <a-select v-model="form.status" placeholder="请选择" :disabled="!form.id">
           <a-select-option
             v-for="(item, idx) in preList.states"
             :key="idx"
-            :value="item.id"
-            >{{ item.status }}</a-select-option
+            :value="item.code"
+            >{{ item.name }}</a-select-option
           >
         </a-select>
       </a-form-model-item>
@@ -45,7 +45,7 @@
   </a-modal>
 </template>
 <script>
-import { add_post, modify_post, preAdd } from '../../api/myrole'
+import { add_post, modify_post, prePage } from '../../api/myrole'
 import mixins from '../../mixins/editor'
 
 export default {
@@ -53,12 +53,12 @@ export default {
     return {
       preList: {
         modules: [],
-        states: [{ status: '激活', id: 11 }],
+        states: [{code: 1, name: "活动"}],
       },
       form: {
         name: '',
         moduleId: '',
-        status: '激活',
+        status: 1,
       },
       rules: {
         name: [
@@ -78,10 +78,10 @@ export default {
   methods: {
     getPreList() {
       this.loading = true
-      preAdd()
+      prePage()
         .then((res) => {
           this.loading = false
-          this.preList.modules = res.modules
+          this.preList = res
         })
         .catch(() => {
           this.loading = false
@@ -90,7 +90,7 @@ export default {
     add() {
       this.loading = true
       add_post({
-        data: this.form,
+        data: Object.assign(this.form,{code:this.form.name}),
       })
         .then(() => {
           this.loading = false
@@ -104,7 +104,13 @@ export default {
     editor() {
       this.loading = true
       modify_post({
-        data: this.form,
+        data: {
+          id:this.form.id,
+          code: this.form.name,
+          name:this.form.name,
+          status:this.form.status,
+          moduleId:this.form.moduleId
+        },
       })
         .then(() => {
           this.loading = false

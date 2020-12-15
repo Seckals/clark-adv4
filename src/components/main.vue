@@ -47,7 +47,7 @@
             </a-form-model-item>
           </template>
         </a-form-model>
-        <div class="i-content-btns">
+        <div class="i-content-btns" v-if="hasAdd">
           <a-button @click="operation('add')" v-permission="permission"
             >新 增</a-button
           >
@@ -83,6 +83,9 @@ export default {
       type: String,
       default: '',
     },
+    hasAdd:{
+      default: true,
+    }
   },
   methods: {
     operation(type, data) {

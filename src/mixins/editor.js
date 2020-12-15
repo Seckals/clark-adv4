@@ -9,7 +9,7 @@ export default {
   watch: {
     data(value) {
       this.$nextTick(() => {
-        this.form = value || {};
+        if(value)this.form = value;
       })
     },
   },

@@ -59,3 +59,14 @@ export function preAdd(options) {
     data: (options && options.data) || {}
   })
 }
+
+
+// 分页前数据准备
+export function prePage(options) {
+  return fetch({
+    url: '/sysRoleController/prePage',
+    method: 'get',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}

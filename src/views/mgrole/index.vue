@@ -18,15 +18,15 @@
             <a-space size="small">
               <a
                 v-permission="'permission.mg-users.edit'"
-                @click="editor(record)"
+                @click="go('/mg-role-users',record)"
               >
                 链接用户</a
               >
               <a
                 v-permission="'permission.mg-users.edit'"
-                @click="editor(record)"
+                @click="go('/mg-role-authorize',record)"
               >
-                连接操作</a
+                链接功能</a
               >
               <a
                 v-permission="'permission.mg-users.edit'"
@@ -81,6 +81,16 @@ export default {
   mixins: [mixins],
   mounted() {},
   methods: {
+    go(path,data){
+      this.$router.push({
+        path,
+        query:{
+          id:data.id,
+          name:data.name,
+          moduleName:data.moduleName
+        }
+      })
+    },
     operation({ type, data }) {
       switch (type) {
         case 'add':

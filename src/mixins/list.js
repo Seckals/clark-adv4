@@ -7,8 +7,6 @@ export default {
   },
   mounted() {
     this.getList();
-    console.log(this.getList())
-
   },
   methods: {
     freash(e) {

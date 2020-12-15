@@ -4,6 +4,7 @@
       :searchs="searchs"
       :hasReset="true"
       permission="permission.mg-role-users.add"
+      :hasAdd="false"
       @operation="operation"
     >
       <template slot="table">
