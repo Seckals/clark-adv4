@@ -3,14 +3,14 @@
     <div class="tabs">
       <router-link
         tag="div"
-        to="/user/login"
+        to="/login"
         active-class="tabsItem tabsItemActive"
         class="tabsItem"
         >登录</router-link
       >
       <router-link
         tag="div"
-        to="/user/regist"
+        to="/regist"
         active-class="tabsItem"
         class="tabsItem"
         >注册</router-link
@@ -53,7 +53,7 @@
       >
     </a-form>
     <div class="pwdForget">
-      <a href="#/user/resetpwd-sendmail">忘记密码</a>
+      <a href="/resetpwd-sendmail">忘记密码</a>
     </div>
   </div>
 </template>

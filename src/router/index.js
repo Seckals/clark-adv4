@@ -2,6 +2,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/views/layout'
 import user from '../views/user'
+import login from '../views/user/login'
+import register from '../views/user/register'
+import registerresult from '../views/user/register-result'
+import registeractive from '../views/user/register-active'
+import resetpwdsendmail from '../views/user/resetpwd-sendmail'
+import resetpwd from '../views/user/resetpwd'
+
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -11,7 +19,7 @@ const routes = [{
     redirect: 'login',
     children: [{
         path: 'login',
-        component: () => import('../views/user/login'),
+        component: login,
         name: 'login',
         meta: {
           title: '登录'
@@ -19,7 +27,7 @@ const routes = [{
       },
       {
         path: 'regist',
-        component: () => import('../views/user/register'),
+        component: register,
         name: 'regist',
         meta: {
           title: '注册'
@@ -27,7 +35,7 @@ const routes = [{
       },
       {
         path: 'register-result',
-        component: () => import('../views/user/register-result'),
+        component: registerresult,
         name: 'register-result',
         meta: {
           title: '注册-规则'
@@ -35,7 +43,7 @@ const routes = [{
       },
       {
         path: 'register-active',
-        component: () => import('../views/user/register-active'),
+        component: registeractive,
         name: 'register-active',
         meta: {
           title: '注册-激活'
@@ -44,7 +52,7 @@ const routes = [{
       },
       {
         path: 'resetpwd-sendmail',
-        component: () => import('../views/user/resetpwd-sendmail'),
+        component: resetpwdsendmail,
         name: 'resetpwd-sendmail',
         meta: {
           title: '重置密码-发送邮箱'
@@ -53,7 +61,7 @@ const routes = [{
 
       {
         path: 'resetpwd',
-        component: () => import('../views/user/resetpwd'),
+        component: resetpwd,
         name: 'resetpwd',
         meta: {
           title: '重置密码'
