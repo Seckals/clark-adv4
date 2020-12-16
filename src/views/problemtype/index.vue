@@ -87,10 +87,6 @@ export default {
           break
       }
     },
-    showLink(id) {
-      this.linkId = id
-      this.$refs.alertLink.show()
-    },
     tableChange(e) {
       this.pagination = e
       this.getList()

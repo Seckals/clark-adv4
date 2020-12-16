@@ -40,10 +40,7 @@
   </div>
 </template>
 <script>
-import {
-  page_get,
-  remove_get
-} from '../../api/comProjectLineRefController'
+import { page_get, remove_get } from '../../api/comProjectLineRefController'
 import LineProject from '../../components/alert/lineProject'
 import mixins from '../../mixins/list'
 const columns = [
@@ -73,13 +70,13 @@ export default {
       infoData: [
         {
           type: 'input',
-          title: '团队编号',
+          title: '项目编号',
           value: JSON.parse(this.$route.query.data).code,
           key: 'name',
         },
         {
           type: 'input',
-          title: '团队名称',
+          title: '项目名称',
           value: JSON.parse(this.$route.query.data).name,
           key: 'code',
         },
@@ -93,9 +90,9 @@ export default {
       switch (type) {
         case 'add':
           this.current = {
-            lineCode:JSON.parse(this.$route.query.data).code,
-            lineName:JSON.parse(this.$route.query.data).name,
-            lineId:JSON.parse(this.$route.query.data).id
+            lineCode: JSON.parse(this.$route.query.data).code,
+            lineName: JSON.parse(this.$route.query.data).name,
+            lineId: JSON.parse(this.$route.query.data).id,
           }
           this.$refs.alert.show()
           break
@@ -130,7 +127,7 @@ export default {
           {
             limit: this.pagination.pageSize,
             page: this.pagination.current,
-            id: JSON.parse(this.$route.query.data).id,
+            lineId: JSON.parse(this.$route.query.data).id,
           },
           data
         ),
@@ -143,7 +140,7 @@ export default {
         .catch(() => {
           this.loading = false
         })
-    }
+    },
   },
 }
 </script>

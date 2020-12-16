@@ -24,7 +24,7 @@
             slot-scope="record"
             @click="toprojectCount(record)"
           >
-            {{ record.stationCount }}</a
+            {{ record.projectCount }}</a
           >
           <template slot="operation" slot-scope="record">
             <a-space size="small">

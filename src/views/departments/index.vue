@@ -53,6 +53,14 @@ const columns = [
     title: '部门名称',
   },
   {
+    dataIndex: 'shortName',
+    title: '部门简称',
+  },
+  {
+    dataIndex: 'employeeCount',
+    title: '员工人数',
+  },
+  {
     dataIndex: 'parentName',
     title: '父部门',
   },

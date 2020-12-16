@@ -26,7 +26,10 @@
                   v-for="(ite, idx) in item.list"
                   :key="idx"
                   :value="ite[item.listvalue]"
-                  >{{ ite[item.listkey] }}</a-select-option
+                  >{{ ite[item.listkey]
+                  }}{{
+                    ite[item.listkey1] ? '(' + ite[item.listkey1] + ')' : ''
+                  }}</a-select-option
                 >
               </a-select>
             </a-form-model-item>

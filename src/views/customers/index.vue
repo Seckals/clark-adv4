@@ -61,6 +61,10 @@ const columns = [
     title: '客户经理',
   },
   {
+    dataIndex: 'projectCount',
+    title: '项目数量',
+  },
+  {
     dataIndex: 'statusValue',
     title: '状态',
   },

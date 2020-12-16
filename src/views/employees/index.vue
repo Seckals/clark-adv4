@@ -108,9 +108,10 @@ export default {
           placeholder: '请选择',
           key: 'empName',
           listDataKey: 'employs',
-          list: [{ empName: '全部', id: '' }],
+          list: [{ empName: '全部', id: '', empNo: '' }],
           listkey: 'empName',
-          listvalue: 'empName',
+          listkey1: 'empNo',
+          listvalue: 'id',
           showsearch: true,
         },
         {
