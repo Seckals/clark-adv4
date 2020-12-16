@@ -70,3 +70,97 @@ export function prePage(options) {
     data: (options && options.data) || {}
   })
 }
+
+
+// 角色关联或解除关联功能
+export function linkOrUnlinkSysFunction(options) {
+  return fetch({
+    url: 'sysRoleController/linkOrUnlinkSysFunction',
+    method: 'post',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}
+// 角色关联功能
+export function linkSysFunction(options) {
+  return fetch({
+    url: 'sysRoleController/linkSysFunction',
+    method: 'post',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}
+// 角色关联用户
+export function linkSysUser(options) {
+  return fetch({
+    url: 'sysRoleController/linkSysUser',
+    method: 'get',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}
+// 角色关联功能分页
+export function pageLinkSysFunction(options) {
+  return fetch({
+    url: 'sysRoleController/pageLinkSysFunction',
+    method: 'get',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}
+// 角色关联用户分页
+export function pageLinkSysUser(options) {
+  return fetch({
+    url: 'sysRoleController/pageLinkSysUser',
+    method: 'get',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}
+// 角色关联功能准备
+export function preLinkSysFunction(options) {
+  return fetch({
+    url: 'sysRoleController/preLinkSysFunction',
+    method: 'get',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}
+// 角色关联用户准备
+export function prelinkSysUser(options) {
+  return fetch({
+    url: 'sysRoleController/prelinkSysUser',
+    method: 'get',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}
+// 角色关联用户分页准备
+export function prePageLinkSysUser(options) {
+  return fetch({
+    url: 'sysRoleController/prePageLinkSysUser',
+    method: 'get',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}
+
+
+// 角色解除关联功能
+export function unlinkSysFunction(options) {
+  return fetch({
+    url: 'sysRoleController/unlinkSysFunction',
+    method: 'post',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}
+// 角色解除关联用户
+export function unlinkSysUser(options) {
+  return fetch({
+    url: 'sysRoleController/unlinkSysUser',
+    method: 'post',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}

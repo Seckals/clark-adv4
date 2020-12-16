@@ -88,6 +88,22 @@ const routes = [{
       meta: {
         title: '维护角色'
       }
+    },
+    {
+      path: '/mg-role-users',
+      name: 'mgroleusers',
+      component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgroleusers'),
+      meta: {
+        title: '按角色维护用户'
+      }
+    },
+    {
+      path: '/mg-role-authorize',
+      name: 'mgroleauthorize',
+      component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgroleauthorize'),
+      meta: {
+        title: '按角色维护功能和权限'
+      }
     }]
   },
   {

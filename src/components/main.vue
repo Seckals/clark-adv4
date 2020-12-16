@@ -47,10 +47,15 @@
             </a-form-model-item>
           </template>
         </a-form-model>
+        <slot name="detail"></slot>
         <div class="i-content-btns" v-if="hasAdd">
-          <a-button @click="operation('add')" v-permission="permission"
+          <div class="i-content-btns-left">
+            <a-button @click="operation('add')" v-permission="permission"
             >新 增</a-button
           >
+            <slot name="btns-left"></slot>
+          </div>
+          <slot name="btns-right"></slot>
         </div>
       </div>
 
@@ -121,7 +126,16 @@ export default {
 .i-content-search {
   margin-bottom: 24px;
 }
-.i-content-btns > button {
+.i-content-btns{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .i-content-btns-left{
+    display: flex;
+    align-items: center;
+  }
+}
+.i-content-btns button {
   margin-right: 20px;
 }
 .i-content-table {
