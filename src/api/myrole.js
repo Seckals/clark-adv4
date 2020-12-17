@@ -75,7 +75,7 @@ export function prePage(options) {
 // 角色关联或解除关联功能
 export function linkOrUnlinkSysFunction(options) {
   return fetch({
-    url: 'sysRoleController/linkOrUnlinkSysFunction',
+    url: 'sysRoleController/unlinkSysUser',
     method: 'post',
     headers: options && options.headers ? options.headers : {},
     data: (options && options.data) || {}

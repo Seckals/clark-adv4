@@ -170,12 +170,12 @@ export default {
     },
     unlink() {
       console.log({
-        functionIds: this.selectedRowKeys,
+        userIds: this.selectedRowKeys,
         roleId: this.$route.query.id,
       })
       linkOrUnlinkSysFunction({
         data: {
-          functionIds: this.selectedRowKeys,
+          userIds: this.selectedRowKeys,
           roleId: this.$route.query.id,
         },
       }).then(() => {
