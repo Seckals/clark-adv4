@@ -95,8 +95,13 @@ export default {
   components: { Department },
   mixins: [mixins],
   methods: {
-    toprojectCount() {
-      this.$router.push('/mg-employees')
+    toprojectCount(item) {
+      this.$router.push({
+        path: '/mg-employees',
+        query: {
+          deptId: item.id,
+        },
+      })
     },
     operation({ type }) {
       switch (type) {

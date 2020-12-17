@@ -144,6 +144,7 @@ export default {
           listkey: 'empName',
           listkey1: 'empNo',
           listvalue: 'id',
+          showsearch: true,
         },
         {
           type: 'input',

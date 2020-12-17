@@ -6,7 +6,7 @@ export default {
     }
   },
   mounted() {
-    this.getList();
+    this.getList(this.$route.query);
   },
   methods: {
     freash(e) {

@@ -143,6 +143,7 @@ export default {
   },
   components: { Projects },
   mixins: [mixins],
+
   mounted() {
     this.getPreList()
   },

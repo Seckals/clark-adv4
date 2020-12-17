@@ -112,7 +112,7 @@ export default {
           list: [{ empName: '全部', empId: '', empNo: '' }],
           listkey: 'empName',
           listkey1: 'empNo',
-          listvalue: 'empName',
+          listvalue: 'empId',
           showsearch: true,
         },
         {
@@ -134,8 +134,14 @@ export default {
     this.getPreList()
   },
   methods: {
-    toprojectCount() {
-      this.$router.push('/mg-projects')
+    toprojectCount(item) {
+      console.log(item)
+      this.$router.push({
+        path: '/mg-projects',
+        query: {
+          customer: item.id,
+        },
+      })
     },
     operation({ type, data }) {
       switch (type) {
