@@ -44,7 +44,7 @@
 import {
   page_get,
   remove_post,
-  prePage_get,
+  prePage_get1,
 } from '../../api/hrEmployeController'
 import Employee from '../../components/alert/employee'
 import mixins from '../../mixins/list'
@@ -230,7 +230,7 @@ export default {
         })
     },
     getSelects() {
-      prePage_get().then((res) => {
+      prePage_get1().then((res) => {
         this.searchs.map((item) => {
           if (item.listDataKey) {
             item.list = item.list.concat(res[item.listDataKey])

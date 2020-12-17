@@ -104,7 +104,7 @@ const routes = [{
         name: 'mylinestation',
         component: () => import( /* webpackChunkName: "mg-departments" */ '../views/mylinestation'),
         meta: {
-          title: '产线工位'
+          title: '按产线列出工位'
         }
       },
       {
@@ -112,7 +112,7 @@ const routes = [{
         name: 'mylineproject',
         component: () => import( /* webpackChunkName: "mg-departments" */ '../views/mylineproject'),
         meta: {
-          title: '产线项目'
+          title: '按产线列出项目'
         }
       },
       {
@@ -128,7 +128,7 @@ const routes = [{
         name: 'teamsemployees',
         component: () => import( /* webpackChunkName: "mg-departments" */ '../views/teamsemployees'),
         meta: {
-          title: '团队员工'
+          title: '按团队列出员工'
         }
       }
     ]

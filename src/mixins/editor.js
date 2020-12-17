@@ -8,6 +8,7 @@ export default {
   props: ['data'],
   watch: {
     data(value) {
+      console.log(value)
       this.$nextTick(() => {
         this.form = value || {};
       })

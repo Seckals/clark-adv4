@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 产线列出工位 -->
     <IMain
       :infoData="infoData"
       permission="mainData.production.mg-line-station.add"
@@ -56,6 +57,14 @@ const columns = [
   {
     dataIndex: 'sep',
     title: '显示位次',
+  },
+  {
+    dataIndex: 'employes',
+    title: '员工',
+  },
+  {
+    dataIndex: 'boxId',
+    title: '按钮盒ID',
   },
   {
     title: '操作',

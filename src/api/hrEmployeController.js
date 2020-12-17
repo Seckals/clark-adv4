@@ -4,7 +4,10 @@ export function add_post(options) {
   return fetch({
     url: 'hrEmployeController/add',
     method: 'post',
-    headers: {'Content-Type': 'application/json', ...(options && options.headers ? options.headers : {})},
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options && options.headers ? options.headers : {})
+    },
     data: (options && options.data) || {}
   })
 }
@@ -13,7 +16,10 @@ export function modify_post(options) {
   return fetch({
     url: 'hrEmployeController/modify',
     method: 'post',
-    headers: {'Content-Type': 'application/json', ...(options && options.headers ? options.headers : {})},
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options && options.headers ? options.headers : {})
+    },
     data: (options && options.data) || {}
   })
 }
@@ -45,7 +51,7 @@ export function preModify_get(options) {
   })
 }
 // 分页前数据准备
-export function prePage_get(options) {
+export function prePage_get1(options) {
   return fetch({
     url: 'hrEmployeController/prePage',
     method: 'get',
@@ -58,7 +64,10 @@ export function remove_post(options) {
   return fetch({
     url: 'hrEmployeController/remove',
     method: 'post',
-    headers: {'Content-Type': 'application/json', ...(options && options.headers ? options.headers : {})},
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options && options.headers ? options.headers : {})
+    },
     data: (options && options.data) || {}
   })
 }
