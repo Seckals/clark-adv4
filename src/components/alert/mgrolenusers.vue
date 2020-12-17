@@ -41,7 +41,6 @@ export default {
       preList: [],
       form: {
         userId: '',
-        roleId: this.$route.query.id,
       },
       rules: {
         userId: [
@@ -71,9 +70,14 @@ export default {
         })
     },
     add() {
+      console.log(this.form, this.$route)
+
       this.loading = true
       linkSysUser({
-        data: this.form,
+        data: {
+          roleId: this.$route.query.id,
+          ...this.form,
+        },
       })
         .then(() => {
           this.loading = false

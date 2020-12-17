@@ -32,7 +32,11 @@
         </a-select>
       </a-form-model-item>
       <a-form-model-item label="状态" prop="status">
-        <a-select v-model="form.status" placeholder="请选择" :disabled="!form.id">
+        <a-select
+          v-model="form.status"
+          placeholder="请选择"
+          :disabled="!form.id"
+        >
           <a-select-option
             v-for="(item, idx) in preList.states"
             :key="idx"
@@ -53,7 +57,7 @@ export default {
     return {
       preList: {
         modules: [],
-        states: [{code: 1, name: "活动"}],
+        states: [{ code: 1, name: '活动' }],
       },
       form: {
         name: '',
@@ -90,7 +94,7 @@ export default {
     add() {
       this.loading = true
       add_post({
-        data: Object.assign(this.form,{code:this.form.name}),
+        data: Object.assign(this.form, { code: this.form.name }),
       })
         .then(() => {
           this.loading = false
@@ -105,11 +109,11 @@ export default {
       this.loading = true
       modify_post({
         data: {
-          id:this.form.id,
+          id: this.form.id,
           code: this.form.name,
-          name:this.form.name,
-          status:this.form.status,
-          moduleId:this.form.moduleId
+          name: this.form.name,
+          status: this.form.status,
+          moduleId: this.form.moduleId,
         },
       })
         .then(() => {
