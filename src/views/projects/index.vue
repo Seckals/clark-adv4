@@ -116,6 +116,7 @@ export default {
           listkey: 'name',
           listkey1: 'empNo',
           listvalue: 'id',
+          showsearch: true,
         },
         {
           type: 'select',
@@ -127,6 +128,7 @@ export default {
           listkey: 'name',
           listkey1: 'empNo',
           listvalue: 'id',
+          showsearch: true,
         },
         {
           type: 'select',

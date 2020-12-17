@@ -16,6 +16,7 @@
                 v-if="item.type === 'input'"
               />
               <a-select
+                :filter-option="filterOption"
                 :show-search="item.showsearch || false"
                 v-model="searchData[item.key]"
                 :placeholder="item.placeholder"
@@ -88,6 +89,13 @@ export default {
     },
   },
   methods: {
+    filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      )
+    },
     operation(type, data) {
       this.$emit('operation', {
         type,
