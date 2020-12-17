@@ -41,7 +41,7 @@ export default {
       preList: [],
       form: {
         userId: '',
-        roleId: this.$route.query.id
+        roleId: this.$route.query.id,
       },
       rules: {
         userId: [
@@ -61,7 +61,7 @@ export default {
   methods: {
     getPreList() {
       this.loading = true
-      prelinkSysUser({roleId: this.$route.query.id})
+      prelinkSysUser({ roleId: this.$route.query.id })
         .then((res) => {
           this.loading = false
           this.preList = res
@@ -83,7 +83,7 @@ export default {
         .catch(() => {
           this.loading = false
         })
-    }
+    },
   },
 }
 </script>

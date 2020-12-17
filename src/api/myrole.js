@@ -84,21 +84,22 @@ export function linkOrUnlinkSysFunction(options) {
 // 角色关联功能
 export function linkSysFunction(options) {
   return fetch({
-    url: 'sysRoleController/linkSysFunction',
+    url: 'sysRoleController/linkOrUnlinkSysFunction',
     method: 'post',
     headers: options && options.headers ? options.headers : {},
     data: (options && options.data) || {}
   })
 }
-// 角色关联用户
+// 角色关联功能
 export function linkSysUser(options) {
   return fetch({
     url: 'sysRoleController/linkSysUser',
-    method: 'get',
+    method: 'post',
     headers: options && options.headers ? options.headers : {},
     data: (options && options.data) || {}
   })
 }
+
 // 角色关联功能分页
 export function pageLinkSysFunction(options) {
   return fetch({
