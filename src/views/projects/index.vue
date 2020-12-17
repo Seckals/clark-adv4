@@ -112,8 +112,9 @@ export default {
           placeholder: '请选择',
           key: 'manager',
           listDataKey: 'manegers',
-          list: [{ name: '全部', id: '' }],
+          list: [{ name: '全部', id: '', empNo: '' }],
           listkey: 'name',
+          listkey1: 'empNo',
           listvalue: 'id',
         },
         {
@@ -122,8 +123,9 @@ export default {
           placeholder: '请选择',
           key: 'peManager',
           listDataKey: 'peManegers',
-          list: [{ name: '全部', id: '' }],
+          list: [{ name: '全部', id: '', empNo: '' }],
           listkey: 'name',
+          listkey1: 'empNo',
           listvalue: 'id',
         },
         {

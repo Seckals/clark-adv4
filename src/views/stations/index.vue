@@ -47,7 +47,7 @@ const columns = [
   {
     dataIndex: 'stationCode',
     title: '工位编号',
-  }, 
+  },
   {
     dataIndex: 'stationName',
     title: '工位名称 ',
@@ -82,7 +82,7 @@ export default {
     del(id) {
       this.loading = true
       remove_get({
-        data: { ids: [id] },
+        data: { id: id },
       })
         .then(() => {
           this.loading = false
@@ -104,7 +104,7 @@ export default {
         data: Object.assign(
           {
             limit: this.pagination.pageSize,
-            page: this.pagination.current
+            page: this.pagination.current,
           },
           data
         ),

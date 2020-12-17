@@ -14,6 +14,13 @@
           :data-source="data"
           @change="tableChange"
         >
+          <a
+            slot="projectCount"
+            slot-scope="record"
+            @click="toprojectCount(record)"
+          >
+            {{ record.projectCount }}</a
+          >
           <template slot="operation" slot-scope="record">
             <a-space size="small">
               <a
@@ -61,8 +68,8 @@ const columns = [
     title: '客户经理',
   },
   {
-    dataIndex: 'projectCount',
     title: '项目数量',
+    scopedSlots: { customRender: 'projectCount' },
   },
   {
     dataIndex: 'statusValue',
@@ -88,13 +95,13 @@ export default {
           type: 'input',
           title: '客户编号',
           placeholder: '请输入',
-          key: 'code',
+          key: 'customCode',
         },
         {
           type: 'input',
           title: '客户名称',
           placeholder: '请输入',
-          key: 'name',
+          key: 'customName',
         },
         {
           type: 'select',
@@ -102,9 +109,11 @@ export default {
           placeholder: '请选择',
           key: 'managerId',
           listDataKey: 'managers',
-          list: [{ empName: '全部', empId: '' }],
+          list: [{ empName: '全部', empId: '', empNo: '' }],
           listkey: 'empName',
-          listvalue: 'empId',
+          listkey1: 'empNo',
+          listvalue: 'empName',
+          showsearch: true,
         },
         {
           type: 'select',
@@ -125,6 +134,9 @@ export default {
     this.getPreList()
   },
   methods: {
+    toprojectCount() {
+      this.$router.push('/mg-projects')
+    },
     operation({ type, data }) {
       switch (type) {
         case 'add':

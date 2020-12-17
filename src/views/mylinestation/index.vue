@@ -48,13 +48,14 @@ const columns = [
     dataIndex: 'stationCode',
     title: '工位编号',
   },
-  {
-    dataIndex: 'sep',
-    title: '显示位次',
-  },
+
   {
     dataIndex: 'stationName',
     title: '工位名称',
+  },
+  {
+    dataIndex: 'sep',
+    title: '显示位次',
   },
   {
     title: '操作',

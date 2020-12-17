@@ -111,7 +111,7 @@ export default {
           list: [{ empName: '全部', id: '', empNo: '' }],
           listkey: 'empName',
           listkey1: 'empNo',
-          listvalue: 'id',
+          listvalue: 'empName',
           showsearch: true,
         },
         {
@@ -142,6 +142,7 @@ export default {
           listDataKey: 'employs',
           list: [{ empName: '全部', id: '' }],
           listkey: 'empName',
+          listkey1: 'empNo',
           listvalue: 'id',
         },
         {
@@ -181,6 +182,9 @@ export default {
           this.$refs.alert.show()
           break
         case 'search':
+          this.getList(data)
+          break
+        case 'reset':
           this.getList(data)
           break
       }

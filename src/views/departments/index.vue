@@ -14,6 +14,13 @@
           :data-source="data"
           @change="tableChange"
         >
+          <a
+            slot="employeeCount"
+            slot-scope="record"
+            @click="toprojectCount(record)"
+          >
+            {{ record.employeeCount }}</a
+          >
           <template slot="operation" slot-scope="record">
             <a-space size="small">
               <a
@@ -57,8 +64,8 @@ const columns = [
     title: '部门简称',
   },
   {
-    dataIndex: 'employeeCount',
     title: '员工人数',
+    scopedSlots: { customRender: 'employeeCount' },
   },
   {
     dataIndex: 'parentName',
@@ -88,6 +95,9 @@ export default {
   components: { Department },
   mixins: [mixins],
   methods: {
+    toprojectCount() {
+      this.$router.push('/mg-employees')
+    },
     operation({ type }) {
       switch (type) {
         case 'add':

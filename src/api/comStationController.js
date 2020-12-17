@@ -4,7 +4,10 @@ export function add_post(options) {
   return fetch({
     url: 'comStationController/add',
     method: 'post',
-    headers: {'Content-Type': 'application/json', ...(options && options.headers ? options.headers : {})},
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options && options.headers ? options.headers : {})
+    },
     data: (options && options.data) || {}
   })
 }
@@ -13,7 +16,10 @@ export function modify_post(options) {
   return fetch({
     url: 'comStationController/modify',
     method: 'post',
-    headers: {'Content-Type': 'application/json', ...(options && options.headers ? options.headers : {})},
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options && options.headers ? options.headers : {})
+    },
     data: (options && options.data) || {}
   })
 }
@@ -44,12 +50,15 @@ export function preModify_get(options) {
     data: (options && options.data) || {}
   })
 }
-// 删除
+// 新增
 export function remove_get(options) {
   return fetch({
     url: 'comStationController/remove',
-    method: 'get',
-    headers: options && options.headers ? options.headers : {},
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options && options.headers ? options.headers : {})
+    },
     data: (options && options.data) || {}
   })
 }
