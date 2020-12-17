@@ -15,7 +15,12 @@
       :default-selected-keys="[$route.path]"
       @click="go"
     >
-      <a-menu-item v-for="item in menu" :key="item.path">
+      <a-menu-item
+        v-for="item in menu.filter((i) => {
+          return i.id < 19
+        })"
+        :key="item.path"
+      >
         <a-icon :type="item.img" />
         <span>{{ item.description }}</span>
       </a-menu-item>
