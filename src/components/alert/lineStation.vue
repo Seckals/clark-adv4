@@ -64,7 +64,7 @@
         </a-select>
       </a-form-model-item>
       <a-form-model-item label="按钮盒ID">
-        <a-input v-model="form.stationName" placeholder="" :disabled="true" />
+        <a-input v-model="form.deveui" placeholder="" :disabled="true" />
       </a-form-model-item>
     </a-form-model>
   </a-modal>
@@ -91,6 +91,7 @@ export default {
         stationId: '',
         stationName: '',
         employes: '',
+        deveui: '',
       },
       rules: {
         employes: [

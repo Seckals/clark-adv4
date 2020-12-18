@@ -59,11 +59,11 @@ const columns = [
     title: '显示位次',
   },
   {
-    dataIndex: 'employes',
+    dataIndex: 'employeeName',
     title: '员工',
   },
   {
-    dataIndex: 'boxId',
+    dataIndex: 'deveui',
     title: '按钮盒ID',
   },
   {
@@ -107,6 +107,7 @@ export default {
             lineCode: JSON.parse(this.$route.query.data).code,
             lineName: JSON.parse(this.$route.query.data).name,
             lineId: JSON.parse(this.$route.query.data).id,
+            deveui: 'A01',
           }
           this.$refs.alert.show()
           break
