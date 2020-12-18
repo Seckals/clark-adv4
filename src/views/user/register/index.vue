@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import { register } from '../../../api/auth'
 export default {
   data() {
     return {
@@ -92,24 +93,23 @@ export default {
   },
 
   methods: {
-    toRigist() {
-      this.form.validateFields((err) => {
+    toRigist(e) {
+      e.preventDefault()
+      this.form.validateFields((err,values) => {
         if (!err) {
           this.loading = true
-          // this.$api.auth
-          //   .register(values)
-          //   .then(({ code }) => {
-          //     console.log(code)
-          //     if (code === 200) {
-          //       this.$router.push({
-          //         path: '/register-result',
-          //         query: { email: encodeURIComponent(values.email) },
-          //       })
-          //     }
-          //   })
-          //   .finally(() => {
-          //     this.loading = false
-          //   })
+          register({data:values})
+            .then(({ code }) => {
+              if (code === 200) {
+                this.$router.push({
+                  path: '/register-result',
+                  query: { email: encodeURIComponent(values.email) },
+                })
+              }
+            })
+            .finally(() => {
+              this.loading = false
+            })
         }
       })
     },

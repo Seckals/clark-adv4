@@ -66,6 +66,7 @@
 </template>
 
 <script>
+import { sendEmail } from '../../../api/auth'
 export default {
   data() {
     return {
@@ -77,12 +78,12 @@ export default {
   },
 
   methods: {
-    toForgetPassword() {
+    toForgetPassword(e) {
+      e.preventDefault()
       this.form.validateFields((err, values) => {
         if (!err) {
           this.loading = true
-          this.$api.userC
-            .forgetPassword(values)
+          sendEmail({data:values})
             .then(() => {
               this.isSent = true
             })

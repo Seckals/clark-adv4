@@ -28,3 +28,16 @@ export function register(options) {
     data: (options && options.data) || {}
   })
 }
+
+// 发送邮件
+export function sendEmail(options) {
+  return fetch({
+    url: '/sysUserController/forgetPassword',
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options && options.headers ? options.headers : {})
+    },
+    data: (options && options.data) || {}
+  })
+}
