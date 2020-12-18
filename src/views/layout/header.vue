@@ -18,7 +18,7 @@
                     下午好！
                     <span>Clark</span>
                 </div>
-                <div class="out">退出</div>
+                <div class="out" @click="out">退出</div>
             </div>
 		</div>
 	</a-layout-header>
@@ -26,7 +26,13 @@
 <script>
 import Notice from '@/components/notice'
 export default {
-    components:{Notice}
+	components:{Notice},
+	methods:{
+		out(){
+			localStorage.clear()
+			this.$router.push('/login')
+		}
+	}
 };
 </script>
 <style lang="less" scoped>

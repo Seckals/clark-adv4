@@ -94,6 +94,7 @@ export default {
     operation({ type, data }) {
       switch (type) {
         case 'add':
+          this.current = {status:1}
           this.$refs.alert.show()
           break
         case 'search':
