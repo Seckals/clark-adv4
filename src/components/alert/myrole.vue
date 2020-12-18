@@ -62,7 +62,7 @@ export default {
       form: {
         name: '',
         moduleId: '',
-        status: 1,
+        status: '',
       },
       rules: {
         name: [
