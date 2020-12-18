@@ -11,7 +11,7 @@ const routes = [{
     path: '/',
     name: 'Layout',
     component: Layout,
-    redirect: '/mg-position',
+    redirect: '/mg-classes',
     children: [{
         path: "/problem-type",
         name: 'problemtype',
