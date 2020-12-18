@@ -1,7 +1,7 @@
 <template>
   <div class="i-content">
     <div class="i-content-title">{{ $route.meta.title }}</div>
-    <div class="i-content-wrap">
+    <div class="i-content-wrap" v-if="ifshowData">
       <div class="i-content-search">
         <a-form-model
           layout="inline"
@@ -72,6 +72,9 @@ export default {
     }
   },
   props: {
+    ifshowData: {
+      default: true,
+    },
     searchs: {
       type: Array,
       default: () => [],

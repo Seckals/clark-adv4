@@ -1,6 +1,6 @@
 <template>
   <div>
-    <IMain />
+    <IMain :ifshowData="false" />
     <a-card :bordered="false">
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
@@ -37,7 +37,10 @@
           </a-row>
         </a-form>
       </div>
-      <div class="table-operator">
+      <div
+        class="table-operator"
+        v-permission="'mainData.production.mg-bol.add'"
+      >
         <a-button type="primary" icon="plus" @click="add">新建</a-button>
       </div>
       <s-table
@@ -54,7 +57,12 @@
       >
         <span slot="action" slot-scope="text, record">
           <template>
-            <a v-action:msaplan_edit @click="handleEdit(record.origin)">编辑</a>
+            <a
+              v-action:msaplan_edit
+              @click="handleEdit(record.origin)"
+              v-permission="'mainData.production.mg-bol.edit'"
+              >编辑</a
+            >
           </template>
         </span>
       </s-table>
@@ -344,8 +352,8 @@ import {
   saveBol_post,
   updateBol_post,
   queryOne_get,
+  queryAllProject_get,
 } from '@/api/bolDo'
-import { queryAllProject_get } from '@/api/common'
 const fields = [
   'dataStanderUp',
   'dataStanderDown',

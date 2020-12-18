@@ -13,6 +13,34 @@ const routes = [{
     component: Layout,
     redirect: '/mg-classes',
     children: [{
+        path: "/mg-bol",
+        name: 'mgbol',
+        component: () => import( /* webpackChunkName: "mg-position" */ '../views/otherPage/BOL.vue'),
+        meta: {
+          title: '问题类型'
+        }
+      }, {
+        path: "/mg-hc",
+        name: 'mghc',
+        component: () => import( /* webpackChunkName: "mg-position" */ '../views/otherPage/HC.vue'),
+        meta: {
+          title: '问题类型'
+        }
+      }, {
+        path: "/project-item",
+        name: 'projectitem',
+        component: () => import( /* webpackChunkName: "mg-position" */ '../views/otherPage/project.vue'),
+        meta: {
+          title: '项目成品天窗物料对应表'
+        }
+      }, {
+        path: "/reason-code",
+        name: 'reasoncode',
+        component: () => import( /* webpackChunkName: "mg-position" */ '../views/otherPage/dept.vue'),
+        meta: {
+          title: '部门原因代码对应表'
+        }
+      }, {
         path: "/problem-type",
         name: 'problemtype',
         component: () => import( /* webpackChunkName: "mg-position" */ '../views/problemtype'),

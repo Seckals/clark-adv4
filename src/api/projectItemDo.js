@@ -2,7 +2,7 @@ import fetch from '@/plugins/axios'
 // 删除记录
 export function _delete_post(options) {
   return fetch({
-    url: 'projectItemDo/delete',
+    url: 'projectItemController/delete',
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
@@ -11,10 +11,20 @@ export function _delete_post(options) {
     data: (options && options.data) || {}
   })
 }
+
+// 查询一条记录
+export function queryAllProject_get(options) {
+  return fetch({
+    url: '/projectItemController/allProject',
+    method: 'get',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}
 // 查询一条记录
 export function getOne_get(options) {
   return fetch({
-    url: 'projectItemDo/getOne',
+    url: 'projectItemController/getOne',
     method: 'get',
     headers: options && options.headers ? options.headers : {},
     data: (options && options.data) || {}
@@ -23,7 +33,7 @@ export function getOne_get(options) {
 // 查询列表
 export function queryList_get(options) {
   return fetch({
-    url: 'projectItemDo/queryList',
+    url: 'projectItemController/page',
     method: 'get',
     headers: options && options.headers ? options.headers : {},
     data: (options && options.data) || {}
@@ -32,7 +42,7 @@ export function queryList_get(options) {
 // 保存记录
 export function save_post(options) {
   return fetch({
-    url: 'projectItemDo/save',
+    url: 'projectItemController/save',
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +54,7 @@ export function save_post(options) {
 // 更新记录
 export function update_post(options) {
   return fetch({
-    url: 'projectItemDo/update',
+    url: 'projectItemController/update',
     method: 'post',
     headers: {
       'Content-Type': 'application/json',

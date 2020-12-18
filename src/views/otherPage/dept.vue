@@ -1,5 +1,6 @@
 <template>
-  <page-header-wrapper :title="false">
+  <div>
+    <IMain :ifshowData="false" />
     <a-card class="board" :bordered="false">
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
@@ -45,7 +46,13 @@
         </a-form>
       </div>
       <div class="table-operator">
-        <a-button type="primary" icon="plus" @click="add">新建</a-button>
+        <a-button
+          type="primary"
+          v-permission="'mainData.production.reason-code.add'"
+          icon="plus"
+          @click="add"
+          >新建</a-button
+        >
       </div>
       <s-table
         ref="table"
@@ -60,11 +67,15 @@
           <template>
             <a
               class="x-space"
-              v-action:measureType_edit
+              v-permission="'mainData.production.reason-code.edit'"
               @click="handleEdit(record)"
               >编辑</a
             >
-            <a v-action:measureType_delete @click="handleDel(record)">删除</a>
+            <a
+              v-permission="'mainData.production.reason-code.delete'"
+              @click="handleDel(record)"
+              >删除</a
+            >
           </template>
         </span>
       </s-table>
@@ -120,18 +131,18 @@
         </a-form-item>
       </a-form>
     </a-modal>
-  </page-header-wrapper>
+  </div>
 </template>
 
 <script>
-import { STable } from '@/components'
+import STable from '@/components/Table'
 import pick from 'lodash.pick'
-import { queryAllDept_get } from '@/api/common'
 import {
   queryList_get,
   save_post,
   update_post,
   _delete_post,
+  queryAllDept_get,
 } from '@/api/deptReasonCodeDo'
 // 表单值
 const fields = ['deptId', 'reasonCode', 'reasonDesc']
@@ -154,8 +165,8 @@ export default {
           { size: parameter.pageSize, current: parameter.pageNo, ...parameter },
           this.queryParam
         )
-        console.log('loadData request parameters:', requestParameters)
         return queryList_get({ data: requestParameters }).then((res) => {
+          console.log(res.data)
           return {
             data: res.records,
             totalCount: res.total,

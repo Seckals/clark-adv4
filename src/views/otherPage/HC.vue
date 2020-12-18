@@ -1,5 +1,6 @@
 <template>
-  <page-header-wrapper :title="false">
+  <div>
+    <IMain :ifshowData="false" />
     <a-card :bordered="false">
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
@@ -55,7 +56,10 @@
           </a-row>
         </a-form>
       </div>
-      <div class="table-operator">
+      <div
+        class="table-operator"
+        v-permission="'mainData.production.mg-hc.add'"
+      >
         <a-button type="primary" icon="plus" @click="add">新建</a-button>
       </div>
       <s-table
@@ -73,6 +77,7 @@
         <span slot="action" slot-scope="text, record">
           <template>
             <a
+              v-permission="'mainData.production.mg-hc.edit'"
               v-if="queryParam.hcType && queryParam.hcType === record.hcType"
               v-action:msaplan_edit
               @click="handleEdit(record.origin)"
@@ -383,11 +388,11 @@
         </a-row>
       </a-form>
     </a-modal>
-  </page-header-wrapper>
+  </div>
 </template>
 
 <script>
-import { STable } from '@/components'
+import STable from '@/components/Table'
 import pick from 'lodash.pick'
 import { debounce } from 'lodash'
 import {
@@ -397,8 +402,8 @@ import {
   updateHc_post,
   queryHcType_get,
   queryOne_get,
+  queryAllProject_get,
 } from '@/api/hcDo'
-import { queryAllProject_get } from '@/api/common'
 const fields = [
   'dataStanderUp',
   'dataStanderDown',
