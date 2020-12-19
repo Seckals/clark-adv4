@@ -28,7 +28,12 @@
       </a-form-model-item>
 
       <a-form-model-item label="父部门">
-        <a-select v-model="form.parentId" placeholder="请选择">
+        <a-select
+          v-model="form.parentId"
+          placeholder="请选择"
+          :filter-option="filterOption"
+          :show-search="true"
+        >
           <a-select-option
             v-for="(item, idx) in preList.depts"
             :key="idx"
@@ -38,7 +43,12 @@
         </a-select>
       </a-form-model-item>
       <a-form-model-item label="部门经理">
-        <a-select v-model="form.deptManager" placeholder="请选择">
+        <a-select
+          v-model="form.deptManager"
+          placeholder="请选择"
+          :filter-option="filterOption"
+          :show-search="true"
+        >
           <a-select-option
             v-for="(item, idx) in preList.employes"
             :key="idx"
@@ -91,6 +101,13 @@ export default {
   },
   mixins: [mixins],
   methods: {
+    filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      )
+    },
     add() {
       this.loading = true
       add_post({

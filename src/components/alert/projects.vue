@@ -27,7 +27,12 @@
         <a-input v-model="form.internalCode" placeholder="" />
       </a-form-model-item>
       <a-form-model-item label="客户" prop="customerId">
-        <a-select v-model="form.customerId" placeholder="请选择客户">
+        <a-select
+          v-model="form.customerId"
+          placeholder="请选择客户"
+          :filter-option="filterOption"
+          :show-search="true"
+        >
           <a-select-option
             v-for="(item, idx) in preList.customers"
             :key="idx"
@@ -53,7 +58,12 @@
         />
       </a-form-model-item>
       <a-form-model-item label="项目经理" prop="managerId">
-        <a-select v-model="form.managerId" placeholder="请选择">
+        <a-select
+          v-model="form.managerId"
+          placeholder="请选择"
+          :filter-option="filterOption"
+          :show-search="true"
+        >
           <a-select-option
             v-for="(item, idx) in preList.manegers"
             :key="idx"
@@ -62,7 +72,12 @@
           >
         </a-select>
       </a-form-model-item>
-      <a-form-model-item label="PE经理" prop="peManager">
+      <a-form-model-item
+        label="PE经理"
+        prop="peManager"
+        :filter-option="filterOption"
+        :show-search="true"
+      >
         <a-select v-model="form.peManager" placeholder="请选择">
           <a-select-option
             v-for="(item, idx) in preList.peManegers"
@@ -159,6 +174,13 @@ export default {
   },
   mixins: [mixins],
   methods: {
+    filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      )
+    },
     add() {
       this.loading = true
       add_post({
