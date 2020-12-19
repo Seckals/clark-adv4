@@ -55,7 +55,7 @@
         size="large"
         @click="
           () => {
-            $router.push('/user/login')
+            $router.push('/login')
           }
         "
       >
@@ -83,7 +83,7 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           this.loading = true
-          sendEmail({data:values})
+          sendEmail({ data: values })
             .then(() => {
               this.isSent = true
             })
