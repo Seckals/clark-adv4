@@ -17,14 +17,9 @@ export default {
       }
     },
     delModel(content,onOk){
-      this.$warning({
+      this.$confirm({
         title: '删除警告',
         content,
-        centered:true,
-        closable:true,
-        okText:'确定',
-        okType:'primary',
-        cancelText:'取消',
         onOk
       });
     },
