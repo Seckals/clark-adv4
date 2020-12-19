@@ -9,7 +9,7 @@
 		"
   >
     <div class="global-header">
-      <div class="left">主数据 / {{ $route.meta.title }}</div>
+      <div class="left">权限管理 / {{ $route.meta.title }}</div>
       <div class="right">
         <Notice />
         <div class="user">
