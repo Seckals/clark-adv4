@@ -52,8 +52,12 @@
           </template>
         </a-form-model>
         <div class="i-content-btns">
-          <a-button @click="operation('add')" v-permission="permission"
-            >新 增</a-button
+          <a-button
+            type="primary"
+            icon="plus"
+            @click="operation('add')"
+            v-permission="permission"
+            >新增</a-button
           >
         </div>
       </div>
