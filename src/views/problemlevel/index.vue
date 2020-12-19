@@ -1,7 +1,7 @@
 <template>
   <div>
     <IMain
-      permission="mainData.personnel.mg-position.add"
+      permission="mainData.personnel.problem-level.add"
       @operation="operation"
     >
       <template slot="table">
@@ -16,20 +16,12 @@
           <template slot="operation" slot-scope="record">
             <a-space size="small">
               <a
-                v-permission="'mainData.personnel.mg-position.edit'"
+                v-permission="'mainData.personnel.problem-level.edit'"
                 @click="editor(record)"
               >
                 编辑</a
               >
-              <a-popconfirm
-                title="确定删除选中的职位?"
-                ok-text="确定"
-                cancel-text="取消"
-                @confirm="del(record.id)"
-                v-permission="'mainData.personnel.mg-position.delete'"
-              >
-                <a> 删除</a>
-              </a-popconfirm>
+              <a v-permission="'mainData.production.problem-level.delete'" @click="delEvent(record.id)"> 删除</a>
             </a-space>
           </template>
         </a-table>
@@ -94,6 +86,11 @@ export default {
     tableChange(e) {
       this.pagination = e
       this.getList()
+    },
+    delEvent(id){
+      this.delModel('确定删除选中的问题等级',()=>{
+        this.del(id)
+      })
     },
     del(id) {
       this.loading = true

@@ -22,15 +22,7 @@
               >
                 编辑</a
               >
-              <a-popconfirm
-                title="确认删除选中的工位?"
-                ok-text="确定"
-                cancel-text="取消"
-                @confirm="del(record.id)"
-                v-permission="'mainData.production.mg-station.delete'"
-              >
-                <a> 删除</a>
-              </a-popconfirm>
+              <a v-permission="'mainData.production.mg-station.delete'" @click="delEvent(record.id)"> 删除</a>
             </a-space>
           </template>
         </a-table>
@@ -78,6 +70,11 @@ export default {
           this.$refs.alert.show()
           break
       }
+    },
+    delEvent(id){
+      this.delModel('确认删除选中的工位',()=>{
+        this.del(id)
+      })
     },
     del(id) {
       this.loading = true

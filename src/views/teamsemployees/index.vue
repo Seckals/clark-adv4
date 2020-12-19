@@ -22,15 +22,7 @@
               >
                 编辑</a
               >
-              <a-popconfirm
-                title="确认删除选中的团队?"
-                ok-text="确定"
-                cancel-text="取消"
-                @confirm="del(record.id)"
-                v-permission="'mainData.personnel.mg-teams-employees.delete'"
-              >
-                <a>删除</a>
-              </a-popconfirm>
+              <a v-permission="'mainData.production.mg-teams-employees.delete'" @click="delEvent(record.id)"> 删除</a>
             </a-space>
           </template>
         </a-table>
@@ -112,6 +104,11 @@ export default {
     tableChange(e) {
       this.pagination = e
       this.getList()
+    },
+    delEvent(id){
+      this.delModel('确认删除选中的团队',()=>{
+        this.del(id)
+      })
     },
     del(id) {
       this.loading = true
