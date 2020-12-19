@@ -52,7 +52,7 @@ export default {
     .logo {
       width: 166px;
       height: 38px;
-      background-image: url('../../images/logo.png');
+      background: url('../../images/logo.png') no-repeat;
       position: absolute;
       background-size: contain;
       left: 30px;
