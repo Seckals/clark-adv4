@@ -6,15 +6,15 @@
       <!-- 主要路由 -->
       <router-view />
     </div>
-    <!-- <layout-footer /> -->
+    <layout-footer />
   </div>
 </template>
 
 <script>
-// import LayoutFooter from '@/components/Layout/App/LayoutFooter'
+import LayoutFooter from './LayoutFooter'
 
 export default {
-  // components: { LayoutFooter },
+  components: { LayoutFooter },
 }
 </script>
 
