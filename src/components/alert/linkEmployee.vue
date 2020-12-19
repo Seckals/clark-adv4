@@ -1,7 +1,7 @@
 <template>
   <a-modal
     v-model="visible"
-    title="职位001关联的员工列表"
+    :title="title"
     :width="500"
     @ok="ok"
     okText="确定"
@@ -40,12 +40,16 @@ export default {
         },
       ],
       data: [],
+      title: '',
     }
   },
-  props: ['id'],
+  props: ['id', 'name'],
   watch: {
     id(value) {
       this.getList(value)
+    },
+    name(value) {
+      this.title = `职位${value}关联的员工列表`
     },
   },
   methods: {

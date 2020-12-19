@@ -33,17 +33,14 @@
               </a-popconfirm>
             </a-space>
           </template>
-          <a
-            slot="linkUserCount"
-            slot-scope="data"
-            @click="showLink(data.id)"
-            >{{ data.linkUserCount }}</a
-          >
+          <a slot="linkUserCount" slot-scope="data" @click="showLink(data)">{{
+            data.linkUserCount
+          }}</a>
         </a-table>
       </template>
     </IMain>
     <Position ref="alert" :data="current" @freash="freash" />
-    <LinkEmployee ref="alertLink" :id="linkId" />
+    <LinkEmployee ref="alertLink" :id="linkId" :name="name" />
   </div>
 </template>
 <script>
@@ -72,6 +69,7 @@ const columns = [
 export default {
   data() {
     return {
+      name: '',
       columns,
       linkId: '',
       current: {},
@@ -106,8 +104,9 @@ export default {
           break
       }
     },
-    showLink(id) {
-      this.linkId = id
+    showLink(data) {
+      this.linkId = data.id
+      this.name = data.name
       this.$refs.alertLink.show()
     },
     tableChange(e) {
