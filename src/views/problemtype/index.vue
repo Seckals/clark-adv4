@@ -1,7 +1,7 @@
 <template>
   <div>
     <IMain
-      permission="mainData.personnel.problem-type.add"
+      permission="mainData.production.problem-type.add"
       @operation="operation"
     >
       <template slot="table">
@@ -17,13 +17,13 @@
           <template slot="operation" slot-scope="record">
             <a-space size="small">
               <a
-                v-permission="'mainData.personnel.problem-type.edit'"
+                v-permission="'mainData.production.problem-type.edit'"
                 @click="editor(record)"
               >
                 编辑</a
               >
               <a
-                v-permission="'mainData.personnel.problem-type.delete'"
+                v-permission="'mainData.production.problem-type.delete'"
                 @click="delEvent(record.id)"
               >
                 删除</a

@@ -31,7 +31,7 @@
                 编辑</a
               >
               <a
-                v-permission="'mainData.personnel.mg-customers.delete'"
+                v-permission="'mainData.project.mg-customers.delete'"
                 @click="delEvent(record.id)"
               >
                 删除</a
