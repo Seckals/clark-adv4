@@ -106,8 +106,10 @@ export default {
         } else {
           if (process.env.NODE_ENV == 'development') {
             this.$router.push(fromUrl)
-          } else {
+          } else if (process.env.NODE_ENV == 'prod') {
             window.location.href = 'http://49.235.30.187:8088/prod/#/'
+          } else if (process.env.NODE_ENV == 'production') {
+            window.location.href = 'http://172.23.2.17:8088/prod/#/'
           }
         }
       })

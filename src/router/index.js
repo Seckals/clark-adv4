@@ -97,7 +97,6 @@ const routes = [{
           title: '重置密码-发送邮箱'
         },
       },
-
       {
         path: 'resetpwd',
         component: resetpwd,
@@ -122,10 +121,13 @@ const router = new VueRouter({
 })
 router.beforeEach((to, from, next) => {
   console.log(to, from, )
-  const detail = localStorage.getItem('auth-info')
-  if (to.path == "/user/login" || to.path == "/user/regist") {
+  let whitePath = ['/user/login', '/user/regist', '/user/register-result', '/user/register-active',
+    '/user/resetpwd-sendmail', '/user/resetpwd', '/404'
+  ]
+  if (whitePath.includes(to.path)) {
     next()
   } else {
+    const detail = localStorage.getItem('auth-info')
     if (detail) {
       store.commit('SET_DETAIL')
       next()
