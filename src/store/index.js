@@ -9,7 +9,8 @@ export default new Vuex.Store({
     token: '',
     menu: [],
     menu1: [],
-    permission: []
+    permission: [],
+    collapsed: false
   },
   getters: {
     username(state) {
@@ -38,6 +39,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    collapsed(state, playod) {
+      state.collapsed = playod
+    },
     SET_TOKEN: () => {
       // state.token = token
     },

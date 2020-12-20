@@ -7,6 +7,7 @@
     >
       <template slot="table">
         <a-table
+          bordered
           :loading="loading"
           :row-key="(record) => record.id"
           :pagination="pagination"
@@ -18,13 +19,13 @@
             <a-space size="small">
               <a
                 v-permission="'permission.mg-users.edit'"
-                @click="go('/mg-role-users',record)"
+                @click="go('/mg-role-users', record)"
               >
                 链接用户</a
               >
               <a
                 v-permission="'permission.mg-users.edit'"
-                @click="go('/mg-role-authorize',record)"
+                @click="go('/mg-role-authorize', record)"
               >
                 链接功能</a
               >
@@ -81,20 +82,20 @@ export default {
   mixins: [mixins],
   mounted() {},
   methods: {
-    go(path,data){
+    go(path, data) {
       this.$router.push({
         path,
-        query:{
-          id:data.id,
-          name:data.name,
-          moduleName:data.moduleName
-        }
+        query: {
+          id: data.id,
+          name: data.name,
+          moduleName: data.moduleName,
+        },
       })
     },
     operation({ type, data }) {
       switch (type) {
         case 'add':
-          this.current = {status:1}
+          this.current = { status: 1 }
           this.$refs.alert.show()
           break
         case 'search':

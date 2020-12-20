@@ -1,6 +1,6 @@
 <template>
   <div class="i-content">
-    <div class="i-content-title">{{ $route.meta.title }}</div>
+    <!-- <div class="i-content-title">{{ $route.meta.title }}</div> -->
     <div class="i-content-wrap">
       <div class="i-content-search">
         <a-form-model
@@ -51,8 +51,8 @@
         <div class="i-content-btns" v-if="hasAdd">
           <div class="i-content-btns-left">
             <a-button @click="operation('add')" v-permission="permission"
-            >新 增</a-button
-          >
+              >新 增</a-button
+            >
             <slot name="btns-left"></slot>
           </div>
           <slot name="btns-right"></slot>
@@ -88,9 +88,9 @@ export default {
       type: String,
       default: '',
     },
-    hasAdd:{
+    hasAdd: {
       default: true,
-    }
+    },
   },
   methods: {
     operation(type, data) {
@@ -126,11 +126,11 @@ export default {
 .i-content-search {
   margin-bottom: 24px;
 }
-.i-content-btns{
+.i-content-btns {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .i-content-btns-left{
+  .i-content-btns-left {
     display: flex;
     align-items: center;
   }

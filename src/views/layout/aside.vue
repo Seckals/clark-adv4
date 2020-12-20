@@ -1,6 +1,6 @@
 <template>
   <a-layout-sider
-    v-model="collapsed"
+    v-model="$store.state.collapsed"
     width="208"
     collapsedWidth="48"
     :trigger="null"
@@ -39,13 +39,13 @@
         >
       </a-sub-menu>
     </a-menu>
-    <div class="menu-trigger">
+    <!-- <div class="menu-trigger">
       <a-icon
         class="trigger"
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click="() => (collapsed = !collapsed)"
       />
-    </div>
+    </div> -->
   </a-layout-sider>
 </template>
 <script>

@@ -9,6 +9,13 @@
 		"
   >
     <div class="global-header">
+      <div class="menu-trigger" style="margin-right:20px">
+        <a-icon
+          class="trigger"
+          :type="$store.state.collapsed ? 'menu-unfold' : 'menu-fold'"
+          @click="check"
+        />
+      </div>
       <div class="left">权限管理 / {{ $route.meta.title }}</div>
       <div class="right">
         <Notice />
@@ -26,6 +33,9 @@ import Notice from '@/components/notice'
 export default {
   components: { Notice },
   methods: {
+    check() {
+      this.$store.commit('collapsed', !this.$store.state.collapsed)
+    },
     out() {
       localStorage.clear('auth-info')
       this.$router.push('/login')
