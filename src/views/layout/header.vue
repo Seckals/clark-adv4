@@ -9,13 +9,13 @@
 		"
   >
     <div class="global-header">
-      <!-- <div class="menu-trigger">
+      <div class="menu-trigger" style="margin-right:20px">
         <a-icon
           class="trigger"
           :type="$store.state.collapsed ? 'menu-unfold' : 'menu-fold'"
           @click="check"
         />
-      </div> -->
+      </div>
       <div class="left">主数据 / {{ $route.meta.title }}</div>
       <div class="right">
         <Notice />

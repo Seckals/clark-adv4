@@ -1,8 +1,8 @@
 <template>
   <a-layout-sider
-    v-model="collapsed"
+    v-model="$store.state.collapsed"
     width="208"
-    collapsedWidth="48"
+    collapsedWidth="70"
     :trigger="null"
     collapsible
   >
@@ -19,11 +19,10 @@
         <a-icon :type="item.img" />
         <span>{{ item.description }}</span>
       </a-menu-item>
-      <a-sub-menu
-        :title="item.description"
-        v-for="(item, index) in menu1"
-        :key="index"
-      >
+      <a-sub-menu v-for="(item, index) in menu1" :key="index">
+        <span slot="title"
+          ><a-icon :type="item.img" /><span>{{ item.description }}</span></span
+        >
         <a-menu-item
           v-for="item1 in item.children.filter((i) => {
             return i.hidden == '1'
@@ -34,13 +33,13 @@
         >
       </a-sub-menu>
     </a-menu>
-    <div class="menu-trigger">
+    <!-- <div class="menu-trigger">
       <a-icon
         class="trigger"
         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
         @click="() => (collapsed = !collapsed)"
       />
-    </div>
+    </div> -->
   </a-layout-sider>
 </template>
 <script>
