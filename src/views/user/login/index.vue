@@ -75,9 +75,6 @@ export default {
       loading: false,
     }
   },
-  created() {
-    console.log(this.$route)
-  },
   methods: {
     ...mapActions(['Login']),
     toLogin(e) {
@@ -99,7 +96,6 @@ export default {
 
     loginSuccess() {
       this.$nextTick(() => {
-        console.log(process.env.NODE_ENV)
         const fromUrl = this.$route.query.from || '/mg-users'
         if (fromUrl.indexOf('//') === 0 || fromUrl.indexOf('http') === 0) {
           window.location.href = this.$route.query.from

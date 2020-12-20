@@ -82,7 +82,6 @@ export default {
       pageLinkSysFunction({
         data: { roleId: this.$route.query.id, limit: 999 },
       }).then((res) => {
-        console.log(res)
         // this.treeData = res.allCategory
         this.getId(res.result)
       })

@@ -120,7 +120,6 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  console.log(to, from, )
   let whitePath = ['/user/login', '/user/regist', '/user/register-result', '/user/register-active',
     '/user/resetpwd-sendmail', '/user/resetpwd', '/404'
   ]

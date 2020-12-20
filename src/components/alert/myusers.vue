@@ -164,7 +164,6 @@ export default {
         .then((res) => {
           this.loading = false
           this.preList = res
-          console.log(this.preList)
         })
         .catch(() => {
           this.loading = false

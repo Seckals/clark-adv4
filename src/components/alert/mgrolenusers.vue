@@ -70,8 +70,6 @@ export default {
         })
     },
     add() {
-      console.log(this.form, this.$route)
-
       this.loading = true
       linkSysUser({
         data: {

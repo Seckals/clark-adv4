@@ -128,7 +128,6 @@ export default {
   },
   methods: {
     operation({ type, data }) {
-      console.log(type)
       switch (type) {
         case 'add':
           this.$refs.alert.show()
@@ -170,10 +169,6 @@ export default {
         })
     },
     unlink() {
-      console.log({
-        userIds: this.selectedRowKeys,
-        roleId: this.$route.query.id,
-      })
       linkOrUnlinkSysFunction({
         data: {
           userIds: this.selectedRowKeys,

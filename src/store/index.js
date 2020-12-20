@@ -32,7 +32,6 @@ export default new Vuex.Store({
       if (!state.permission || state.permission.length === 0) {
         const detail = util.getLocal('auth-info') || {}
         const menu = util.getOneFromList(detail.modules, 'name', 'permission') || []
-        console.log(menu)
         state.permission = util.getOneValueInOneArray(menu.categories || [], 'name') || []
       }
       return state.permission
@@ -52,7 +51,6 @@ export default new Vuex.Store({
       const detail = util.getLocal('auth-info') || {}
       const menu = util.getOneFromList(detail.modules, 'name', 'permission') || {}
       const permission = util.getOneValueInOneArray(menu.categories || [], 'name') || []
-      console.log(permission)
       state.user = detail.empName
       state.token = detail.token
       state.menu = menu.categories.filter((i) => {
