@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve ",
     "build": "vue-cli-service build ",
-    "prod": "vue-cli-service build --mode prod"
+    "prod": "vue-cli-service build --mode prod",
+    "production": "vue-cli-service build --mode production"
   },
   "dependencies": {
     "ant-design-vue": "^1.2.4",

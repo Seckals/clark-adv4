@@ -63,7 +63,6 @@ export default {
           ? '49.235.30.187'
           : '172.23.2.17'
       }:8088/auth/#/user/login?from=${encodeURIComponent(location.href)}`
-      console.log(loginURL)
       window.location.href = loginURL
     },
   },

@@ -6,7 +6,7 @@
     :trigger="null"
     collapsible
   >
-    <div class="logo">
+    <div class="logo" @click="tolinkprod">
       <img src="../../assets/img/logo.png" alt="" />
     </div>
     <a-menu
@@ -58,6 +58,15 @@ export default {
     },
   },
   methods: {
+    tolinkprod() {
+      if (process.env.NODE_ENV == 'development') {
+        this.$router.push('/')
+      } else if (process.env.NODE_ENV == 'prod') {
+        window.location.href = 'http://49.235.30.187:8088/prod/#/'
+      } else if (process.env.NODE_ENV == 'production') {
+        window.location.href = 'http://172.23.2.17:8088/prod/#/'
+      }
+    },
     go(e) {
       if (e.key) {
         this.$router.push(e.key)
