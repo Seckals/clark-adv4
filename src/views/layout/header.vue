@@ -9,6 +9,13 @@
 		"
   >
     <div class="global-header">
+      <!-- <div class="menu-trigger">
+        <a-icon
+          class="trigger"
+          :type="$store.state.collapsed ? 'menu-unfold' : 'menu-fold'"
+          @click="check"
+        />
+      </div> -->
       <div class="left">主数据 / {{ $route.meta.title }}</div>
       <div class="right">
         <Notice />
@@ -34,6 +41,9 @@ export default {
     this.mynoontip()
   },
   methods: {
+    check() {
+      this.$store.commit('collapsed', !this.$store.state.collapsed)
+    },
     mynoontip() {
       const that = this
       const date = new Date()

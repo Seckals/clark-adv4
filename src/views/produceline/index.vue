@@ -7,6 +7,7 @@
     >
       <template slot="table">
         <a-table
+          bordered
           :loading="loading"
           :row-key="(record) => record.id"
           :columns="columns"
@@ -34,7 +35,12 @@
               >
                 编辑</a
               >
-              <a v-permission="'mainData.production.mg-produce-line.delete'" @click="delEvent(record.id)"> 删除</a>
+              <a
+                v-permission="'mainData.production.mg-produce-line.delete'"
+                @click="delEvent(record.id)"
+              >
+                删除</a
+              >
             </a-space>
           </template>
         </a-table>
@@ -113,8 +119,8 @@ export default {
           break
       }
     },
-    delEvent(id){
-      this.delModel('确认删除选中的产线',()=>{
+    delEvent(id) {
+      this.delModel('确认删除选中的产线', () => {
         this.del(id)
       })
     },

@@ -7,6 +7,7 @@
     >
       <template slot="table">
         <a-table
+          bordered
           :loading="loading"
           :row-key="(record) => record.id"
           :pagination="pagination"
@@ -22,7 +23,12 @@
               >
                 编辑</a
               >
-              <a v-permission="'mainData.production.mg-line-project.delete'" @click="delEvent(record.id)"> 删除</a>
+              <a
+                v-permission="'mainData.production.mg-line-project.delete'"
+                @click="delEvent(record.id)"
+              >
+                删除</a
+              >
             </a-space>
           </template>
         </a-table>
@@ -97,8 +103,8 @@ export default {
       this.pagination = e
       this.getList()
     },
-    delEvent(id){
-      this.delModel('确定删除选中的项目',()=>{
+    delEvent(id) {
+      this.delModel('确定删除选中的项目', () => {
         this.del(id)
       })
     },

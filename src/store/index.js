@@ -10,7 +10,8 @@ export default new Vuex.Store({
     token: '',
     menu: [],
     menu1: [],
-    permission: []
+    permission: [],
+    collapsed: false
   },
   getters: {
     getUser(state) {
@@ -35,6 +36,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    collapsed(state, playlod) {
+      state.collapsed = playlod
+    },
     SET_DETAIL(state) {
       const detail = util.getLocal('auth-info') || {}
       const menu = util.getOneFromList(detail.modules, 'name', 'mainData') || {}

@@ -3,6 +3,7 @@
     <IMain :searchs="[]">
       <template slot="table">
         <a-table
+          bordered
           :loading="loading"
           :row-key="(record) => record.id"
           :pagination="pagination"

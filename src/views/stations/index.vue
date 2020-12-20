@@ -7,6 +7,7 @@
     >
       <template slot="table">
         <a-table
+          bordered
           :pagination="pagination"
           :loading="loading"
           :row-key="(record) => record.id"
