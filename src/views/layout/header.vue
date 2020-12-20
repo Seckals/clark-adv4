@@ -52,7 +52,8 @@ export default {
         window.location.hostname !== '172.23.2.17'
           ? '49.235.30.187'
           : '172.23.2.17'
-      }:8088/auth/#/user/login?from=${encodeURIComponent(location.href)}`
+      }:8088/auth/#/login?from=${encodeURIComponent(location.href)}`
+      console.log(loginURL)
       window.location.href = loginURL
     },
   },
