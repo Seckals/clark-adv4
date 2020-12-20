@@ -27,7 +27,7 @@ export default {
   components: { Notice },
   methods: {
     out() {
-      localStorage.clear()
+      localStorage.clear('auth-info')
       this.$router.push('/login')
     },
   },
