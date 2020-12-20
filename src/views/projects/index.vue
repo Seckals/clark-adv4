@@ -22,7 +22,12 @@
               >
                 编辑</a
               >
-              <a v-permission="'mainData.production.mg-projects.delete'" @click="delEvent(record.id)"> 删除</a>
+              <a
+                v-permission="'mainData.project.mg-projects.delete'"
+                @click="delEvent(record.id)"
+              >
+                删除</a
+              >
             </a-space>
           </template>
         </a-table>
@@ -159,8 +164,8 @@ export default {
       this.pagination = e
       this.getList()
     },
-    delEvent(id){
-      this.delModel('确认删除选中的项目',()=>{
+    delEvent(id) {
+      this.delModel('确认删除选中的项目', () => {
         this.del(id)
       })
     },

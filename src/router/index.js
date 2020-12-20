@@ -17,14 +17,14 @@ const routes = [{
         name: 'mgbol',
         component: () => import( /* webpackChunkName: "mg-position" */ '../views/otherPage/BOL.vue'),
         meta: {
-          title: '问题类型'
+          title: 'BOL数据维护'
         }
       }, {
         path: "/mg-hc",
         name: 'mghc',
         component: () => import( /* webpackChunkName: "mg-position" */ '../views/otherPage/HC.vue'),
         meta: {
-          title: '问题类型'
+          title: '人头数据维护'
         }
       }, {
         path: "/project-item",

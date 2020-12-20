@@ -29,7 +29,12 @@
               >
                 编辑</a
               >
-              <a v-permission="'mainData.production.mg-departments.delete'" @click="delEvent(record.id)"> 删除</a>
+              <a
+                v-permission="'mainData.personnel.mg-departments.delete'"
+                @click="delEvent(record.id)"
+              >
+                删除</a
+              >
             </a-space>
           </template>
         </a-table>
@@ -106,8 +111,8 @@ export default {
       this.pagination = e
       this.getList()
     },
-    delEvent(id){
-      this.delModel('确认删除选中的部门',()=>{
+    delEvent(id) {
+      this.delModel('确认删除选中的部门', () => {
         this.del(id)
       })
     },

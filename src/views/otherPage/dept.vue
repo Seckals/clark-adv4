@@ -280,7 +280,7 @@ export default {
     handleDel(record) {
       this.$confirm({
         title: '删除警告',
-        content: `您正在尝试删除部门原因代码${record.measureType}，您确定还要继续吗？`,
+        content: `您正在尝试删除部门原因代码${record.reasonCode}，您确定还要继续吗？`,
         onOk: () => {
           _delete_post({
             data: { id: record.id },

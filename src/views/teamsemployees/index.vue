@@ -22,7 +22,12 @@
               >
                 编辑</a
               >
-              <a v-permission="'mainData.production.mg-teams-employees.delete'" @click="delEvent(record.id)"> 删除</a>
+              <a
+                v-permission="'mainData.personnel.mg-teams-employees.delete'"
+                @click="delEvent(record.id)"
+              >
+                删除</a
+              >
             </a-space>
           </template>
         </a-table>
@@ -90,9 +95,9 @@ export default {
       switch (type) {
         case 'add':
           this.current = {
-            teamId:JSON.parse(this.$route.query.data).id,
-            teamCode:JSON.parse(this.$route.query.data).teamCode,
-            teamName:JSON.parse(this.$route.query.data).teamName
+            teamId: JSON.parse(this.$route.query.data).id,
+            teamCode: JSON.parse(this.$route.query.data).teamCode,
+            teamName: JSON.parse(this.$route.query.data).teamName,
           }
           this.$refs.alert.show()
           break
@@ -105,8 +110,8 @@ export default {
       this.pagination = e
       this.getList()
     },
-    delEvent(id){
-      this.delModel('确认删除选中的团队',()=>{
+    delEvent(id) {
+      this.delModel('确认删除选中的团队', () => {
         this.del(id)
       })
     },

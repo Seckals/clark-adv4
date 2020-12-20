@@ -22,7 +22,12 @@
               >
                 编辑</a
               >
-              <a v-permission="'mainData.production.mg-position.delete'" @click="delEvent(record.id)"> 删除</a>
+              <a
+                v-permission="'mainData.personnel.mg-position.delete'"
+                @click="delEvent(record.id)"
+              >
+                删除</a
+              >
             </a-space>
           </template>
           <a slot="linkUserCount" slot-scope="data" @click="showLink(data)">{{
@@ -105,8 +110,8 @@ export default {
       this.pagination = e
       this.getList()
     },
-    delEvent(id){
-      this.delModel('确定删除选中的职位',()=>{
+    delEvent(id) {
+      this.delModel('确定删除选中的职位', () => {
         this.del(id)
       })
     },

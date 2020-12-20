@@ -23,7 +23,12 @@
               >
                 编辑</a
               >
-              <a v-permission="'mainData.production.mg-line-station.delete'" @click="delEvent(record.id)"> 删除</a>
+              <a
+                v-permission="'mainData.production.mg-line-station.delete'"
+                @click="delEvent(record.id)"
+              >
+                删除</a
+              >
             </a-space>
           </template>
         </a-table>
@@ -112,8 +117,8 @@ export default {
       this.pagination = e
       this.getList()
     },
-    delEvent(id){
-      this.delModel('确定删除选中的工位',()=>{
+    delEvent(id) {
+      this.delModel('确定删除选中的工位', () => {
         this.del(id)
       })
     },

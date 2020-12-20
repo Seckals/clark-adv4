@@ -32,8 +32,8 @@
                 >
                   <a-select-option
                     v-for="hcTypes in allHcType"
-                    :value="hcTypes"
-                    :key="hcTypes === '' ? '全部' : hcTypes"
+                    :value="hcTypes === '' ? ' ' : hcTypes"
+                    :key="hcTypes === '' ? ' ' : hcTypes"
                     >{{ hcTypes === '' ? '全部' : hcTypes }}</a-select-option
                   >
                 </a-select>
@@ -501,6 +501,7 @@ export default {
     queryHcType_get().then((data) => {
       if (Array.isArray(data)) {
         this.allHcType = data.reverse()
+        debugger
       }
     })
   },

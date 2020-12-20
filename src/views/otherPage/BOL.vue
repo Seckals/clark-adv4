@@ -58,7 +58,6 @@
         <span slot="action" slot-scope="text, record">
           <template>
             <a
-              v-action:msaplan_edit
               @click="handleEdit(record.origin)"
               v-permission="'mainData.production.mg-bol.edit'"
               >编辑</a
@@ -602,9 +601,11 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           const request =
-            this.mdl.normalMap && this.mdl.normalMap.length
+            this.mdl.normalMap && Object.keys(this.mdl.normalMap).length
               ? updateBol_post
               : saveBol_post
+          console.log(this.mdl.normalMap.length)
+
           const normalMap = {}
           const superMap = {}
           ;[...values.dataStanderUp, ...values.dataStanderDown].forEach(
@@ -630,7 +631,6 @@ export default {
             this.$refs.table.refresh()
             this.visible = false
             this.form.resetFields()
-            this.mdl = null
             this.$success({
               title: `${this.mdl ? '修改成功' : '保存成功'}`,
               content: `您所维护的BOL数据已经${
@@ -640,6 +640,7 @@ export default {
               //   this.visible = false
               // }
             })
+            this.mdl = null
           })
           console.log(values)
         }

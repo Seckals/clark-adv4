@@ -46,12 +46,12 @@
       <a-form-model-item label="显示位次">
         <a-input v-model="form.sep" placeholder="请输入显示位次" />
       </a-form-model-item>
-      <a-form-model-item label="员工" prop="employes">
+      <a-form-model-item label="员工" prop="employeeId">
         <a-select
           show-search
           option-filter-prop="children"
           :filter-option="filterOption"
-          v-model="form.employes"
+          v-model="form.employeeId"
           placeholder="请选择"
           @change="selectData"
         >
@@ -90,11 +90,11 @@ export default {
         sep: '',
         stationId: '',
         stationName: '',
-        employes: '',
+        employeeId: '',
         deveui: '',
       },
       rules: {
-        employes: [
+        employeeId: [
           {
             required: true,
             message: '请选择员工',
@@ -127,9 +127,7 @@ export default {
       this.loading = true
       add_post({
         data: {
-          lineId: this.form.lineId,
-          sep: this.form.sep,
-          stationId: this.form.stationId,
+          ...this.form,
         },
       })
         .then(() => {
@@ -142,13 +140,11 @@ export default {
         })
     },
     editor() {
+      debugger
       this.loading = true
       modify_post({
         data: {
-          id: this.form.id,
-          lineId: this.form.lineId,
-          sep: this.form.sep,
-          stationId: this.form.stationId,
+          ...this.form,
         },
       })
         .then(() => {
