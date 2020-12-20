@@ -2,7 +2,7 @@ import fetch from '@/plugins/axios'
 // 查询BOL列表
 export function bolList_get(options) {
   return fetch({
-    url: '/bolDoController/allProject',
+    url: '/bolDoController/bolList',
     method: 'get',
     headers: options && options.headers ? options.headers : {},
     data: (options && options.data) || {}

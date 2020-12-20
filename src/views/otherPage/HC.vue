@@ -79,7 +79,6 @@
             <a
               v-permission="'mainData.production.mg-hc.edit'"
               v-if="queryParam.hcType && queryParam.hcType === record.hcType"
-              v-action:msaplan_edit
               @click="handleEdit(record.origin)"
               >编辑</a
             >
@@ -427,7 +426,7 @@ export default {
       // 查询参数
       queryParam: {
         year: new Date().getFullYear(),
-        hcType: '',
+        hcType: ' ',
       },
       // 加载数据方法 必须为 Promise 对象
       loadData: async (parameter) => {
@@ -448,7 +447,8 @@ export default {
           requestParameters.ascs = 'project_code'
           this.firstQuery = false
         }
-        return hcList_get({ data: { ...requestParameters } }).then((res) => {
+        console.log(requestParameters)
+        return hcList_get({ data: requestParameters }).then((res) => {
           this.selectedRowKeys = []
           const newRecords = []
           if (res.records && res.records.length) {

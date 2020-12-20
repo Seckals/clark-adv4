@@ -395,7 +395,6 @@ export default {
 
         return bolList_get({ data: { ...requestParameters } }).then((res) => {
           this.selectedRowKeys = []
-          debugger
           const newRecords = []
           if (res.records && res.records.length) {
             res.records.forEach((item) => {
