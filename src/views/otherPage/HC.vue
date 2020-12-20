@@ -501,7 +501,6 @@ export default {
     queryHcType_get().then((data) => {
       if (Array.isArray(data)) {
         this.allHcType = data.reverse()
-        debugger
       }
     })
   },

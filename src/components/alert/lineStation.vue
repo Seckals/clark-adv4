@@ -140,7 +140,6 @@ export default {
         })
     },
     editor() {
-      debugger
       this.loading = true
       modify_post({
         data: {
