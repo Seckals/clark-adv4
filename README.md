@@ -21,11 +21,19 @@ npm run build
 
 ```
 
-### Compiles and minifies for production
+### Compiles and minifies for prod
 
 ```
 npm run prod
 打包到测试环境
+
+```
+
+### Compiles and minifies for production
+
+```
+npm run production
+打包到生产环境
 
 ```
 
