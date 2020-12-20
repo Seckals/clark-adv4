@@ -29,7 +29,11 @@
   </div>
 </template>
 <script>
-import { preLinkSysFunction, linkSysFunction } from '../../api/myrole'
+import {
+  preLinkSysFunction,
+  linkSysFunction,
+  pageLinkSysFunction,
+} from '../../api/myrole'
 
 export default {
   data() {
@@ -45,6 +49,7 @@ export default {
   },
   mounted() {
     this.getSelects()
+    this.getSelects1()
   },
   methods: {
     save() {
@@ -67,12 +72,20 @@ export default {
       })
     },
     getSelects() {
-      preLinkSysFunction({ data: { roleId: this.$route.query.id } }).then(
-        (res) => {
-          this.treeData = res.allCategory
-          this.getId(res.selectedCategory)
-        }
-      )
+      preLinkSysFunction({
+        data: { roleId: this.$route.query.id },
+      }).then((res) => {
+        this.treeData = res.allCategory
+      })
+    },
+    getSelects1() {
+      pageLinkSysFunction({
+        data: { roleId: this.$route.query.id, limit: 999 },
+      }).then((res) => {
+        console.log(res)
+        // this.treeData = res.allCategory
+        this.getId(res.result)
+      })
     },
   },
 }
