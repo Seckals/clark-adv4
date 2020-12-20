@@ -75,36 +75,37 @@ const routes = [{
     component: Layout,
     redirect: '/mg-role',
     children: [{
-      path: '/mg-users',
-      name: 'mgusers',
-      component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgusers'),
-      meta: {
-        title: '维护用户'
+        path: '/mg-users',
+        name: 'mgusers',
+        component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgusers'),
+        meta: {
+          title: '维护用户'
+        }
+      }, {
+        path: '/mg-role',
+        name: 'mgrole',
+        component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgrole'),
+        meta: {
+          title: '维护角色'
+        }
+      },
+      {
+        path: '/mg-role-users',
+        name: 'mgroleusers',
+        component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgroleusers'),
+        meta: {
+          title: '按角色维护用户'
+        }
+      },
+      {
+        path: '/mg-role-authorize',
+        name: 'mgroleauthorize',
+        component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgroleauthorize'),
+        meta: {
+          title: '按角色维护功能和权限'
+        }
       }
-    }, {
-      path: '/mg-role',
-      name: 'mgrole',
-      component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgrole'),
-      meta: {
-        title: '维护角色'
-      }
-    },
-    {
-      path: '/mg-role-users',
-      name: 'mgroleusers',
-      component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgroleusers'),
-      meta: {
-        title: '按角色维护用户'
-      }
-    },
-    {
-      path: '/mg-role-authorize',
-      name: 'mgroleauthorize',
-      component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgroleauthorize'),
-      meta: {
-        title: '按角色维护功能和权限'
-      }
-    }]
+    ]
   },
   {
     path: '/404',
@@ -114,7 +115,7 @@ const routes = [{
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
