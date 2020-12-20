@@ -15,6 +15,9 @@ import LayoutFooter from './LayoutFooter'
 
 export default {
   components: { LayoutFooter },
+  created() {
+    console.log(111)
+  },
 }
 </script>
 

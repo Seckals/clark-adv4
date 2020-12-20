@@ -79,7 +79,7 @@ fetch.interceptors.response.use(
 
     // 登录失效
     if (code === 401) {
-      location.href = `//${location.host}/auth/#/user/login?from=${encodeURIComponent(location.href)}`
+      location.href = `//${location.host}/auth/#/user/login`
       return false
     }
 

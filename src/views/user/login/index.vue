@@ -3,14 +3,14 @@
     <div class="tabs">
       <router-link
         tag="div"
-        to="/login"
+        to="/user/login"
         active-class="tabsItem tabsItemActive"
         class="tabsItem"
         >登录</router-link
       >
       <router-link
         tag="div"
-        to="/regist"
+        to="/user/regist"
         active-class="tabsItem"
         class="tabsItem"
         >注册</router-link
@@ -60,7 +60,7 @@
       >
     </a-form>
     <div class="pwdForget">
-      <a href="/resetpwd-sendmail">忘记密码</a>
+      <a href="#/user/resetpwd-sendmail">忘记密码</a>
     </div>
   </div>
 </template>
@@ -74,6 +74,9 @@ export default {
       form: this.$form.createForm(this, { name: 'login' }),
       loading: false,
     }
+  },
+  created() {
+    console.log(this.$route)
   },
   methods: {
     ...mapActions(['Login']),
@@ -93,13 +96,19 @@ export default {
         }
       })
     },
+
     loginSuccess() {
       this.$nextTick(() => {
+        console.log(process.env.NODE_ENV)
         const fromUrl = this.$route.query.from || '/mg-users'
         if (fromUrl.indexOf('//') === 0 || fromUrl.indexOf('http') === 0) {
           window.location.href = this.$route.query.from
         } else {
-          this.$router.push(fromUrl)
+          if (process.env.NODE_ENV == 'development') {
+            this.$router.push(fromUrl)
+          } else {
+            window.location.href = 'http://49.235.30.187:8088/prod/#/'
+          }
         }
       })
 

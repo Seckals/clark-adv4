@@ -17,13 +17,13 @@ export default {
     }
   },
   created() {
-    const detail = localStorage.getItem('auth-info')
-    console.log(detail)
-    if (!detail) {
-      this.toLogin()
-      return
-    }
-    this.$store.commit('SET_DETAIL')
+    // const detail = localStorage.getItem('auth-info')
+    // console.log(detail)
+    // if (!detail) {
+    //   this.toLogin()
+    //   return
+    // }
+    // this.$store.commit('SET_DETAIL')
   },
   methods: {
     toLogin() {

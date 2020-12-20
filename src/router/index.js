@@ -8,15 +8,54 @@ import registerresult from '../views/user/register-result'
 import registeractive from '../views/user/register-active'
 import resetpwdsendmail from '../views/user/resetpwd-sendmail'
 import resetpwd from '../views/user/resetpwd'
+import store from '../store'
 
 
 Vue.use(VueRouter)
 
 const routes = [{
     path: '/',
+    name: 'Layout',
+    component: Layout,
+    redirect: '/mg-role',
+    children: [{
+        path: '/mg-users',
+        name: 'mgusers',
+        component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgusers'),
+        meta: {
+          title: '维护用户'
+        }
+      }, {
+        path: '/mg-role',
+        name: 'mgrole',
+        component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgrole'),
+        meta: {
+          title: '维护角色'
+        }
+      },
+      {
+        path: '/mg-role-users',
+        name: 'mgroleusers',
+        component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgroleusers'),
+        meta: {
+          title: '按角色维护用户'
+        }
+      },
+      {
+        path: '/mg-role-authorize',
+        name: 'mgroleauthorize',
+        component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgroleauthorize'),
+        meta: {
+          title: '按角色维护功能和权限'
+        }
+      }
+    ]
+  },
+  {
+    path: '/user',
     name: 'user',
     component: user,
-    redirect: 'login',
+    redirect: '/user/login',
     children: [{
         path: 'login',
         component: login,
@@ -70,44 +109,6 @@ const routes = [{
     ]
   },
   {
-    path: '/Layout',
-    name: 'Layout',
-    component: Layout,
-    redirect: '/mg-role',
-    children: [{
-        path: '/mg-users',
-        name: 'mgusers',
-        component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgusers'),
-        meta: {
-          title: '维护用户'
-        }
-      }, {
-        path: '/mg-role',
-        name: 'mgrole',
-        component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgrole'),
-        meta: {
-          title: '维护角色'
-        }
-      },
-      {
-        path: '/mg-role-users',
-        name: 'mgroleusers',
-        component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgroleusers'),
-        meta: {
-          title: '按角色维护用户'
-        }
-      },
-      {
-        path: '/mg-role-authorize',
-        name: 'mgroleauthorize',
-        component: () => import( /* webpackChunkName: "mg-position" */ '../views/mgroleauthorize'),
-        meta: {
-          title: '按角色维护功能和权限'
-        }
-      }
-    ]
-  },
-  {
     path: '/404',
     name: '404',
     component: () => import( /* webpackChunkName: "404" */ '../views/404')
@@ -118,6 +119,20 @@ const router = new VueRouter({
   mode: 'hash',
   base: process.env.BASE_URL,
   routes
+})
+router.beforeEach((to, from, next) => {
+  console.log(to, from, )
+  const detail = localStorage.getItem('auth-info')
+  if (to.path == "/user/login" || to.path == "/user/regist") {
+    next()
+  } else {
+    if (detail) {
+      store.commit('SET_DETAIL')
+      next()
+    } else {
+      next('/user/login')
+    }
+  }
 })
 
 export default router
