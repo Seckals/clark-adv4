@@ -10,7 +10,7 @@ module.exports = {
     //   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     // ]
     name,
-    devtool: 'source-map',
+    // devtool: 'source-map',
     performance: {
       hints: 'warning',
       //入口起点的最大体积 整数类型（以字节为单位）
