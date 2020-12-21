@@ -17,7 +17,7 @@
     >
       <a-menu-item
         v-for="item in menu.filter((i) => {
-          return i.id < 19
+          return i.hidden == '1'
         })"
         :key="item.path"
       >
