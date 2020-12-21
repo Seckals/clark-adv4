@@ -37,7 +37,7 @@
         </a-input>
       </a-form-item>
       <a-form-item>
-        <a-input
+        <a-input-password
           v-decorator="[
             'password',
             {
@@ -48,7 +48,7 @@
           placeholder="请输入密码"
         >
           <a-icon slot="prefix" type="lock" />
-        </a-input>
+        </a-input-password>
       </a-form-item>
       <a-button
         :loading="loading"
