@@ -68,6 +68,7 @@
 <script>
 import { mapActions } from 'vuex'
 import { login } from '../../../api/auth'
+import util from '../../../utils'
 export default {
   data() {
     return {
@@ -87,19 +88,30 @@ export default {
             data: values,
           }).then((res) => {
             window.localStorage.setItem('auth-info', JSON.stringify(res))
-            this.$store.commit('SET_DETAIL')
-            this.loginSuccess()
+            this.loginSuccess(res)
+            this.loading = false
           })
         }
       })
     },
 
-    loginSuccess() {
+    loginSuccess(res) {
       this.$nextTick(() => {
         const fromUrl = this.$route.query.from || '/mg-users'
         if (fromUrl.indexOf('//') === 0 || fromUrl.indexOf('http') === 0) {
           window.location.href = this.$route.query.from
         } else {
+          const menu =
+            util.getOneFromList(res.modules, 'name', 'permission') || {}
+          if (Object.keys(menu).length == 0) {
+            this.$notification.error({
+              message: '错误',
+              description: '无权限',
+              duration: 4,
+            })
+            return
+          }
+          this.$store.commit('SET_DETAIL')
           if (process.env.NODE_ENV == 'development') {
             this.$router.push(fromUrl)
           } else if (process.env.NODE_ENV == 'prod') {
@@ -107,16 +119,15 @@ export default {
           } else if (process.env.NODE_ENV == 'production') {
             window.location.href = 'http://172.23.2.17:8088/prod/#/'
           }
+          // 延迟 1 秒显示欢迎信息
+          // setTimeout(() => {
+          //   this.$notification.success({
+          //     message: '欢迎',
+          //     description: `${this.$store.state.user},欢迎回来`,
+          //   })
+          // }, 1000)
         }
       })
-
-      // 延迟 1 秒显示欢迎信息
-      setTimeout(() => {
-        this.$notification.success({
-          message: '欢迎',
-          description: `${this.$store.state.user},欢迎回来`,
-        })
-      }, 1000)
     },
     requestFailed(err) {
       // this.$refs['validate-code'].draw()
