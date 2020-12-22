@@ -685,12 +685,9 @@ export default {
     handleOk() {
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log(
-            this.mdl.normalMap,
-            this.mdl.normalMap && this.mdl.normalMap.length !== 0
-          )
+          console.log(this.mdl.normalMap, Object.keys(this.mdl.normalMap))
           const request =
-            this.mdl.normalMap && this.mdl.normalMap.length !== 0
+            Object.keys(this.mdl.normalMap).length != 0
               ? updateHc_post
               : saveHc_post
           const normalMap = {}
@@ -720,10 +717,8 @@ export default {
             // this.visible = false
             this.form.resetFields()
             this.$success({
-              title: `${this.mdl ? '修改成功' : '保存成功'}`,
-              content: `您所维护的数据已经${
-                this.mdl ? '修改成功！' : '保存成功！'
-              }`,
+              title: `成功`,
+              content: `您所维护的数据已经操作成功`,
               // onOk: () => {
               //   this.visible = false
               // }

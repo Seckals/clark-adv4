@@ -601,7 +601,7 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           const request =
-            this.mdl.normalMap && Object.keys(this.mdl.normalMap).length != 0
+            Object.keys(this.mdl.normalMap).length != 0
               ? updateBol_post
               : saveBol_post
           const normalMap = {}
