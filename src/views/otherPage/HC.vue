@@ -47,7 +47,7 @@
                 <a-button
                   style="margin-left: 8px"
                   @click="
-                    queryParam = { hcType: '', year: new Date().getFullYear() }
+                    queryParam = { hcType: ' ', year: new Date().getFullYear() }
                   "
                   >重置</a-button
                 >
@@ -624,6 +624,8 @@ export default {
     // 重置数据
     resetClick(params = {}) {
       console.log(params)
+      console.log(params)
+      debugger
       this.queryParam = { ...params }
       this.$refs.table.refresh()
     },
@@ -683,8 +685,12 @@ export default {
     handleOk() {
       this.form.validateFields((err, values) => {
         if (!err) {
+          console.log(
+            this.mdl.normalMap,
+            this.mdl.normalMap && this.mdl.normalMap.length !== 0
+          )
           const request =
-            this.mdl.normalMap && this.mdl.normalMap.length
+            this.mdl.normalMap && this.mdl.normalMap.length !== 0
               ? updateHc_post
               : saveHc_post
           const normalMap = {}
@@ -711,18 +717,18 @@ export default {
             },
           }).then(() => {
             this.$refs.table.refresh()
-            this.visible = false
+            // this.visible = false
             this.form.resetFields()
-            this.mdl = null
             this.$success({
               title: `${this.mdl ? '修改成功' : '保存成功'}`,
-              content: `您所维护的BOL数据已经${
+              content: `您所维护的数据已经${
                 this.mdl ? '修改成功！' : '保存成功！'
               }`,
               // onOk: () => {
               //   this.visible = false
               // }
             })
+            this.mdl = null
           })
         }
       })

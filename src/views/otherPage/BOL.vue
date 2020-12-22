@@ -417,7 +417,7 @@ export default {
           }
           return {
             data: newRecords,
-            totalCount: res.total,
+            totalCount: 100,
             totalPage: res.pages,
             pageSize: res.size,
             pageNo: res.current,
@@ -601,11 +601,9 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           const request =
-            this.mdl.normalMap && Object.keys(this.mdl.normalMap).length
+            this.mdl.normalMap && Object.keys(this.mdl.normalMap).length != 0
               ? updateBol_post
               : saveBol_post
-          console.log(this.mdl.normalMap.length)
-
           const normalMap = {}
           const superMap = {}
           ;[...values.dataStanderUp, ...values.dataStanderDown].forEach(
@@ -629,7 +627,7 @@ export default {
             },
           }).then(() => {
             this.$refs.table.refresh()
-            this.visible = false
+            // this.visible = false
             this.form.resetFields()
             this.$success({
               title: `${this.mdl ? '修改成功' : '保存成功'}`,
