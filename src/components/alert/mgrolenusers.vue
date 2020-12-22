@@ -19,7 +19,12 @@
       :wrapper-col="{ span: 18 }"
     >
       <a-form-model-item label="用户" prop="userId">
-        <a-select v-model="form.userId" placeholder="请选择">
+        <a-select
+          v-model="form.userId"
+          placeholder="请选择"
+          :filter-option="filterOption"
+          :show-search="true"
+        >
           <a-select-option
             v-for="(item, idx) in preList"
             :key="idx"
@@ -58,6 +63,13 @@ export default {
   },
   mixins: [mixins],
   methods: {
+    filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      )
+    },
     getPreList() {
       this.loading = true
       prelinkSysUser({ roleId: this.$route.query.id })
