@@ -142,6 +142,7 @@ export default {
     },
     tableChange(e) {
       this.pagination = e
+
       this.getList()
     },
     onSelectChange(selectedRowKeys) {
