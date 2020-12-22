@@ -417,7 +417,7 @@ export default {
           }
           return {
             data: newRecords,
-            totalCount: 100,
+            totalCount: res.total,
             totalPage: res.pages,
             pageSize: res.size,
             pageNo: res.current,
