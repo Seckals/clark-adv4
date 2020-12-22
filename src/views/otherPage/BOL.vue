@@ -58,7 +58,7 @@
         <span slot="action" slot-scope="text, record">
           <template>
             <a
-              @click="handleEdit(record.origin)"
+              @click="handleEdit(record.origin, true)"
               v-permission="'mainData.production.mg-bol.edit'"
               >编辑</a
             >
@@ -368,6 +368,7 @@ export default {
   },
   data() {
     return {
+      ifadd: false,
       // 弹窗数据
       visible: false,
       form: this.$form.createForm(this, { first: true }),
@@ -551,6 +552,7 @@ export default {
     }, 500),
     // 添加数据
     add() {
+      this.ifadd = true
       this.visible = true
     },
     // 重置数据
@@ -565,7 +567,8 @@ export default {
       this.selectedRows = selectedRows
     },
     // 编辑
-    handleEdit(origin) {
+    handleEdit(origin, ifEdit = false) {
+      if (ifEdit) this.ifadd = false
       this.visible = true
       this.$nextTick(() => {
         const normalMap = origin.normalMap
@@ -599,11 +602,9 @@ export default {
     // 弹窗成功点击
     handleOk() {
       this.form.validateFields((err, values) => {
+        console.log(this.ifadd)
         if (!err) {
-          const request =
-            Object.keys(this.mdl.normalMap).length != 0
-              ? updateBol_post
-              : saveBol_post
+          const request = !this.ifadd ? updateBol_post : saveBol_post
           const normalMap = {}
           const superMap = {}
           ;[...values.dataStanderUp, ...values.dataStanderDown].forEach(
@@ -630,9 +631,9 @@ export default {
             // this.visible = false
             this.form.resetFields()
             this.$success({
-              title: `${this.mdl ? '修改成功' : '保存成功'}`,
+              title: `${!this.ifadd ? '修改成功' : '保存成功'}`,
               content: `您所维护的BOL数据已经${
-                this.mdl ? '修改成功！' : '保存成功！'
+                !this.ifadd ? '修改成功！' : '保存成功！'
               }`,
               // onOk: () => {
               //   this.visible = false
