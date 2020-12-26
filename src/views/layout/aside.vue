@@ -83,6 +83,7 @@ export default {
   right: 0;
   box-sizing: border-box;
   padding: 0 16px;
+
   line-height: 45px;
   cursor: pointer;
   & > i {
