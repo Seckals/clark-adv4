@@ -1,20 +1,30 @@
+// 引入
+// const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 module.exports = {
-  // configureWebpack: (config) => {
-  //   config.devtool = 'source-map'
-  // },
-  configureWebpack: {
-    performance: {
-      hints: 'warning',
-      //入口起点的最大体积 整数类型（以字节为单位）
-      maxEntrypointSize: 50000000,
-      //生成文件的最大体积 整数类型（以字节为单位 300k）
-      maxAssetSize: 30000000,
-      //只给出 js 文件的性能提示
-      assetFilter: function (assetFilename) {
-        return assetFilename.endsWith('.js');
-      }
+  chainWebpack: config => {
+    if (process.env.NODE_ENV != 'development') {
+      // js,css代码的最小化压缩
+      config.optimization.minimize(true);
     }
   },
+  configureWebpack: (config) => {
+    // if (process.env.NODE_ENV != 'development') {
+    //   config.optimization.minimizer = [
+    //     new UglifyJsPlugin({
+    //       uglifyOptions: {
+    //         warnings: false,
+    //         compress: {
+    //           drop_console: true,
+    //           drop_debugger: false,
+    //           pure_funcs: ["console.log"]
+    //         }
+    //       }
+    //     })
+    //   ];
+    // }
+    config.devtool = 'source-map'
+  },
+  productionSourceMap: false,
   publicPath: './',
   devServer: {
     proxy: {
