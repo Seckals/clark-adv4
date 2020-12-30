@@ -106,9 +106,13 @@ const routes = [{
         },
       },
     ]
+  }, {
+    path: '/401',
+    name: '401',
+    component: () => import( /* webpackChunkName: "404" */ '../views/401')
   },
   {
-    path: '/404',
+    path: '*',
     name: '404',
     component: () => import( /* webpackChunkName: "404" */ '../views/404')
   }
@@ -131,7 +135,7 @@ router.beforeEach((to, from, next) => {
       const data = util.getLocal('auth-info') || {}
       const menu = util.getOneFromList(data.modules, 'name', 'permission') || {}
       if (Object.keys(menu).length == 0) {
-        next('/user/login')
+        next('/401')
       } else {
         store.commit('SET_DETAIL')
         next()
