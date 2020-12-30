@@ -11,7 +11,6 @@ import './components'
 
 Vue.config.productionTip = false
 Vue.prototype.$utils = util
-
 new Vue({
   router,
   store,

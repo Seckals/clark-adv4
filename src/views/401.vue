@@ -1,5 +1,5 @@
 <template>
-  <a-result status="403" title="401" sub-title="您无访问权限.">
+  <a-result status="404" title="401" sub-title="您无访问权限.">
     <template #extra> </template>
   </a-result>
 </template>

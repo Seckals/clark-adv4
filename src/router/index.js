@@ -86,6 +86,13 @@ const routes = [{
       meta: {
         title: '维护班次'
       }
+    }, {
+      path: '/shutdown',
+      name: 'classes',
+      component: () => import( /* webpackChunkName: "mg-classes" */ '../views/shutdown'),
+      meta: {
+        title: '停机代码'
+      }
     },
     {
       path: '/mg-projects',
