@@ -86,11 +86,15 @@ export default {
           this.loading = true
           login({
             data: values,
-          }).then((res) => {
-            window.localStorage.setItem('auth-info', JSON.stringify(res))
-            this.loginSuccess(res)
-            this.loading = false
           })
+            .then((res) => {
+              window.localStorage.setItem('auth-info', JSON.stringify(res))
+              this.loginSuccess(res)
+              this.loading = false
+            })
+            .catch(() => {
+              this.loading = false
+            })
         }
       })
     },
@@ -119,13 +123,6 @@ export default {
           } else if (process.env.NODE_ENV == 'production') {
             window.location.href = 'http://172.23.2.17:8088/prod/#/'
           }
-          // 延迟 1 秒显示欢迎信息
-          // setTimeout(() => {
-          //   this.$notification.success({
-          //     message: '欢迎',
-          //     description: `${this.$store.state.user},欢迎回来`,
-          //   })
-          // }, 1000)
         }
       })
     },

@@ -9,7 +9,7 @@ import registeractive from '../views/user/register-active'
 import resetpwdsendmail from '../views/user/resetpwd-sendmail'
 import resetpwd from '../views/user/resetpwd'
 import store from '../store'
-
+import util from '../utils'
 
 Vue.use(VueRouter)
 
@@ -128,8 +128,14 @@ router.beforeEach((to, from, next) => {
   } else {
     const detail = localStorage.getItem('auth-info')
     if (detail) {
-      store.commit('SET_DETAIL')
-      next()
+      const data = util.getLocal('auth-info') || {}
+      const menu = util.getOneFromList(data.modules, 'name', 'permission') || {}
+      if (Object.keys(menu).length == 0) {
+        next('/user/login')
+      } else {
+        store.commit('SET_DETAIL')
+        next()
+      }
     } else {
       next('/user/login')
     }
