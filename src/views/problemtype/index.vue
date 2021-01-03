@@ -43,6 +43,10 @@ import problemtype from '../../components/alert/problemtype'
 import mixins from '../../mixins/list'
 const columns = [
   {
+    dataIndex: 'systemModule',
+    title: '系统模块',
+  },
+  {
     dataIndex: 'problemTypeCode',
     title: '问题类型编号',
   },

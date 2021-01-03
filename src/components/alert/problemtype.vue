@@ -17,10 +17,13 @@
       :label-col="{ span: 6 }"
       :wrapper-col="{ span: 18 }"
     >
-      <a-form-model-item label="问题类型编号" prop="code">
+      <a-form-model-item label="系统模块" prop="systemModule">
+        <a-input v-model="form.systemModule" placeholder="" />
+      </a-form-model-item>
+      <a-form-model-item label="问题类型编号" prop="problemTypeCode">
         <a-input v-model="form.problemTypeCode" placeholder="" />
       </a-form-model-item>
-      <a-form-model-item label="问题类型名称" prop="name">
+      <a-form-model-item label="问题类型名称" prop="problemTypeName">
         <a-input v-model="form.problemTypeName" placeholder="" />
       </a-form-model-item>
     </a-form-model>
@@ -35,8 +38,16 @@ export default {
       form: {
         problemTypeCode: '',
         problemTypeName: '',
+        systemModule: '',
       },
       rules: {
+        systemModule: [
+          {
+            required: true,
+            message: '请输入系统模块',
+            trigger: 'blur',
+          },
+        ],
         problemTypeName: [
           {
             required: true,
@@ -62,6 +73,7 @@ export default {
         data: {
           name: this.form.problemTypeName,
           code: this.form.problemTypeCode,
+          systemModule: this.form.systemModule,
         },
       })
         .then(() => {
@@ -80,6 +92,7 @@ export default {
           name: this.form.problemTypeName,
           code: this.form.problemTypeCode,
           id: this.form.id,
+          systemModule: this.form.systemModule,
         },
       })
         .then(() => {
