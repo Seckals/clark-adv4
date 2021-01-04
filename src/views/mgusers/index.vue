@@ -96,7 +96,7 @@ export default {
           type: 'input',
           title: '员工名称',
           placeholder: '请输入',
-          key: 'empNo',
+          key: 'empName',
         },
         {
           type: 'select',
