@@ -110,9 +110,9 @@ export default {
         },
         {
           type: 'input',
-          title: '邮箱地址',
+          title: '邮箱',
           placeholder: '请输入',
-          key: 'empNo',
+          key: 'email',
         },
         {
           type: 'input',
