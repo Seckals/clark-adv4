@@ -6,6 +6,7 @@
       permission="permission.mg-role-users.add"
       :hasAdd="false"
       @operation="operation"
+      ref="IMain"
     >
       <template slot="table">
         <a-table
@@ -141,7 +142,7 @@ export default {
     },
     tableChange(e) {
       this.pagination = e
-      this.getList()
+      this.getList(this.$refs.IMain.searchData)
     },
     getList(data = {}) {
       this.loading = true

@@ -5,6 +5,7 @@
       :hasReset="true"
       permission="permission.mg-role-users.add"
       @operation="operation"
+      ref="IMain"
     >
       <div slot="detail">
         <div style="margin-bottom: 12px">
@@ -142,8 +143,7 @@ export default {
     },
     tableChange(e) {
       this.pagination = e
-
-      this.getList()
+      this.getList(this.$refs.IMain.searchData)
     },
     onSelectChange(selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys
