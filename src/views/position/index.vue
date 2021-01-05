@@ -4,6 +4,7 @@
       :searchs="searchs"
       permission="mainData.personnel.mg-position.add"
       @operation="operation"
+      ref="IMain"
     >
       <template slot="table">
         <a-table
@@ -109,7 +110,7 @@ export default {
     },
     tableChange(e) {
       this.pagination = e
-      this.getList()
+      this.getList(this.$refs.IMain.searchData)
     },
     delEvent(id) {
       this.delModel('确定删除选中的职位', () => {

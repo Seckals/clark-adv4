@@ -1,6 +1,7 @@
 <template>
   <div>
     <IMain
+      ref="IMain"
       :searchs="searchs"
       permission="mainData.project.mg-customers.add"
       @operation="operation"
@@ -153,7 +154,7 @@ export default {
     },
     tableChange(e) {
       this.pagination = e
-      this.getList()
+      this.getList(this.$refs.IMain.searchData)
     },
     delEvent(id) {
       this.delModel('确认删除选中的客户', () => {

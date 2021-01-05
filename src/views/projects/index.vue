@@ -4,6 +4,7 @@
       :searchs="searchs"
       permission="mainData.project.mg-projects.add"
       @operation="operation"
+      ref="IMain"
     >
       <template slot="table">
         <a-table
@@ -163,7 +164,7 @@ export default {
     },
     tableChange(e) {
       this.pagination = e
-      this.getList()
+      this.getList(this.$refs.IMain.searchData)
     },
     delEvent(id) {
       this.delModel('确认删除选中的项目', () => {
