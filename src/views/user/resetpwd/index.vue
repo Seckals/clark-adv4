@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { resetPassword } from '../../../api/auth'
 // import { mapActions } from 'vuex'
 // import AuthPage from '@views/components/authPage'
 // import { timeFix } from '@/utils/time'
@@ -58,26 +59,30 @@ export default {
   // mounted(){console.log()},
 
   methods: {
-    toResetpwd() {
-      // e.preventDefault()
-      // this.form.validateFields((err, values) => {
-      //   if (!err) {
-      //     this.loading = true
-      //     this.$api.userC
-      //       .resetPassword({
-      //         ...this.$router.query,
-      //         ...values,
-      //       })
-      //       .then(({ code }) => {
-      //         if (cose !== 200) return
-      //         this.$router.push('/user/login')
-      //       })
-      //       .catch((res) => {})
-      //       .finally(() => {
-      //         this.loading = false
-      //       })
-      //   }
-      // })
+    toResetpwd(e) {
+      e.preventDefault()
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          this.loading = true
+          console.log(this.$route.query,values)
+         resetPassword({
+           data:{
+              ...this.$route.query,
+              ...values,
+            }
+         })
+            .then(({ code }) => {
+              console.log(code)
+              if (code !== 200) return
+              this.$router.push('/user/login')
+            }).catch(e=>{
+              console.log(e)
+            })
+            .finally(() => {
+              this.loading = false
+            })
+        }
+      })
     },
     loginSuccess() {
       this.$nextTick(() => {

@@ -16,7 +16,7 @@ export function login(options) {
     data: (options && options.data) || {}
   })
 }
-// 修改
+// 注册
 export function register(options) {
   return fetch({
     url: '/sysUserController/register',
@@ -28,7 +28,30 @@ export function register(options) {
     data: (options && options.data) || {}
   })
 }
-
+// 重置密码
+export function resetPassword(options) {
+  return fetch({
+    url: 'sysUserController/resetPassword',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options && options.headers ? options.headers : {})
+    },
+    data: (options && options.data) || {}
+  })
+}
+// 新密码
+export function newPassword(options) {
+  return fetch({
+    url: 'sysUserController/newPassword',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options && options.headers ? options.headers : {})
+    },
+    data: (options && options.data) || {}
+  })
+}
 // 发送邮件
 export function sendEmail(options) {
   return fetch({

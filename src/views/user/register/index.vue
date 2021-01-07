@@ -3,14 +3,14 @@
     <div class="tabs">
       <router-link
         tag="div"
-        to="/login"
+        to="/user/login"
         active-class="tabsItem"
         class="tabsItem"
         >登录</router-link
       >
       <router-link
         tag="div"
-        to="/regist"
+        to="/user/regist"
         active-class="tabsItem tabsItemActive"
         class="tabsItem"
         >注册</router-link
