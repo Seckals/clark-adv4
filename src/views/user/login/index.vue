@@ -1,25 +1,19 @@
 <template>
   <div class="mainWrapper">
     <div class="tabs">
-      <router-link
-        tag="div"
-        to="/user/login"
-        active-class="tabsItem tabsItemActive"
-        class="tabsItem"
-        >登录</router-link
-      >
-      <router-link
-        tag="div"
-        to="/user/regist"
-        active-class="tabsItem"
-        class="tabsItem"
-        >注册</router-link
-      >
+      <router-link tag="div"
+                   to="/user/login"
+                   active-class="tabsItem tabsItemActive"
+                   class="tabsItem">登录</router-link>
+      <router-link tag="div"
+                   to="/user/regist"
+                   active-class="tabsItem"
+                   class="tabsItem">注册</router-link>
     </div>
-    <a-form :form="form" @submit="toLogin">
+    <a-form :form="form"
+            @submit="toLogin">
       <a-form-item>
-        <a-input
-          v-decorator="[
+        <a-input v-decorator="[
             'key',
             {
               rules: [
@@ -30,34 +24,30 @@
               ],
             },
           ]"
-          size="large"
-          placeholder="请输入邮箱或手机号登录"
-        >
-          <a-icon slot="prefix" type="user" />
+                 size="large"
+                 placeholder="请输入邮箱或手机号登录">
+          <a-icon slot="prefix"
+                  type="user" />
         </a-input>
       </a-form-item>
       <a-form-item>
-        <a-input-password
-          v-decorator="[
+        <a-input-password v-decorator="[
             'password',
             {
               rules: [{ required: true, message: '请输入密码！' }],
             },
           ]"
-          size="large"
-          placeholder="请输入密码"
-        >
-          <a-icon slot="prefix" type="lock" />
+                          size="large"
+                          placeholder="请输入密码">
+          <a-icon slot="prefix"
+                  type="lock" />
         </a-input-password>
       </a-form-item>
-      <a-button
-        :loading="loading"
-        type="primary"
-        block
-        size="large"
-        html-type="submit"
-        >登录</a-button
-      >
+      <a-button :loading="loading"
+                type="primary"
+                block
+                size="large"
+                html-type="submit">登录</a-button>
     </a-form>
     <div class="pwdForget">
       <a href="#/user/resetpwd-sendmail">忘记密码</a>
@@ -70,7 +60,7 @@ import { mapActions } from 'vuex'
 import { login } from '../../../api/auth'
 import util from '../../../utils'
 export default {
-  data() {
+  data () {
     return {
       form: this.$form.createForm(this, { name: 'login' }),
       loading: false,
@@ -78,7 +68,7 @@ export default {
   },
   methods: {
     ...mapActions(['Login']),
-    toLogin(e) {
+    toLogin (e) {
       e.preventDefault()
       // this.loading = true
       this.form.validateFields((err, values) => {
@@ -99,7 +89,7 @@ export default {
       })
     },
 
-    loginSuccess(res) {
+    loginSuccess (res) {
       this.$nextTick(() => {
         const fromUrl = this.$route.query.from || '/mg-users'
         if (fromUrl.indexOf('//') === 0 || fromUrl.indexOf('http') === 0) {
@@ -116,7 +106,7 @@ export default {
             return
           }
           this.$store.commit('SET_DETAIL')
-          if (process.env.NODE_ENV == 'development') {
+          if (process.env.NODE_ENV == 'development' || process.env.VUE_APP_FLAG == 'bj') {
             this.$router.push(fromUrl)
           } else if (process.env.NODE_ENV == 'prod') {
             window.location.href = 'http://49.235.30.187:8088/prod/#/'
@@ -126,7 +116,7 @@ export default {
         }
       })
     },
-    requestFailed(err) {
+    requestFailed (err) {
       // this.$refs['validate-code'].draw()
       this.$notification.error({
         message: '错误',

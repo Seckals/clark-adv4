@@ -8,16 +8,14 @@
       }}
     </div>
     <div class="mainWrapper">
-      <a-button
-        type="primary"
-        block
-        size="large"
-        @click="
+      <a-button type="primary"
+                block
+                size="large"
+                @click="
           () => {
             $router.push('/user/login')
           }
-        "
-      >
+        ">
         确认
       </a-button>
     </div>
@@ -25,8 +23,9 @@
 </template>
 
 <script>
+import { active } from '../../../api/auth'
 export default {
-  data() {
+  data () {
     return {
       isActive: false,
       second: 5,
@@ -36,26 +35,31 @@ export default {
 
   watch: {},
 
-  created() {
-    // const { accountP, empNo } = this.$router.query;
-    this.$api.userC
-      .active({})
-      .then((code) => {
-        if (code !== 200) return
+  created () {
+    console.log(this.$route.query)
+    const { accountP, empNo } = this.$route.query;
+    active({
+      data: {
+        empNo: empNo, accountP: accountP
+      }
+    })
+      .then(() => {
+        debugger
+        this.isActive = true
         this.timmer = setInterval(() => {
           if (this.second > 0) {
-            this.second -= 1
+            this.second = this.second - 1
           } else {
             clearTimeout(this.timmer)
             this.$router.push('/user/login')
           }
         }, 1000)
+      }).catch(res => {
+        console.log(res)
       })
-      .finally(() => {
-        this.isActive = true
-      })
+
   },
-  destroyed() {
+  destroyed () {
     clearTimeout(this.timmer)
   },
 }

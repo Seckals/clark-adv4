@@ -28,6 +28,18 @@ export function register(options) {
     data: (options && options.data) || {}
   })
 }
+// 注册
+export function active(options) {
+  return fetch({
+    url: 'sysUserController/active',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(options && options.headers ? options.headers : {})
+    },
+    data: (options && options.data) || {}
+  })
+}
 // 重置密码
 export function resetPassword(options) {
   return fetch({

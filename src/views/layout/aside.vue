@@ -1,42 +1,34 @@
 <template>
-  <a-layout-sider
-    v-model="$store.state.collapsed"
-    width="208"
-    collapsedWidth="48"
-    :trigger="null"
-    collapsible
-  >
-    <div class="logo" @click="tolinkprod">
-      <img src="../../assets/img/logo.png" alt="" />
+  <a-layout-sider v-model="$store.state.collapsed"
+                  width="208"
+                  collapsedWidth="48"
+                  :trigger="null"
+                  collapsible>
+    <div class="logo"
+         @click="tolinkprod">
+      <img src="../../assets/img/logo.png"
+           alt="" />
     </div>
-    <a-menu
-      theme="dark"
-      mode="inline"
-      :default-selected-keys="[$route.path]"
-      @click="go"
-    >
-      <a-menu-item
-        v-for="item in menu.filter((i) => {
+    <a-menu theme="dark"
+            mode="inline"
+            :default-selected-keys="[$route.path]"
+            @click="go">
+      <a-menu-item v-for="item in menu.filter((i) => {
           return i.hidden == '1'
         })"
-        :key="item.path"
-      >
+                   :key="item.path">
         <a-icon :type="item.img" />
         <span>{{ item.description }}</span>
       </a-menu-item>
-      <a-sub-menu
-        :title="item.description"
-        v-for="(item, index) in menu1"
-        :key="index"
-      >
-        <a-menu-item
-          v-for="item1 in item.children.filter((i) => {
+      <a-sub-menu :title="item.description"
+                  v-for="(item, index) in menu1"
+                  :key="index">
+        <a-menu-item v-for="item1 in item.children.filter((i) => {
             return i.hidden == '1'
           })"
-          :key="item1.path"
-        >
-          <a-icon :type="item1.img" />{{ item1.description }}</a-menu-item
-        >
+                     :key="item1.path">
+          <a-icon :type="item1.img" />{{ item1.description }}
+        </a-menu-item>
       </a-sub-menu>
     </a-menu>
     <!-- <div class="menu-trigger">
@@ -50,21 +42,23 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       collapsed: false,
     }
   },
   computed: {
-    menu() {
+    menu () {
       return this.$store.getters.getMenu || []
     },
-    menu1() {
+    menu1 () {
       return this.$store.getters.getMenu1 || []
     },
   },
   methods: {
-    tolinkprod() {
+    tolinkprod () {
+      console.log(process.env.VUE_APP_FLAG)
+      if (process.env.VUE_APP_FLAG == 'bj') return
       if (process.env.NODE_ENV == 'development') {
         this.$router.push('/')
       } else if (process.env.NODE_ENV == 'prod') {
@@ -73,7 +67,7 @@ export default {
         window.location.href = 'http://172.23.2.17:8088/prod/#/'
       }
     },
-    go(e) {
+    go (e) {
       if (e.key) {
         this.$router.push(e.key)
       }

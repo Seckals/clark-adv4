@@ -1,29 +1,21 @@
 <template>
   <div class="mainWrapper">
     <div class="tabs">
-      <router-link
-        tag="div"
-        to="/user/login"
-        active-class="tabsItem"
-        class="tabsItem"
-        >登录</router-link
-      >
-      <router-link
-        tag="div"
-        to="/user/regist"
-        active-class="tabsItem tabsItemActive"
-        class="tabsItem"
-        >注册</router-link
-      >
+      <router-link tag="div"
+                   to="/user/login"
+                   active-class="tabsItem"
+                   class="tabsItem">登录</router-link>
+      <router-link tag="div"
+                   to="/user/regist"
+                   active-class="tabsItem tabsItemActive"
+                   class="tabsItem">注册</router-link>
     </div>
-    <a-form :form="form" @submit="toRigist">
-      <a-form-item
-        label="邮箱"
-        :label-col="{ span: 6 }"
-        :wrapper-col="{ span: 18 }"
-      >
-        <a-input
-          v-decorator="[
+    <a-form :form="form"
+            @submit="toRigist">
+      <a-form-item label="邮箱"
+                   :label-col="{ span: 6 }"
+                   :wrapper-col="{ span: 18 }">
+        <a-input v-decorator="[
             'email',
             {
               rules: [
@@ -35,48 +27,36 @@
               ],
             },
           ]"
-          size="large"
-          placeholder="请输入您的公司邮箱"
-        />
+                 size="large"
+                 placeholder="请输入您的公司邮箱" />
       </a-form-item>
-      <a-form-item
-        label="确认密码"
-        :label-col="{ span: 6 }"
-        :wrapper-col="{ span: 18 }"
-      >
-        <a-input
-          v-decorator="[
+      <a-form-item label="确认密码"
+                   :label-col="{ span: 6 }"
+                   :wrapper-col="{ span: 18 }">
+        <a-input v-decorator="[
             'password',
             { rules: [{ required: true, message: '请输入密码！' }] },
           ]"
-          size="large"
-          placeholder="请输入密码"
-          type="password"
-        />
+                 size="large"
+                 placeholder="请输入密码"
+                 type="password" />
       </a-form-item>
-      <a-form-item
-        label="密码"
-        :label-col="{ span: 6 }"
-        :wrapper-col="{ span: 18 }"
-      >
-        <a-input
-          v-decorator="[
+      <a-form-item label="密码"
+                   :label-col="{ span: 6 }"
+                   :wrapper-col="{ span: 18 }">
+        <a-input v-decorator="[
             'rePassword',
             { rules: [{ required: true, message: '请再次输入密码！' }] },
           ]"
-          size="large"
-          placeholder="请再次输入密码"
-          type="password"
-        />
+                 size="large"
+                 placeholder="请再次输入密码"
+                 type="password" />
       </a-form-item>
-      <a-button
-        :loading="loading"
-        type="primary"
-        block
-        size="large"
-        html-type="submit"
-        >注册</a-button
-      >
+      <a-button :loading="loading"
+                type="primary"
+                block
+                size="large"
+                html-type="submit">注册</a-button>
     </a-form>
   </div>
 </template>
@@ -84,7 +64,7 @@
 <script>
 import { register } from '../../../api/auth'
 export default {
-  data() {
+  data () {
     return {
       form: this.$form.createForm(this, { name: 'regist' }),
       submitting: false,
@@ -93,19 +73,17 @@ export default {
   },
 
   methods: {
-    toRigist(e) {
+    toRigist (e) {
       e.preventDefault()
-      this.form.validateFields((err,values) => {
+      this.form.validateFields((err, values) => {
         if (!err) {
           this.loading = true
-          register({data:values})
-            .then(({ code }) => {
-              if (code === 200) {
-                this.$router.push({
-                  path: '/register-result',
-                  query: { email: encodeURIComponent(values.email) },
-                })
-              }
+          register({ data: values })
+            .then(() => {
+              this.$router.push({
+                path: '/user/register-result',
+                query: { email: encodeURIComponent(values.email) },
+              })
             })
             .finally(() => {
               this.loading = false
