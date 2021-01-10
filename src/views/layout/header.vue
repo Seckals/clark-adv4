@@ -1,20 +1,17 @@
 <template>
-  <a-layout-header
-    style="
+  <a-layout-header style="
 			padding: 0px;
 			height: 48px;
 			line-height: 48px;
 			width: 100%;
 			z-index: 19;
-		"
-  >
+		">
     <div class="global-header">
-      <div class="menu-trigger" style="margin-right:20px">
-        <a-icon
-          class="trigger"
-          :type="$store.state.collapsed ? 'menu-unfold' : 'menu-fold'"
-          @click="check"
-        />
+      <div class="menu-trigger"
+           style="margin-right:20px">
+        <a-icon class="trigger"
+                :type="$store.state.collapsed ? 'menu-unfold' : 'menu-fold'"
+                @click="check" />
       </div>
       <div class="left">主数据 / {{ $route.meta.title }}</div>
       <div class="right">
@@ -23,7 +20,8 @@
           {{ noontip }}！
           <span>{{ $store.state.user }}</span>
         </div>
-        <div class="out" @click="logout">退出</div>
+        <div class="out"
+             @click="logout">退出</div>
       </div>
     </div>
   </a-layout-header>
@@ -32,19 +30,19 @@
 import Notice from '@/components/notice'
 export default {
   components: { Notice },
-  data() {
+  data () {
     return {
       noontip: '', // 上下午提示
     }
   },
-  created() {
+  created () {
     this.mynoontip()
   },
   methods: {
-    check() {
+    check () {
       this.$store.commit('collapsed', !this.$store.state.collapsed)
     },
-    mynoontip() {
+    mynoontip () {
       const that = this
       const date = new Date()
       if (date.getHours() >= 0 && date.getHours() < 12) {
@@ -55,14 +53,15 @@ export default {
         that.noontip = '晚上好'
       }
     },
-    logout() {
+    logout () {
       document.title = '登录'
       localStorage.removeItem('auth-info')
-      const loginURL = `http://${
-        window.location.hostname !== '172.23.2.17'
-          ? '49.235.30.187'
+      const loginURL = `http://${window.location.hostname == '49.235.30.187'
+        ? '49.235.30.187'
+        : process.env.VUE_APP_FLAG == 'bj'
+          ? '192.168.51.52'
           : '172.23.2.17'
-      }:8088/auth/#/user/login?from=${encodeURIComponent(location.href)}`
+        }:8088/auth/#/user/login?from=${encodeURIComponent(location.href)}`
       window.location.href = loginURL
     },
   },

@@ -31,9 +31,11 @@ export default {
   },
   methods: {
     toLogin () {
-      const loginURL = `http://${window.location.hostname !== '172.23.2.17'
+      const loginURL = `http://${window.location.hostname == '49.235.30.187'
         ? '49.235.30.187'
-        : '172.23.2.17'
+        : process.env.VUE_APP_FLAG == 'bj'
+          ? '192.168.51.52'
+          : '172.23.2.17'
         }:8088/auth/#/user/login?from=${encodeURIComponent(location.href)}`
       window.location.href = loginURL
     },
