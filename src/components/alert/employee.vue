@@ -1,91 +1,85 @@
 <template>
-  <a-modal
-    v-model="visible"
-    :title="form.id ? '编辑员工' : '新增员工'"
-    :confirmLoading="loading"
-    :width="500"
-    @ok="ok"
-    okText="确定"
-    cancelText="取消"
-    :destroyOnClose="true"
-    :afterClose="close"
-    class="alert-employee"
-  >
-    <a-form-model
-      :model="form"
-      ref="ruleForm"
-      :rules="rules"
-      :label-col="{ span: 4 }"
-      :wrapper-col="{ span: 18 }"
-    >
-      <a-form-model-item label="员工工号" prop="empNo">
-        <a-input v-model="form.empNo" placeholder="" />
+  <a-modal v-model="visible"
+           :title="form.id ? '编辑员工' : '新增员工'"
+           :confirmLoading="loading"
+           :width="500"
+           @ok="ok"
+           okText="确定"
+           cancelText="取消"
+           :destroyOnClose="true"
+           :afterClose="close"
+           class="alert-employee">
+    <a-form-model :model="form"
+                  ref="ruleForm"
+                  :rules="rules"
+                  :label-col="{ span: 4 }"
+                  :wrapper-col="{ span: 18 }">
+      <a-form-model-item label="员工工号"
+                         prop="empNo">
+        <a-input v-model="form.empNo"
+                 placeholder="" />
       </a-form-model-item>
-      <a-form-model-item label="员工姓名" prop="empName">
-        <a-input v-model="form.empName" placeholder="" />
+      <a-form-model-item label="员工姓名"
+                         prop="empName">
+        <a-input v-model="form.empName"
+                 placeholder="" />
       </a-form-model-item>
-      <a-form-model-item label="上级" prop="parentId">
-        <a-select
-          v-model="form.parentId"
-          placeholder="请选择"
-          :filter-option="filterOption"
-          :show-search="true"
-        >
-          <a-select-option
-            v-for="(item, idx) in preList.employs"
-            :key="idx"
-            :value="item.id"
-            >{{ item.empName + '[' + item.empNo + ']' }}</a-select-option
-          >
+      <a-form-model-item label="上级"
+                         prop="parentId">
+        <a-select v-model="form.parentId"
+                  placeholder="请选择"
+                  :filter-option="filterOption"
+                  @focus="getPreList"
+                  :show-search="true">
+          <a-select-option v-for="(item, idx) in preList.employs"
+                           :key="idx"
+                           :value="item.id">{{ item.empName + '[' + item.empNo + ']' }}</a-select-option>
         </a-select>
       </a-form-model-item>
-      <a-form-model-item label="职位" prop="positionId">
-        <a-select
-          v-model="form.positionId"
-          placeholder="请选择"
-          :filter-option="filterOption"
-          :show-search="true"
-        >
-          <a-select-option
-            v-for="(item, idx) in preList.positions"
-            :key="idx"
-            :value="item.id"
-            >{{ item.name }}</a-select-option
-          >
+      <a-form-model-item label="职位"
+                         prop="positionId">
+        <a-select v-model="form.positionId"
+                  placeholder="请选择"
+                  :filter-option="filterOption"
+                  :show-search="true">
+          <a-select-option v-for="(item, idx) in preList.positions"
+                           :key="idx"
+                           :value="item.id">{{ item.name }}</a-select-option>
         </a-select>
       </a-form-model-item>
-      <a-form-model-item label="手机号码" prop="mobile">
-        <a-input v-model="form.mobile" placeholder="" />
+      <a-form-model-item label="手机号码"
+                         prop="mobile">
+        <a-input v-model="form.mobile"
+                 placeholder="" />
       </a-form-model-item>
-      <a-form-model-item label="邮箱" prop="email">
-        <a-input v-model="form.email" placeholder="" />
+      <a-form-model-item label="邮箱"
+                         prop="email">
+        <a-input v-model="form.email"
+                 placeholder="" />
       </a-form-model-item>
-      <a-form-model-item label="卡号" prop="cardNo">
-        <a-input v-model="form.cardNo" placeholder="" />
+      <a-form-model-item label="卡号"
+                         prop="cardNo">
+        <a-input v-model="form.cardNo"
+                 placeholder="" />
       </a-form-model-item>
-      <a-form-model-item label="部门" prop="deptId">
-        <a-select
-          v-model="form.deptId"
-          placeholder="请选择"
-          :filter-option="filterOption"
-          :show-search="true"
-        >
-          <a-select-option
-            v-for="(item, idx) in preList.depts"
-            :key="idx"
-            :value="item.deptId"
-            >{{ item.deptName }}</a-select-option
-          >
+      <a-form-model-item label="部门"
+                         prop="deptId">
+        <a-select v-model="form.deptId"
+                  placeholder="请选择"
+                  :filter-option="filterOption"
+                  :show-search="true">
+          <a-select-option v-for="(item, idx) in preList.depts"
+                           :key="idx"
+                           :value="item.deptId">{{ item.deptName }}</a-select-option>
         </a-select>
       </a-form-model-item>
-      <a-form-model-item label="状态" prop="status">
-        <a-select v-model="form.status" placeholder="请选择">
-          <a-select-option
-            v-for="(item, idx) in preList.states"
-            :key="idx"
-            :value="item.code"
-            >{{ item.name }}</a-select-option
-          >
+      <a-form-model-item label="状态"
+                         prop="status">
+        <a-select v-model="form.status"
+                  placeholder="请选择">
+          <a-select-option v-for="(item, idx) in preList.states"
+                           :key="idx"
+                           :value="item.code">{{ item.name }}</a-select-option>
         </a-select>
       </a-form-model-item>
     </a-form-model>
@@ -100,7 +94,7 @@ import {
 import mixins from '../../mixins/editor'
 
 export default {
-  data() {
+  data () {
     return {
       preList: {
         depts: [],
@@ -186,19 +180,19 @@ export default {
       },
     }
   },
-  mounted() {
+  mounted () {
     this.getPreList()
   },
   mixins: [mixins],
   methods: {
-    filterOption(input, option) {
+    filterOption (input, option) {
       return (
         option.componentOptions.children[0].text
           .toLowerCase()
           .indexOf(input.toLowerCase()) >= 0
       )
     },
-    add() {
+    add () {
       this.loading = true
       add_post({
         data: this.form,
@@ -212,7 +206,7 @@ export default {
           this.loading = false
         })
     },
-    editor() {
+    editor () {
       this.loading = true
       modify_post({
         data: this.form,
@@ -226,7 +220,7 @@ export default {
           this.loading = false
         })
     },
-    getPreList() {
+    getPreList () {
       this.loading = true
       preAdd_get()
         .then((res) => {
