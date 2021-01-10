@@ -11,12 +11,12 @@ import zhCN from 'ant-design-vue/lib/locale-provider/zh_CN'
 import data from './mock/userinfo'
 export default {
   name: 'app',
-  data() {
+  data () {
     return {
       locale: zhCN,
     }
   },
-  created() {
+  created () {
     if (process.env.NODE_ENV == 'development') {
       window.localStorage.setItem('auth-info', JSON.stringify(data))
     } else {
@@ -26,15 +26,15 @@ export default {
         return
       }
     }
+
     this.$store.commit('SET_DETAIL')
   },
   methods: {
-    toLogin() {
-      const loginURL = `http://${
-        window.location.hostname !== '172.23.2.17'
-          ? '49.235.30.187'
-          : '172.23.2.17'
-      }:8088/auth/#/user/login?from=${encodeURIComponent(location.href)}`
+    toLogin () {
+      const loginURL = `http://${window.location.hostname !== '172.23.2.17'
+        ? '49.235.30.187'
+        : '172.23.2.17'
+        }:8088/auth/#/user/login?from=${encodeURIComponent(location.href)}`
       window.location.href = loginURL
     },
   },
@@ -131,7 +131,7 @@ ol {
 }
 
 .x-clear:after {
-  content: '.';
+  content: ".";
   display: block;
   height: 0;
   clear: both;
@@ -206,7 +206,7 @@ ol {
   }
   &::before {
     position: absolute;
-    content: '';
+    content: "";
     width: 28px;
     height: 28px;
     border: 1px solid #a9cbeb;
@@ -216,7 +216,7 @@ ol {
   }
   &::after {
     position: absolute;
-    content: '';
+    content: "";
     width: 18px;
     height: 18px;
     background: #a9cbeb;
