@@ -7,8 +7,8 @@
     "build": "vue-cli-service build ",
     "prod": "vue-cli-service build --mode prod",
     "production": "vue-cli-service build --mode production",
-    "prodsh": "vue-cli-service build --mode prod",
-    "productionsh": "vue-cli-service build --mode production"
+    "prodsh": "vue-cli-service build --mode prodsh",
+    "productionsh": "vue-cli-service build --mode productionsh"
   },
   "dependencies": {
     "ant-design-vue": "^1.2.4",
