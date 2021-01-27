@@ -1,64 +1,50 @@
 <template>
-  <a-modal
-    v-model="visible"
-    title="编辑通知对象"
-    :confirmLoading="loading"
-    :width="700"
-    okText="确定"
-    @ok="ok"
-    cancelText="取消"
-    :destroyOnClose="true"
-    :afterClose="close"
-  >
+  <a-modal v-model="visible"
+           title="编辑通知对象"
+           :confirmLoading="loading"
+           :width="700"
+           okText="确定"
+           @ok="ok"
+           cancelText="取消"
+           :destroyOnClose="true"
+           :afterClose="close">
     <div class="warn-btns">
-      <a-button
-        :disabled="hasAdd || (selectedRowKeys && selectedRowKeys.length > 0)"
-        @click="add"
-        >新增</a-button
-      >
-      <a-button
-        :disabled="!selectedRowKeys || selectedRowKeys.length === 0"
-        @click="del"
-        >删除</a-button
-      >
-      <a-button :disabled="!hasAdd" @click="save">保存</a-button>
+      <a-button :disabled="hasAdd || (selectedRowKeys && selectedRowKeys.length > 0)"
+                @click="add">新增</a-button>
+      <a-button :disabled="!selectedRowKeys || selectedRowKeys.length === 0"
+                @click="del">删除</a-button>
+      <a-button :disabled="!hasAdd"
+                @click="save">保存</a-button>
     </div>
     <div class="warn-tabls">
-      <a-table
-        bordered
-        :row-selection="{
+      <a-table bordered
+               :row-selection="{
           selectedRowKeys,
           getCheckboxProps,
           onChange: onSelectChange,
         }"
-        :row-key="(record) => record.empId"
-        :pagination="{ hideOnSinglePage: true }"
-        :columns="columns"
-        :data-source="notifyEmailContacts"
-      >
-        <template
-          v-for="col in ['empName', 'email', 'mobile']"
-          :slot="col"
-          slot-scope="text, record, index"
-        >
+               :row-key="(record) => record.empId"
+               :pagination="{ hideOnSinglePage: true }"
+               :columns="columns"
+               :data-source="notifyEmailContacts">
+        <template v-for="col in ['empName', 'email', 'mobile']"
+                  :slot="col"
+                  slot-scope="text, record, index">
           <div :key="col">
             <template v-if="index === notifyEmailContacts.length - 1 && hasAdd">
-              <a-select
-                placeholder="请选择"
-                v-if="col === 'empName'"
-                style="width: 170px"
-                v-model="record.empId"
-                @change="selcetChange($event, index)"
-              >
-                <a-select-option
-                  v-for="(item, idx) in employs"
-                  :key="idx"
-                  :value="item.id"
-                  >{{ item.name + '[' + item.empNo + ']' }}</a-select-option
-                >
+              <a-select placeholder="请选择"
+                        v-if="col === 'empName'"
+                        style="width: 170px"
+                        v-model="record.empId"
+                        @change="selcetChange($event, index)">
+                <a-select-option v-for="(item) in employs"
+                                 :key="item.id"
+                                 :value="item.id">{{ item.name + '[' + item.empNo + ']' }}</a-select-option>
               </a-select>
-              <a-input v-else-if="col === 'email'" v-model="record.email" />
-              <a-input v-else v-model="record.mobile" />
+              <a-input v-else-if="col === 'email'"
+                       v-model="record.email" />
+              <a-input v-else
+                       v-model="record.mobile" />
             </template>
             <template v-else>
               {{ text }}
@@ -89,7 +75,7 @@ const columns = [
   },
 ]
 export default {
-  data() {
+  data () {
     return {
       visible: false,
       loading: false,
@@ -102,17 +88,17 @@ export default {
   },
   props: ['id'],
   watch: {
-    id(value) {
+    id (value) {
       if (value) {
         this.getDetail(value)
       }
     },
   },
-  mounted() {
+  mounted () {
     if (this.id) this.getDetail(this.id)
   },
   methods: {
-    add() {
+    add () {
       if (this.hasAdd) return
       this.hasAdd = true
       this.notifyEmailContacts.push({
@@ -121,7 +107,7 @@ export default {
         mobile: '',
       })
     },
-    del() {
+    del () {
       this.notifyEmailContacts = [
         ...this.notifyEmailContacts.filter(
           (item) => !this.selectedRowKeys.includes(item.empId)
@@ -129,7 +115,7 @@ export default {
       ]
       this.selectedRowKeys = []
     },
-    save() {
+    save () {
       let flag = this.notifyEmailContacts.every(
         (item) => item.empId && item.mobile && item.email
       )
@@ -138,7 +124,7 @@ export default {
       }
       this.notifyEmailContacts = [...this.notifyEmailContacts]
     },
-    getCheckboxProps(record) {
+    getCheckboxProps (record) {
       let index = this.notifyEmailContacts.findIndex(
         (item) => item.empId == record.empId
       )
@@ -150,22 +136,25 @@ export default {
         },
       }
     },
-    selcetChange(e, i) {
+    selcetChange (e, i) {
       let emp = this.employs.find((item) => item.id == e)
+      console.log(emp)
       this.notifyEmailContacts[i].empName = emp.name
+      this.notifyEmailContacts[i].email = emp.email
+      this.notifyEmailContacts[i].mobile = emp.mobile
     },
-    onSelectChange(e) {
+    onSelectChange (e) {
       this.selectedRowKeys = e
     },
-    show() {
+    show () {
       this.visible = true
     },
-    close() {
+    close () {
       this.selectedRowKeys = []
       this.hasAdd = false
       this.$emit('freash', 'close')
     },
-    getDetail(id) {
+    getDetail (id) {
       this.loading = true
       preModify_get({
         data: { id },
@@ -179,7 +168,7 @@ export default {
           this.loading = false
         })
     },
-    ok() {
+    ok () {
       let notifyEmailContacts = this.notifyEmailContacts.filter(
         (item) => item.empId
       )

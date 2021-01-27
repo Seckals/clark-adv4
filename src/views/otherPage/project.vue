@@ -1,155 +1,135 @@
 <template>
   <div>
     <IMain :ifshowData="false" />
-    <a-card class="board" :bordered="false">
+    <a-card class="board"
+            :bordered="false">
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
           <a-row :gutter="48">
-            <a-col :md="8" :sm="24">
+            <a-col :md="8"
+                   :sm="24">
               <a-form-item label="项目">
-                <a-select
-                  show-search
-                  option-filter-prop="children"
-                  v-model="queryParam.projectCode"
-                  placeholder="请选择项目"
-                >
-                  <a-select-option
-                    v-for="project in allProject"
-                    :value="project"
-                    :key="project"
-                    >{{ project }}</a-select-option
-                  >
+                <a-select show-search
+                          option-filter-prop="children"
+                          v-model="queryParam.projectCode"
+                          placeholder="请选择项目">
+                  <a-select-option v-for="project in allProject"
+                                   :value="project"
+                                   :key="project">{{ project }}</a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="24">
+            <a-col :md="8"
+                   :sm="24">
               <a-form-item label="成品物料">
-                <a-input
-                  v-model="queryParam.projectItemCode"
-                  placeholder="请输入成品物料编码"
-                ></a-input>
+                <a-input v-model="queryParam.projectItemCode"
+                         placeholder="请输入成品物料编码"></a-input>
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="24">
+            <a-col :md="8"
+                   :sm="24">
               <span class="table-page-search-submitButtons">
-                <a-button type="primary" @click="$refs.table.refresh(true)"
-                  >查询</a-button
-                >
-                <a-button
-                  style="margin-left: 8px"
-                  @click="() => (this.queryParam = {})"
-                  >重置</a-button
-                >
+                <a-button type="primary"
+                          @click="$refs.table.refresh(true)">查询</a-button>
+                <a-button style="margin-left: 8px"
+                          @click="() => (this.queryParam = {})">重置</a-button>
               </span>
             </a-col>
           </a-row>
         </a-form>
       </div>
       <div class="table-operator">
-        <a-button
-          type="primary"
-          icon="plus"
-          @click="add"
-          v-permission="'mainData.production.project-item.add'"
-          >新建</a-button
-        >
+        <a-button type="primary"
+                  icon="plus"
+                  @click="add"
+                  v-permission="'mainData.production.project-item.add'">新建</a-button>
       </div>
-      <s-table
-        ref="table"
-        size="default"
-        rowKey="id"
-        bordered
-        :columns="columns"
-        :data="loadData"
-        showPagination="auto"
-      >
-        <span slot="action" slot-scope="text, record">
+      <s-table ref="table"
+               size="default"
+               rowKey="id"
+               bordered
+               :columns="columns"
+               :data="loadData"
+               showPagination="auto">
+        <span slot="action"
+              slot-scope="text, record">
           <template>
-            <a
-              class="x-space"
-              v-permission="'mainData.production.project-item.edit'"
-              @click="handleEdit(record)"
-              >编辑</a
-            >
-            <a
-              v-permission="'mainData.production.project-item.delete'"
-              @click="handleDel(record)"
-              >删除</a
-            >
+            <a class="x-space"
+               v-permission="'mainData.production.project-item.edit'"
+               @click="handleEdit(record)">编辑</a>
+            <a v-permission="'mainData.production.project-item.delete'"
+               @click="handleDel(record)">删除</a>
           </template>
         </span>
       </s-table>
     </a-card>
-    <a-modal
-      :title="`${mdl.id ? '编辑' : '新建'}项目成品物料对应关系`"
-      :width="640"
-      :visible="visible"
-      @ok="handleOk"
-      @cancel="handleCancel"
-    >
-      <a-form
-        :form="form"
-        :label-col="{ span: 6 }"
-        :wrapper-col="{ span: 15 }"
-        layout="vertical"
-      >
+    <a-modal :title="`${mdl.id ? '编辑' : '新建'}项目成品物料对应关系`"
+             :width="640"
+             :visible="visible"
+             @ok="handleOk"
+             @cancel="handleCancel">
+      <a-form :form="form"
+              :label-col="{ span: 6 }"
+              :wrapper-col="{ span: 15 }"
+              layout="vertical">
         <a-form-item label="项目">
-          <a-select
-            show-search
-            option-filter-prop="children"
-            placeholder="请选择项目"
-            v-decorator="[
+          <a-select show-search
+                    option-filter-prop="children"
+                    placeholder="请选择项目"
+                    v-decorator="[
               'projectCode',
               { rules: [{ required: true, message: '请选择项目' }] },
-            ]"
-          >
-            <a-select-option
-              v-for="project in allProject"
-              :value="project"
-              :key="project"
-              >{{ project }}</a-select-option
-            >
+            ]">
+            <a-select-option v-for="project in allProject"
+                             :value="project"
+                             :key="project">{{ project }}</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="成品天窗物料编码">
-          <a-input
-            placeholder="请输入物料编码"
-            v-decorator="[
+          <a-input placeholder="请输入物料编码"
+                   v-decorator="[
               'projectItemCode',
               { rules: [{ required: true, message: '成品天窗物料编码必填' }] },
-            ]"
-          />
+            ]" />
         </a-form-item>
-        <a-form-item label="物料说明">
-          <a-input
-            placeholder="请输入物料说明"
-            v-decorator="[
+        <a-form-item label="物料编号">
+          <a-input placeholder="请输入物料编号"
+                   v-decorator="[
+              'customerItemCode',
+              { rules: [{ required: true, message: '成品天窗物料物料编号' }] },
+            ]" />
+        </a-form-item>
+        <a-form-item label="物料中文描述">
+          <a-input placeholder="请输入物料中文描述"
+                   v-decorator="[
               'projectItemDesc',
-              { rules: [{ required: true, message: '物料说明必填' }] },
-            ]"
-          />
+              { rules: [{ required: true, message: '物料中文描述必填' }] },
+            ]" />
+        </a-form-item>
+        <a-form-item label="物料英文描述">
+          <a-input placeholder="请输入物料英文描述"
+                   v-decorator="[
+              'projectEnDesc',
+              { rules: [{ required: true, message: '物料英文描述必填' }] },
+            ]" />
         </a-form-item>
         <a-form-item label="料架容量">
-          <a-input-number
-            style="width:100%"
-            :min="0"
-            :step="1"
-            :precision="0"
-            placeholder="请输入料架容量"
-            v-decorator="[
+          <a-input-number style="width:100%"
+                          :min="0"
+                          :step="1"
+                          :precision="0"
+                          placeholder="请输入料架容量"
+                          v-decorator="[
               'binSize',
               { rules: [{ required: true, message: '料架容量必填' }] },
-            ]"
-          />
+            ]" />
         </a-form-item>
         <a-form-item label="颜色">
-          <a-input
-            placeholder="请输入颜色"
-            v-decorator="[
+          <a-input placeholder="请输入颜色"
+                   v-decorator="[
               'colorDesc',
               { rules: [{ required: true, message: '颜色必填' }] },
-            ]"
-          />
+            ]" />
         </a-form-item>
       </a-form>
     </a-modal>
@@ -171,12 +151,14 @@ const fields = [
   'projectCode',
   'projectItemCode',
   'projectItemDesc',
+  'customerItemCode',
   'binSize',
   'colorDesc',
+  'projectEnDesc'
 ]
 
 export default {
-  data() {
+  data () {
     return {
       queryParam: {},
       loadData: (parameter) => {
@@ -216,13 +198,13 @@ export default {
   components: {
     STable,
   },
-  created() {
+  created () {
     queryAllProject_get().then((data) => {
       this.allProject = data
     })
   },
   computed: {
-    columns() {
+    columns () {
       let { sortedInfo } = this
       sortedInfo = sortedInfo || {}
       return [
@@ -242,8 +224,17 @@ export default {
           sorter: true,
         },
         {
-          title: '物料说明',
+          title: '客户物料编号',
+          dataIndex: 'customerItemCode',
+          sorter: true,
+        },
+        {
+          title: '物料中文说明',
           dataIndex: 'projectItemDesc',
+        },
+        {
+          title: '物料英文说明',
+          dataIndex: 'projectEnDesc',
         },
         {
           title: '料架容量',
@@ -270,12 +261,12 @@ export default {
   },
   methods: {
     // 新增
-    add() {
+    add () {
       this.visible = true
       this.canEdit = false
     },
     // 弹窗ok
-    handleOk(record) {
+    handleOk (record) {
       const request = this.mdl.id ? update_post : save_post
       this.form.validateFields((err, values) => {
         console.log(err, values)
@@ -290,9 +281,8 @@ export default {
             this.handleCancel()
             this.$success({
               title: `${this.id ? '修改成功' : '保存成功'}`,
-              content: `您所维护的成品物料对应关系已经${
-                this.id ? '修改成功！' : '保存成功！'
-              }`,
+              content: `您所维护的成品物料对应关系已经${this.id ? '修改成功！' : '保存成功！'
+                }`,
               onOk: () => {
                 this.visible = false
               },
@@ -302,13 +292,13 @@ export default {
       })
     },
     // 弹窗取消
-    handleCancel() {
+    handleCancel () {
       this.form.resetFields()
       this.visible = false
       this.mdl = {}
     },
     // 编辑
-    handleEdit(record) {
+    handleEdit (record) {
       this.visible = true
       this.canEdit = !!record.firstFreeNum
       this.mdl = Object.assign({}, record) // 浅拷贝
@@ -317,7 +307,7 @@ export default {
       })
     },
     // 删除
-    handleDel(record) {
+    handleDel (record) {
       this.$confirm({
         title: '删除警告',
         content: `您正在尝试删除成品物料对应关系${record.projectItemCode}，您确定还要继续吗？`,
@@ -335,7 +325,7 @@ export default {
             })
           })
         },
-        onCancel() {
+        onCancel () {
           console.log('Cancel')
         },
       })
