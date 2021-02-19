@@ -1,46 +1,40 @@
 <template>
   <div>
-    <IMain
-      :hasReset="true"
-      permission="permission.mg-role-users.add"
-      @operation="operation"
-    >
+    <IMain :hasReset="true"
+           permission="permission.mg-role.add"
+           @operation="operation">
       <template slot="table">
-        <a-table
-          bordered
-          :loading="loading"
-          :row-key="(record) => record.id"
-          :pagination="pagination"
-          :columns="columns"
-          :data-source="data"
-          @change="tableChange"
-        >
-          <template slot="operation" slot-scope="record">
+        <a-table bordered
+                 :loading="loading"
+                 :row-key="(record) => record.id"
+                 :pagination="pagination"
+                 :columns="columns"
+                 :data-source="data"
+                 @change="tableChange">
+          <template slot="operation"
+                    slot-scope="record">
             <a-space size="small">
-              <a
-                v-permission="'permission.mg-users.edit'"
-                @click="go('/mg-role-users', record)"
-              >
-                链接用户</a
-              >
-              <a
-                v-permission="'permission.mg-users.edit'"
-                @click="go('/mg-role-authorize', record)"
-              >
-                链接功能</a
-              >
-              <a
-                v-permission="'permission.mg-users.edit'"
-                @click="editor(record)"
-              >
-                编辑</a
-              >
+              <a v-permission="'permission.mg-role.linkUser'"
+                 @click="go('/mg-role-users', record)">
+                链接用户</a>
+              <a v-permission="'permission.mg-role.linkFunction'"
+                 @click="go('/mg-role-authorize', record)">
+                链接功能</a>
+              <a v-permission="'permission.mg-role.edit'"
+                 @click="editor(record)">
+                编辑</a>
             </a-space>
+          </template>
+          <template slot="type"
+                    slot-scope="record">
+            {{record.type==0?'管理员':record.type==1?'普通用户':'--'}}
           </template>
         </a-table>
       </template>
     </IMain>
-    <myrole ref="alert" :data="current" @freash="freash" />
+    <myrole ref="alert"
+            :data="current"
+            @freash="freash" />
   </div>
 </template>
 <script>
@@ -57,6 +51,10 @@ const columns = [
     title: '角色名称',
   },
   {
+    scopedSlots: { customRender: 'type' },
+    title: '角色类型',
+  },
+  {
     dataIndex: 'statusValue',
     title: '状态',
   },
@@ -66,7 +64,7 @@ const columns = [
   },
 ]
 export default {
-  data() {
+  data () {
     return {
       columns,
       current: {},
@@ -80,9 +78,9 @@ export default {
   },
   components: { myrole },
   mixins: [mixins],
-  mounted() {},
+  mounted () { },
   methods: {
-    go(path, data) {
+    go (path, data) {
       this.$router.push({
         path,
         query: {
@@ -92,7 +90,7 @@ export default {
         },
       })
     },
-    operation({ type, data }) {
+    operation ({ type, data }) {
       switch (type) {
         case 'add':
           this.current = { status: 1 }
@@ -103,11 +101,11 @@ export default {
           break
       }
     },
-    tableChange(e) {
+    tableChange (e) {
       this.pagination = e
       this.getList()
     },
-    getList(data = {}) {
+    getList (data = {}) {
       this.loading = true
       page_get({
         data: Object.assign(

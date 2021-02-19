@@ -91,7 +91,7 @@ export default {
 
     loginSuccess (res) {
       this.$nextTick(() => {
-        const fromUrl = this.$route.query.from || '/mg-users'
+        const fromUrl = this.$route.query.from || '/mg-role'
         if (fromUrl.indexOf('//') === 0 || fromUrl.indexOf('http') === 0) {
           window.location.href = this.$route.query.from
         } else {

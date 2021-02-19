@@ -1,46 +1,40 @@
 <template>
   <div>
-    <IMain
-      :searchs="searchs"
-      :hasReset="true"
-      permission="permission.mg-role-users.add"
-      @operation="operation"
-      ref="IMain"
-    >
+    <IMain :searchs="searchs"
+           :hasReset="true"
+           permission="permission.mg-role-users.add"
+           @operation="operation"
+           ref="IMain">
       <div slot="detail">
         <div style="margin-bottom: 12px">
           模块:{{ $route.query.moduleName }}
         </div>
         <div style="margin-bottom: 12px">角色名:{{ $route.query.name }}</div>
       </div>
-      <a-button
-        slot="btns-left"
-        @click="operation({ type: 'del' })"
-        v-permission="'permission.mg-role-users.add'"
-        :disabled="!selectedRowKeys || selectedRowKeys.length === 0"
-        >删除</a-button
-      >
-      <a-button slot="btns-right" type="primary" @click="$router.back()"
-        >返回</a-button
-      >
+      <a-button slot="btns-left"
+                @click="operation({ type: 'del' })"
+                v-permission="'permission.mg-role-users.delete'"
+                :disabled="!selectedRowKeys || selectedRowKeys.length === 0">删除</a-button>
+      <a-button slot="btns-right"
+                type="primary"
+                @click="$router.back()">返回</a-button>
       <template slot="table">
-        <a-table
-          bordered
-          :loading="loading"
-          :row-key="(record) => record.userId"
-          :pagination="pagination"
-          :row-selection="{
+        <a-table bordered
+                 :loading="loading"
+                 :row-key="(record) => record.userId"
+                 :pagination="pagination"
+                 :row-selection="{
             selectedRowKeys,
             onChange: onSelectChange,
           }"
-          :columns="columns"
-          :data-source="data"
-          @change="tableChange"
-        >
+                 :columns="columns"
+                 :data-source="data"
+                 @change="tableChange">
         </a-table>
       </template>
     </IMain>
-    <mgrolenusers ref="alert" @freash="freash" />
+    <mgrolenusers ref="alert"
+                  @freash="freash" />
   </div>
 </template>
 <script>
@@ -74,7 +68,7 @@ const columns = [
   },
 ]
 export default {
-  data() {
+  data () {
     return {
       columns,
       current: {},
@@ -124,11 +118,11 @@ export default {
   },
   components: { mgrolenusers },
   mixins: [mixins],
-  mounted() {
+  mounted () {
     this.getSelects()
   },
   methods: {
-    operation({ type, data }) {
+    operation ({ type, data }) {
       switch (type) {
         case 'add':
           this.$refs.alert.show()
@@ -141,14 +135,14 @@ export default {
           break
       }
     },
-    tableChange(e) {
+    tableChange (e) {
       this.pagination = e
       this.getList(this.$refs.IMain.searchData)
     },
-    onSelectChange(selectedRowKeys) {
+    onSelectChange (selectedRowKeys) {
       this.selectedRowKeys = selectedRowKeys
     },
-    getList(data = {}) {
+    getList (data = {}) {
       this.loading = true
       pageLinkSysUser({
         data: Object.assign(
@@ -169,7 +163,7 @@ export default {
           this.loading = false
         })
     },
-    unlink() {
+    unlink () {
       linkOrUnlinkSysFunction({
         data: {
           userIds: this.selectedRowKeys,
@@ -180,7 +174,7 @@ export default {
         this.getList()
       })
     },
-    getSelects() {
+    getSelects () {
       prePageLinkSysUser({ data: { roleId: this.$route.query.id } }).then(
         (res) => {
           this.searchs.map((item) => {

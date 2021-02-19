@@ -71,9 +71,7 @@ export default {
               ...values,
             }
          })
-            .then(({ code }) => {
-              console.log(code)
-              if (code !== 200) return
+            .then(() => {
               this.$router.push('/user/login')
             }).catch(e=>{
               console.log(e)

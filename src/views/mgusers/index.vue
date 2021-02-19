@@ -1,37 +1,32 @@
 <template>
   <div>
-    <IMain
-      :searchs="searchs"
-      :hasReset="true"
-      permission="permission.mg-role-users.add"
-      :hasAdd="false"
-      @operation="operation"
-      ref="IMain"
-    >
+    <IMain :searchs="searchs"
+           :hasReset="true"
+           :hasAdd="false"
+           @operation="operation"
+           ref="IMain">
       <template slot="table">
-        <a-table
-          bordered
-          :loading="loading"
-          :row-key="(record) => record.userId"
-          :pagination="pagination"
-          :columns="columns"
-          :data-source="data"
-          @change="tableChange"
-        >
-          <template slot="operation" slot-scope="record">
+        <a-table bordered
+                 :loading="loading"
+                 :row-key="(record) => record.userId"
+                 :pagination="pagination"
+                 :columns="columns"
+                 :data-source="data"
+                 @change="tableChange">
+          <template slot="operation"
+                    slot-scope="record">
             <a-space size="small">
-              <a
-                v-permission="'permission.mg-users.edit'"
-                @click="editor(record)"
-              >
-                编辑</a
-              >
+              <a v-permission="'permission.mg-users.edit'"
+                 @click="editor(record)">
+                编辑</a>
             </a-space>
           </template>
         </a-table>
       </template>
     </IMain>
-    <myusers ref="alert" :data="current" @freash="freash" />
+    <myusers ref="alert"
+             :data="current"
+             @freash="freash" />
   </div>
 </template>
 <script>
@@ -73,7 +68,7 @@ const columns = [
   },
 ]
 export default {
-  data() {
+  data () {
     return {
       columns,
       current: {},
@@ -126,11 +121,11 @@ export default {
   },
   components: { myusers },
   mixins: [mixins],
-  mounted() {
+  mounted () {
     this.getSelects()
   },
   methods: {
-    operation({ type, data }) {
+    operation ({ type, data }) {
       switch (type) {
         case 'add':
           this.$refs.alert.show()
@@ -140,11 +135,11 @@ export default {
           break
       }
     },
-    tableChange(e) {
+    tableChange (e) {
       this.pagination = e
       this.getList(this.$refs.IMain.searchData)
     },
-    getList(data = {}) {
+    getList (data = {}) {
       this.loading = true
       page_get({
         data: Object.assign(
@@ -164,7 +159,7 @@ export default {
           this.loading = false
         })
     },
-    getSelects() {
+    getSelects () {
       prePage_get().then((res) => {
         this.searchs.map((item) => {
           if (item.listDataKey) {

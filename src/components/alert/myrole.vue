@@ -1,48 +1,50 @@
 <template>
-  <a-modal
-    v-model="visible"
-    :title="form.id ? '编辑角色' : '新增角色'"
-    :confirmLoading="loading"
-    :width="500"
-    @ok="ok"
-    okText="确定"
-    cancelText="取消"
-    :destroyOnClose="true"
-    :afterClose="close"
-    class="alert-employee"
-  >
-    <a-form-model
-      :model="form"
-      ref="ruleForm"
-      :rules="rules"
-      :label-col="{ span: 4 }"
-      :wrapper-col="{ span: 18 }"
-    >
-      <a-form-model-item label="角色名称" prop="name">
-        <a-input v-model="form.name" placeholder="" />
+  <a-modal v-model="visible"
+           :title="form.id ? '编辑角色' : '新增角色'"
+           :confirmLoading="loading"
+           :width="500"
+           @ok="ok"
+           okText="确定"
+           cancelText="取消"
+           :destroyOnClose="true"
+           :afterClose="close"
+           class="alert-employee">
+    <a-form-model :model="form"
+                  ref="ruleForm"
+                  :rules="rules"
+                  :label-col="{ span: 4 }"
+                  :wrapper-col="{ span: 18 }">
+      <a-form-model-item label="角色名称"
+                         prop="name">
+        <a-input v-model="form.name"
+                 placeholder="" />
       </a-form-model-item>
-      <a-form-model-item label="模块" prop="moduleId">
-        <a-select v-model="form.moduleId" placeholder="请选择">
-          <a-select-option
-            v-for="(item, idx) in preList.modules"
-            :key="idx"
-            :value="item.id"
-            >{{ item.description }}</a-select-option
-          >
+      <a-form-model-item label="角色类型"
+                         prop="type">
+        <a-select v-model="form.type"
+                  placeholder="请选择">
+          <a-select-option v-for="(item, idx) in types"
+                           :key="idx"
+                           :value="item.code">{{ item.name }}</a-select-option>
         </a-select>
       </a-form-model-item>
-      <a-form-model-item label="状态" prop="status">
-        <a-select
-          v-model="form.status"
-          placeholder="请选择"
-          :disabled="!form.id"
-        >
-          <a-select-option
-            v-for="(item, idx) in preList.states"
-            :key="idx"
-            :value="item.code"
-            >{{ item.name }}</a-select-option
-          >
+      <a-form-model-item label="模块"
+                         prop="moduleId">
+        <a-select v-model="form.moduleId"
+                  placeholder="请选择">
+          <a-select-option v-for="(item, idx) in preList.modules"
+                           :key="idx"
+                           :value="item.id">{{ item.description }}</a-select-option>
+        </a-select>
+      </a-form-model-item>
+      <a-form-model-item label="状态"
+                         prop="status">
+        <a-select v-model="form.status"
+                  placeholder="请选择"
+                  :disabled="!form.id">
+          <a-select-option v-for="(item, idx) in preList.states"
+                           :key="idx"
+                           :value="item.code">{{ item.name }}</a-select-option>
         </a-select>
       </a-form-model-item>
     </a-form-model>
@@ -53,16 +55,20 @@ import { add_post, modify_post, prePage } from '../../api/myrole'
 import mixins from '../../mixins/editor'
 
 export default {
-  data() {
+  data () {
     return {
       preList: {
         modules: [],
         states: [{ code: 1, name: '活动' }],
-      },
+
+      }, types: [
+        { code: 0, name: '管理员' }, { code: 1, name: '普通用户' }
+      ],
       form: {
         name: '',
         moduleId: '',
         status: '',
+        type: ''
       },
       rules: {
         name: [
@@ -71,16 +77,22 @@ export default {
             message: '请输入',
             trigger: 'blur',
           },
+        ], type: [
+          {
+            required: true,
+            message: '请选择',
+            trigger: 'blur',
+          },
         ],
       },
     }
   },
-  mounted() {
+  mounted () {
     this.getPreList()
   },
   mixins: [mixins],
   methods: {
-    getPreList() {
+    getPreList () {
       this.loading = true
       prePage()
         .then((res) => {
@@ -91,7 +103,7 @@ export default {
           this.loading = false
         })
     },
-    add() {
+    add () {
       this.loading = true
       add_post({
         data: Object.assign(this.form, { code: this.form.name }),
@@ -105,7 +117,7 @@ export default {
           this.loading = false
         })
     },
-    editor() {
+    editor () {
       this.loading = true
       modify_post({
         data: {

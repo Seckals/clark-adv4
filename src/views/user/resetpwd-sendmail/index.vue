@@ -55,7 +55,7 @@
         size="large"
         @click="
           () => {
-            $router.push('/login')
+            $router.push('/user/login')
           }
         "
       >
