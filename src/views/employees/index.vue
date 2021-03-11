@@ -1,42 +1,35 @@
 <template>
   <div>
-    <IMain
-      :searchs="searchs"
-      :hasReset="true"
-      permission="mainData.personnel.mg-employees.add"
-      @operation="operation"
-      ref="IMain"
-    >
+    <IMain :searchs="searchs"
+           :hasReset="true"
+           permission="mainData.personnel.mg-employees.add"
+           @operation="operation"
+           ref="IMain">
       <template slot="table">
-        <a-table
-          bordered
-          :loading="loading"
-          :row-key="(record) => record.id"
-          :pagination="pagination"
-          :columns="columns"
-          :data-source="data"
-          @change="tableChange"
-        >
-          <template slot="operation" slot-scope="record">
+        <a-table bordered
+                 :loading="loading"
+                 :row-key="(record) => record.id"
+                 :pagination="pagination"
+                 :columns="columns"
+                 :data-source="data"
+                 @change="tableChange">
+          <template slot="operation"
+                    slot-scope="record">
             <a-space size="small">
-              <a
-                v-permission="'mainData.personnel.mg-employees.edit'"
-                @click="editor(record)"
-              >
-                编辑</a
-              >
-              <a
-                v-permission="'mainData.personnel.mg-employees.delete'"
-                @click="delEvent(record.id)"
-              >
-                删除</a
-              >
+              <a v-permission="'mainData.personnel.mg-employees.edit'"
+                 @click="editor(record)">
+                编辑</a>
+              <a v-permission="'mainData.personnel.mg-employees.delete'"
+                 @click="delEvent(record.id)">
+                删除</a>
             </a-space>
           </template>
         </a-table>
       </template>
     </IMain>
-    <Employee ref="alert" :data="current" @freash="freash" />
+    <Employee ref="alert"
+              :data="current"
+              @freash="freash" />
   </div>
 </template>
 <script>
@@ -63,6 +56,9 @@ const columns = [
   {
     dataIndex: 'email',
     title: '邮箱',
+  }, {
+    dataIndex: 'officePhone',
+    title: '公司电话',
   },
 
   {
@@ -91,7 +87,7 @@ const columns = [
   },
 ]
 export default {
-  data() {
+  data () {
     return {
       columns,
       current: {},
@@ -172,11 +168,11 @@ export default {
   },
   components: { Employee },
   mixins: [mixins],
-  mounted() {
+  mounted () {
     this.getSelects()
   },
   methods: {
-    operation({ type, data }) {
+    operation ({ type, data }) {
       switch (type) {
         case 'add':
           this.$refs.alert.show()
@@ -189,16 +185,16 @@ export default {
           break
       }
     },
-    tableChange(e) {
+    tableChange (e) {
       this.pagination = e
       this.getList(this.$refs.IMain.searchData)
     },
-    delEvent(id) {
+    delEvent (id) {
       this.delModel('确认删除选中的员工', () => {
         this.del(id)
       })
     },
-    del(id) {
+    del (id) {
       this.loading = true
       remove_post({
         data: { id },
@@ -213,7 +209,7 @@ export default {
           this.loading = false
         })
     },
-    getList(data = {}) {
+    getList (data = {}) {
       this.loading = true
       page_get({
         data: Object.assign(
@@ -233,7 +229,7 @@ export default {
           this.loading = false
         })
     },
-    getSelects() {
+    getSelects () {
       prePage_get1().then((res) => {
         this.searchs.map((item) => {
           if (item.listDataKey) {

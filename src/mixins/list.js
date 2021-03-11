@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-02-19 16:55:27
+ * @LastEditTime: 2021-03-07 18:22:56
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /clark-adv4/src/mixins/list.js
+ */
 export default {
   data() {
     return {
@@ -16,7 +24,7 @@ export default {
         if (this.getPreList) this.getPreList()
       }
     },
-    delModel(content,onOk){
+    delModel(content, onOk) {
       this.$confirm({
         title: '删除警告',
         content,

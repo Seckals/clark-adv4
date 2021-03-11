@@ -12,6 +12,7 @@
 export default {
   methods: {
     go () {
+      console.log(11)
       const loginURL = `http://${window.location.hostname == '49.235.30.187'
         ? '49.235.30.187'
         : process.env.VUE_APP_FLAG == 'bj'

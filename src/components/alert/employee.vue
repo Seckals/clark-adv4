@@ -57,6 +57,11 @@
         <a-input v-model="form.email"
                  placeholder="" />
       </a-form-model-item>
+      <a-form-model-item label="公司电话"
+                         prop="officePhone">
+        <a-input v-model="form.officePhone"
+                 placeholder="" />
+      </a-form-model-item>
       <a-form-model-item label="卡号"
                          prop="cardNo">
         <a-input v-model="form.cardNo"
