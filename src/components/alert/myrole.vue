@@ -126,6 +126,7 @@ export default {
           name: this.form.name,
           status: this.form.status,
           moduleId: this.form.moduleId,
+          type:this.form.type
         },
       })
         .then(() => {
