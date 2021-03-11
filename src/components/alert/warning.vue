@@ -35,7 +35,8 @@
               <a-select placeholder="请选择"
                         v-if="col === 'empName'"
                         style="width: 170px"
-                        v-model="record.empId"
+                        v-model="record.empId" :filter-option="filterOption"
+          :show-search="true"
                         @change="selcetChange($event, index)">
                 <a-select-option v-for="(item) in employs"
                                  :key="item.id"
@@ -97,7 +98,13 @@ export default {
   mounted () {
     if (this.id) this.getDetail(this.id)
   },
-  methods: {
+  methods: {  filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      )
+    },
     add () {
       if (this.hasAdd) return
       this.hasAdd = true
