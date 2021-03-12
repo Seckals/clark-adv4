@@ -35,12 +35,12 @@
         </a-table>
       </template>
     </IMain>
-    <calendar ref="alert" :data="current" @freash="freash" />
+    <holiday ref="alert" :data="current" @freash="freash" />
   </div>
 </template>
 <script>
-import { page_get, remove_post } from '../../api/calendar'
-import calendar from '../../components/alert/calendar'
+import { page_get, remove_post } from '../../api/holiday'
+import holiday from '../../components/alert/holiday'
 import mixins from '../../mixins/list'
 const columns = [
   {
@@ -89,7 +89,7 @@ export default {
       ],
     }
   },
-  components: { calendar },
+  components: { holiday },
   mixins: [mixins],
   methods: {
     operation({ type, data }) {

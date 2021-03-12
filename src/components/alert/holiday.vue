@@ -1,10 +1,10 @@
 <!--
  * @Author: 张鹏
  * @Date: 2021-03-11 20:19:40
- * @LastEditTime: 2021-03-11 20:42:34
+ * @LastEditTime: 2021-03-12 09:39:06
  * @LastEditors: your name
  * @Description: 
- * @FilePath: /clark-adv4/src/components/alert/calendar.vue
+ * @FilePath: /clark-adv4/src/components/alert/holiday.vue
  * 可以输入预定的版权声明、个性签名、空行等
 -->
 <template>
@@ -49,7 +49,7 @@
   </a-modal>
 </template>
 <script>
-import { add_post, modify_post } from '../../api/calendar'
+import { add_post, modify_post } from '../../api/holiday'
 import mixins from '../../mixins/editor'
 export default {
   data() {

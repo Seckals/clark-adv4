@@ -167,9 +167,9 @@ const routes = [{
       }
    },
    {
-      path: '/calendar',
-      name: 'calendar',
-      component: () => import( /* webpackChunkName: "mg-departments" */ '../views/calendar'),
+      path: '/holiday',
+      name: 'holiday',
+      component: () => import( /* webpackChunkName: "mg-departments" */ '../views/holiday'),
       meta: {
          title: '日历管理'
       }
