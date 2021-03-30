@@ -17,7 +17,7 @@
                 @click="save">保存</a-button>
     </div>
     <div class="warn-tabls">
-      <a-table bordered
+      <a-table 
                :row-selection="{
           selectedRowKeys,
           getCheckboxProps,

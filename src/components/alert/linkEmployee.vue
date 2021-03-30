@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2021-03-25 12:04:00
+ * @LastEditTime: 2021-03-30 20:38:39
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /clark-adv4/src/components/alert/linkEmployee.vue
+-->
 <template>
   <a-modal
     v-model="visible"
@@ -9,7 +17,7 @@
     :destroyOnClose="true"
   >
     <a-table
-      bordered
+      
       :loading="loading"
       :row-key="(record) => record.id"
       :columns="columns"

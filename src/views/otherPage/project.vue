@@ -2,7 +2,7 @@
   <div>
     <IMain :ifshowData="false" />
     <a-card class="board"
-            :bordered="false">
+            :="false">
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
           <a-row :gutter="48">
@@ -47,7 +47,7 @@
       <s-table ref="table"
                size="default"
                rowKey="id"
-               bordered
+               
                :columns="columns"
                :data="loadData"
                showPagination="auto">

@@ -1,7 +1,7 @@
 <template>
   <div>
     <IMain :ifshowData="false" />
-    <a-card class="board" :bordered="false">
+    <a-card class="board" :="false">
       <div class="table-page-search-wrapper">
         <a-form layout="inline">
           <a-row :gutter="48">
@@ -58,7 +58,7 @@
         ref="table"
         size="default"
         rowKey="id"
-        bordered
+        
         :columns="columns"
         :data="loadData"
         showPagination="auto"

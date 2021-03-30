@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2021-03-25 12:04:00
+ * @LastEditTime: 2021-03-30 11:28:10
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /clark-adv4/src/api/hcDo.js
+ */
 import fetch from '@/plugins/axios'
 // 查询HC列表
 export function hcList_get(options) {
@@ -22,6 +30,15 @@ export function queryAllProject_get(options) {
 export function queryAllYear_get(options) {
   return fetch({
     url: 'hcDoController/queryAllYear',
+    method: 'get',
+    headers: options && options.headers ? options.headers : {},
+    data: (options && options.data) || {}
+  })
+}
+// 查询所有HcType
+export function querycomLineController_get(options) {
+  return fetch({
+    url: 'comLineController/list',
     method: 'get',
     headers: options && options.headers ? options.headers : {},
     data: (options && options.data) || {}

@@ -47,7 +47,6 @@
         ref="table"
         size="default"
         rowKey="code"
-        bordered
         :columns="columns"
         :data="loadData"
         :rowSelection="rowSelection"
@@ -87,7 +86,7 @@
                 :min="2000"
                 :max="9999"
                 :step="1"
-                style="width:100%"
+                style="width: 100%"
                 placeholder="请选择年份"
                 @blur="changeType"
                 v-decorator="[
@@ -97,15 +96,40 @@
                     rules: [
                       {
                         required: true,
-                        message: '必选',
-                      },
-                    ],
-                  },
+                        message: '必选'
+                      }
+                    ]
+                  }
                 ]"
               ></a-input-number>
             </a-form-item>
           </a-col>
           <a-col :md="12" :sm="24">
+            <a-form-item label="年份">
+              <a-input-number
+                :min="2000"
+                :max="9999"
+                :step="1"
+                style="width: 100%"
+                placeholder="请选择年份"
+                @blur="changeType"
+                v-decorator="[
+                  `year`,
+                  {
+                    initialValue: new Date().getFullYear(),
+                    rules: [
+                      {
+                        required: true,
+                        message: '必选'
+                      }
+                    ]
+                  }
+                ]"
+              ></a-input-number>
+            </a-form-item>
+          </a-col>
+     
+            <a-col :md="12" :sm="24">
             <a-form-item label="项目">
               <a-select
                 @change="changeType"
@@ -115,15 +139,16 @@
                     rules: [
                       {
                         required: true,
-                        message: '必选',
-                      },
-                    ],
-                  },
+                        message: '必选'
+                      }
+                    ]
+                  }
                 ]"
                 show-search
                 option-filter-prop="children"
                 placeholder="请选择项目"
               >
+                <!-- <a-select-option value=" " key="">全部</a-select-option> -->
                 <a-select-option
                   v-for="project in allProject"
                   :value="project"
@@ -133,11 +158,39 @@
               </a-select>
             </a-form-item>
           </a-col>
+             <a-col :md="12" :sm="24">
+            <a-form-item label="产线">
+              <a-select
+                v-decorator="[
+                  `lineCode`,
+                  {
+                    rules: [
+                      {
+                        required: true,
+                        message: '必选'
+                      }
+                    ]
+                  }
+                ]"
+                show-search
+                option-filter-prop="children"
+                placeholder="请选择产线"
+                  @change="changeType"
+              >
+                <a-select-option
+                  v-for="(lineCode, index) in lineCodes"
+                  :value="lineCode"
+                  :key="index"
+                  >{{ lineCode }}</a-select-option
+                >
+              </a-select>
+            </a-form-item>
+          </a-col>
         </a-row>
         <a-row class="x-blank" :gutter="48">
           <a-col :sm="3">
             <div class="editTitle">
-              <span style="color:#0079FE">标准</span>白晚班
+              <span style="color: #0079fe">标准</span>白晚班
             </div>
           </a-col>
           <a-col :sm="20">
@@ -173,10 +226,10 @@
                                   rules: [
                                     {
                                       required: true,
-                                      message: '必填',
-                                    },
-                                  ],
-                                },
+                                      message: '必填'
+                                    }
+                                  ]
+                                }
                               ]"
                             ></a-input-number>
                           </a-form-item>
@@ -219,10 +272,10 @@
                                   rules: [
                                     {
                                       required: true,
-                                      message: '必填',
-                                    },
-                                  ],
-                                },
+                                      message: '必填'
+                                    }
+                                  ]
+                                }
                               ]"
                             ></a-input-number>
                           </a-form-item>
@@ -238,7 +291,7 @@
         <a-row :gutter="48">
           <a-col :sm="3">
             <div class="editTitle">
-              <span style="color:#FE6500">超级</span>白晚班
+              <span style="color: #fe6500">超级</span>白晚班
             </div>
           </a-col>
           <a-col :sm="20">
@@ -274,10 +327,10 @@
                                   rules: [
                                     {
                                       required: true,
-                                      message: '必填',
-                                    },
-                                  ],
-                                },
+                                      message: '必填'
+                                    }
+                                  ]
+                                }
                               ]"
                             ></a-input-number>
                           </a-form-item>
@@ -320,10 +373,10 @@
                                   rules: [
                                     {
                                       required: true,
-                                      message: '必填',
-                                    },
-                                  ],
-                                },
+                                      message: '必填'
+                                    }
+                                  ]
+                                }
                               ]"
                             ></a-input-number>
                           </a-form-item>
@@ -342,60 +395,62 @@
 </template>
 
 <script>
-import STable from '@/components/Table'
-import pick from 'lodash.pick'
-import { debounce } from 'lodash'
+import STable from '@/components/Table';
+import pick from 'lodash.pick';
+import { debounce } from 'lodash';import {
+  querycomLineController_get,
+} from '@/api/hcDo';
 import {
   bolList_get,
   queryAllYear_get,
   saveBol_post,
   updateBol_post,
   queryOne_get,
-  queryAllProject_get,
-} from '@/api/bolDo'
+  queryAllProject_get
+} from '@/api/bolDo';
 const fields = [
   'dataStanderUp',
   'dataStanderDown',
   'dataSuperUp',
   'dataSuperDown',
   'projectCode',
-  'year',
-]
+  'year','lineCode'
+];
 export default {
   name: 'Standbook',
   components: {
-    STable,
+    STable
   },
   data() {
-    return {
+    return { lineCodes: [],
       ifadd: false,
       // 弹窗数据
       visible: false,
       form: this.$form.createForm(this, { first: true }),
       // 查询参数
       queryParam: {
-        year: new Date().getFullYear(),
+        year: new Date().getFullYear()
       },
       // 加载数据方法 必须为 Promise 对象
       loadData: async (parameter) => {
         if (parameter.sortOrder) {
           this.sortedInfo = {
             columnKey: parameter.sortField,
-            order: parameter.sortOrder,
-          }
+            order: parameter.sortOrder
+          };
         } else {
-          this.sortedInfo = {}
+          this.sortedInfo = {};
         }
         const requestParameters = Object.assign(
           {},
           { size: parameter.pageSize, current: parameter.pageNo, ...parameter },
           this.queryParam
-        )
-        console.log('loadData request parameters:', requestParameters)
+        );
+        console.log('loadData request parameters:', requestParameters);
 
         return bolList_get({ data: { ...requestParameters } }).then((res) => {
-          this.selectedRowKeys = []
-          const newRecords = []
+          this.selectedRowKeys = [];
+          const newRecords = [];
           if (res.records && res.records.length) {
             res.records.forEach((item) => {
               newRecords.push({
@@ -405,7 +460,8 @@ export default {
                 classes: '标准白晚班',
                 code: item.projectCode + '0',
                 origin: item,
-              })
+                lineCode:item.lineCode
+              });
               newRecords.push({
                 ...item.superMap,
                 projectCode: item.projectCode,
@@ -413,45 +469,52 @@ export default {
                 classes: '超级白晚班',
                 code: item.projectCode + '1',
                 origin: item,
-              })
-            })
+                lineCode:item.lineCode
+              });
+            });
           }
           return {
             data: newRecords,
             totalCount: res.total,
             totalPage: res.pages,
             pageSize: res.size,
-            pageNo: res.current,
-          }
-        })
+            pageNo: res.current
+          };
+        });
       },
       selectedRowKeys: [],
       selectedRows: [],
       sortedInfo: null, // 排序信息
       allYears: [],
       allProject: [],
-      mdl: null, // 编辑id
-    }
+      mdl: null // 编辑id
+    };
   },
   filters: {},
   async created() {
     queryAllYear_get().then((data) => {
-      this.allYears = data
-    })
+      this.allYears = data;
+    });
     queryAllProject_get().then((data) => {
-      this.allProject = data
-    })
+      this.allProject = data;
+    }); querycomLineController_get().then((data) => {
+      if (Array.isArray(data)) {
+        this.lineCodes = data.map(i=>{
+          return i.code
+        });
+      }
+    });
   },
   computed: {
     rowSelection() {
       return {
         selectedRowKeys: this.selectedRowKeys,
-        onChange: this.onSelectChange,
-      }
+        onChange: this.onSelectChange
+      };
     },
     columns() {
-      let { sortedInfo } = this
-      sortedInfo = sortedInfo || {}
+      let { sortedInfo } = this;
+      sortedInfo = sortedInfo || {};
       return [
         {
           title: '项目',
@@ -463,128 +526,134 @@ export default {
           customRender: (value, row, index) => {
             const obj = {
               children: value,
-              attrs: {},
-            }
+              attrs: {}
+            };
             if (index % 2 === 0) {
-              obj.attrs.rowSpan = 2
+              obj.attrs.rowSpan = 2;
             } else {
-              obj.attrs.rowSpan = 0
+              obj.attrs.rowSpan = 0;
             }
-            return obj
-          },
+            return obj;
+          }
         },
         {
           title: '班次类型',
           width: 110,
           fixed: 'left',
-          dataIndex: 'classes',
+          dataIndex: 'classes'
+        },
+         {
+          title: '班次类型',
+          width: 110,
+          dataIndex: 'lineCode'
         },
         {
           title: '一月',
-          dataIndex: '1',
+          dataIndex: '1'
         },
         {
           title: '二月',
-          dataIndex: '2',
+          dataIndex: '2'
         },
         {
           title: '三月',
-          dataIndex: '3',
+          dataIndex: '3'
         },
         {
           title: '四月',
-          dataIndex: '4',
+          dataIndex: '4'
         },
         {
           title: '五月',
-          dataIndex: '5',
+          dataIndex: '5'
         },
         {
           title: '六月',
-          dataIndex: '6',
+          dataIndex: '6'
         },
         {
           title: '七月',
-          dataIndex: '7',
+          dataIndex: '7'
         },
         {
           title: '八月',
-          dataIndex: '8',
+          dataIndex: '8'
         },
         {
           title: '九月',
-          dataIndex: '9',
+          dataIndex: '9'
         },
         {
           title: '十月',
-          dataIndex: '10',
+          dataIndex: '10'
         },
         {
           title: '十一月',
-          dataIndex: '11',
+          dataIndex: '11'
         },
         {
           title: '十二月',
-          dataIndex: '12',
+          dataIndex: '12'
         },
         {
           title: '操作',
           width: 150,
           fixed: 'right',
-          scopedSlots: { customRender: 'action' },
-        },
-      ]
-    },
+          scopedSlots: { customRender: 'action' }
+        }
+      ];
+    }
   },
   methods: {
-    changeType: debounce(function() {
+    changeType: debounce(function () {
       this.$nextTick(() => {
-        const { projectCode, year } = this.form.getFieldsValue([
+        const { projectCode, year,lineCode } = this.form.getFieldsValue([
           'projectCode',
-          'year',
-        ])
-        if (projectCode && year) {
-          queryOne_get({ data: { projectCode, year } }).then((data) => {
-            this.handleEdit(data)
-          })
+          'year','lineCode'
+        ]);
+        if (projectCode && year&&lineCode) {
+          queryOne_get({ data: { projectCode, year,lineCode } }).then((data) => {
+            this.handleEdit(data);
+          });
         }
-      })
+      });
     }, 500),
     // 添加数据
     add() {
-      this.ifadd = true
-      this.visible = true
+      this.ifadd = true;
+      this.visible = true;
     },
     // 重置数据
     resetClick(params = {}) {
-      console.log(params)
-      this.queryParam = { ...params }
-      this.$refs.table.refresh()
+      console.log(params);
+      this.queryParam = { ...params };
+      this.$refs.table.refresh();
     },
     // 选择
     onSelectChange(selectedRowKeys, selectedRows) {
-      this.selectedRowKeys = selectedRowKeys
-      this.selectedRows = selectedRows
+      this.selectedRowKeys = selectedRowKeys;
+      this.selectedRows = selectedRows;
     },
     // 编辑
     handleEdit(origin, ifEdit = false) {
-      if (ifEdit) this.ifadd = false
-      this.visible = true
+      if (ifEdit) this.ifadd = false;
+      this.visible = true;
       this.$nextTick(() => {
-        const normalMap = origin.normalMap
+        const normalMap = origin.normalMap;
         const dataStanderUp = ['1', '2', '3', '4', '5', '6'].map(
           (item) => normalMap[item]
-        )
+        );
         const dataStanderDown = ['7', '8', '9', '10', '11', '12'].map(
           (item) => normalMap[item]
-        )
+        );
         const dataSuperUp = ['1', '2', '3', '4', '5', '6'].map(
           (item) => normalMap[item]
-        )
+        );
         const dataSuperDown = ['7', '8', '9', '10', '11', '12'].map(
           (item) => normalMap[item]
-        )
-        this.mdl = origin
+        );
+        this.mdl = origin;
+        console.log(origin.lineCode)
         this.form.setFieldsValue(
           pick(
             {
@@ -592,59 +661,60 @@ export default {
               dataStanderUp,
               dataStanderDown,
               dataSuperUp,
-              dataSuperDown,
+              dataSuperDown
             },
             fields
           )
-        ) // loadsh的pick方法
-      })
+        ); // loadsh的pick方法
+      });
     },
     // 弹窗成功点击
     handleOk() {
       this.form.validateFields((err, values) => {
-        console.log(this.ifadd)
+        console.log(this.ifadd);
         if (!err) {
-          const request = !this.ifadd ? updateBol_post : saveBol_post
-          const normalMap = {}
-          const superMap = {}
-          ;[...values.dataStanderUp, ...values.dataStanderDown].forEach(
+          const request = !this.ifadd ? updateBol_post : saveBol_post;
+          const normalMap = {};
+          const superMap = {};
+          [...values.dataStanderUp, ...values.dataStanderDown].forEach(
             (item, index) => {
-              normalMap[index + 1] = item
+              normalMap[index + 1] = item;
             }
-          )
-          ;[...values.dataSuperUp, ...values.dataSuperDown].forEach(
+          );
+          [...values.dataSuperUp, ...values.dataSuperDown].forEach(
             (item, index) => {
-              superMap[index + 1] = item
+              superMap[index + 1] = item;
             }
-          )
+          );
 
-          const { projectCode, year } = values
+          const { projectCode, year ,lineCode} = values;
           request({
             data: {
               normalMap,
               superMap,
               projectCode,
               year,
-            },
+                lineCode
+            }
           }).then(() => {
-            this.$refs.table.refresh()
+            this.$refs.table.refresh();
             // this.visible = false
-            this.form.resetFields()
+            this.form.resetFields();
             this.$success({
               title: `${!this.ifadd ? '修改成功' : '保存成功'}`,
               content: `您所维护的BOL数据已经${
                 !this.ifadd ? '修改成功！' : '保存成功！'
-              }`,
+              }`
               // onOk: () => {
               //   this.visible = false
               // }
-            })
-            this.mdl = null
-          })
-          console.log(values)
+            });
+            this.mdl = null;
+          });
+          console.log(values);
         }
-        console.log(err)
-      })
+        console.log(err);
+      });
     },
     // 弹窗取消
     handleCancel() {
@@ -652,16 +722,16 @@ export default {
         title: '放弃保存？',
         content: `您确定放弃保存吗？如果放弃保存，您所维护的信息将丢失。`,
         onOk: () => {
-          this.visible = false
-          this.form.resetFields()
+          this.visible = false;
+          this.form.resetFields();
         },
         onCancel() {
-          console.log('Cancel')
-        },
-      })
-    },
-  },
-}
+          console.log('Cancel');
+        }
+      });
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>

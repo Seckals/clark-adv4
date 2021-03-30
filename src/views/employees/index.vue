@@ -6,7 +6,7 @@
            @operation="operation"
            ref="IMain">
       <template slot="table">
-        <a-table bordered
+        <a-table 
                  :loading="loading"
                  :row-key="(record) => record.id"
                  :pagination="pagination"

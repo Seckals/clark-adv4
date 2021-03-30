@@ -7,7 +7,7 @@
     >
       <template slot="table">
         <a-table
-          bordered
+          
           :loading="loading"
           :row-key="(record) => record.id"
           :columns="columns"
