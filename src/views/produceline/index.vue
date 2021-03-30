@@ -50,45 +50,45 @@
   </div>
 </template>
 <script>
-import { list_get, remove_post } from '../../api/comLineController'
-import ProduceLine from '../../components/alert/produceLine'
-import mixins from '../../mixins/list'
+import { list_get, remove_post } from '../../api/comLineController';
+import ProduceLine from '../../components/alert/produceLine';
+import mixins from '../../mixins/list';
 const columns = [
   {
     dataIndex: 'code',
-    title: '产线编号',
+    title: '产线编号'
   },
   {
     dataIndex: 'name',
-    title: '产线名称',
+    title: '产线名称'
   },
   {
     dataIndex: 'seq',
-    title: '显示位次',
+    title: '显示位次'
   },
   {
     title: '工位数量',
-    scopedSlots: { customRender: 'stationCount' },
+    scopedSlots: { customRender: 'stationCount' }
   },
   {
     title: '项目数量',
-    scopedSlots: { customRender: 'projectCount' },
+    scopedSlots: { customRender: 'projectCount' }
   },
   {
     dataIndex: 'managerName',
-    title: '产线主管',
+    title: '责任工程师'
   },
   {
     title: '操作',
-    scopedSlots: { customRender: 'operation' },
-  },
-]
+    scopedSlots: { customRender: 'operation' }
+  }
+];
 export default {
   data() {
     return {
       columns,
-      current: {},
-    }
+      current: {}
+    };
   },
   components: { ProduceLine },
   mixins: [mixins],
@@ -97,59 +97,59 @@ export default {
       this.$router.push({
         path: '/mg-line-project',
         query: {
-          data: JSON.stringify(data),
-        },
-      })
+          data: JSON.stringify(data)
+        }
+      });
     },
     tostationCount(data) {
       this.$router.push({
         path: '/mg-line-station',
         query: {
-          data: JSON.stringify(data),
-        },
-      })
+          data: JSON.stringify(data)
+        }
+      });
     },
     operation({ type }) {
       switch (type) {
         case 'add':
-          this.$refs.alert.show()
-          break
+          this.$refs.alert.show();
+          break;
         case 'del':
-          this.del(this.selected)
-          break
+          this.del(this.selected);
+          break;
       }
     },
     delEvent(id) {
       this.delModel('确认删除选中的产线', () => {
-        this.del(id)
-      })
+        this.del(id);
+      });
     },
     del(id) {
-      this.loading = true
+      this.loading = true;
       remove_post({
-        data: { ids: [id] },
+        data: { ids: [id] }
       })
         .then(() => {
-          this.loading = false
-          this.$message.success('删除成功')
-          this.selected = ''
-          this.getList()
+          this.loading = false;
+          this.$message.success('删除成功');
+          this.selected = '';
+          this.getList();
         })
         .catch(() => {
-          this.loading = false
-        })
+          this.loading = false;
+        });
     },
     getList() {
-      this.loading = true
+      this.loading = true;
       list_get()
         .then((res) => {
-          this.loading = false
-          this.data = res || []
+          this.loading = false;
+          this.data = res || [];
         })
         .catch(() => {
-          this.loading = false
-        })
-    },
-  },
-}
+          this.loading = false;
+        });
+    }
+  }
+};
 </script>

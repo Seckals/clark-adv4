@@ -26,7 +26,7 @@
       <a-form-model-item label="显示位次" prop="seq">
         <a-input v-model="form.seq" placeholder="" />
       </a-form-model-item>
-      <a-form-model-item label="产线主管">
+      <a-form-model-item label="责任工程师">
         <a-select
           v-model="form.managerId"
           placeholder="请选择"
@@ -45,8 +45,8 @@
   </a-modal>
 </template>
 <script>
-import { add_post, modify_post, preAdd_get } from '../../api/comLineController'
-import mixins from '../../mixins/editor'
+import { add_post, modify_post, preAdd_get } from '../../api/comLineController';
+import mixins from '../../mixins/editor';
 
 export default {
   data() {
@@ -56,35 +56,35 @@ export default {
         code: '',
         name: '',
         seq: '',
-        managerId: '',
+        managerId: ''
       },
       rules: {
         name: [
           {
             required: true,
             message: '请输入产线名称',
-            trigger: 'blur',
-          },
+            trigger: 'blur'
+          }
         ],
         code: [
           {
             required: true,
             message: '请输入产线编号',
-            trigger: 'blur',
-          },
+            trigger: 'blur'
+          }
         ],
         seq: [
           {
             required: true,
             message: '请输入显示位次',
-            trigger: 'blur',
-          },
-        ],
-      },
-    }
+            trigger: 'blur'
+          }
+        ]
+      }
+    };
   },
   mounted() {
-    this.getManagers()
+    this.getManagers();
   },
   mixins: [mixins],
   methods: {
@@ -93,47 +93,47 @@ export default {
         option.componentOptions.children[0].text
           .toLowerCase()
           .indexOf(input.toLowerCase()) >= 0
-      )
+      );
     },
     add() {
-      this.loading = true
+      this.loading = true;
       add_post({
-        data: this.form,
+        data: this.form
       })
         .then(() => {
-          this.loading = false
-          this.$emit('freash')
-          this.visible = false
+          this.loading = false;
+          this.$emit('freash');
+          this.visible = false;
         })
         .catch(() => {
-          this.loading = false
-        })
+          this.loading = false;
+        });
     },
     editor() {
-      this.loading = true
+      this.loading = true;
       modify_post({
-        data: this.form,
+        data: this.form
       })
         .then(() => {
-          this.loading = false
-          this.$emit('freash')
-          this.visible = false
+          this.loading = false;
+          this.$emit('freash');
+          this.visible = false;
         })
         .catch(() => {
-          this.loading = false
-        })
+          this.loading = false;
+        });
     },
     getManagers() {
-      this.loading = true
+      this.loading = true;
       preAdd_get()
         .then((res) => {
-          this.loading = false
-          this.managers = res.managers || []
+          this.loading = false;
+          this.managers = res.managers || [];
         })
         .catch(() => {
-          this.loading = false
-        })
-    },
-  },
-}
+          this.loading = false;
+        });
+    }
+  }
+};
 </script>
