@@ -65,7 +65,7 @@
       <s-table
         ref="table"
         size="default"
-        rowKey="code"
+        :row-key="(record,index) => index"
         :columns="columns"
         :data="loadData"
         :rowSelection="rowSelection"
@@ -579,7 +579,7 @@ export default {
           dataIndex: 'classes'
         },
         {
-          title: '班次类型',
+          title: '产次类型',
           width: 110,
           dataIndex: 'lineCode'
         },

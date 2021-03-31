@@ -543,7 +543,7 @@ export default {
           dataIndex: 'classes'
         },
          {
-          title: '班次类型',
+          title: '产线类型',
           width: 110,
           dataIndex: 'lineCode'
         },

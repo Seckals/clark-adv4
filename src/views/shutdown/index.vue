@@ -13,6 +13,10 @@
           :columns="columns"
           :data-source="data"
         >
+        
+             <template slot="downtimeType" slot-scope="record">
+               {{record.downtimeType=='un_plan_downtime'?'非计划停机':'计划停机'}}
+          </template>
           <template slot="operation" slot-scope="record">
             <a-space size="small">
               <a
@@ -41,8 +45,8 @@ import shutdown from '../../components/alert/shutdown'
 import mixins from '../../mixins/list'
 const columns = [
   {
-    dataIndex: 'downtimeType',
     title: '停机类型',
+     scopedSlots: { customRender: 'downtimeType' },
   },
   {
     dataIndex: 'downtimeCode',
