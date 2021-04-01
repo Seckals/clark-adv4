@@ -104,30 +104,6 @@
               ></a-input-number>
             </a-form-item>
           </a-col>
-          <a-col :md="12" :sm="24">
-            <a-form-item label="年份">
-              <a-input-number
-                :min="2000"
-                :max="9999"
-                :step="1"
-                style="width: 100%"
-                placeholder="请选择年份"
-                @blur="changeType"
-                v-decorator="[
-                  `year`,
-                  {
-                    initialValue: new Date().getFullYear(),
-                    rules: [
-                      {
-                        required: true,
-                        message: '必选'
-                      }
-                    ]
-                  }
-                ]"
-              ></a-input-number>
-            </a-form-item>
-          </a-col>
      
             <a-col :md="12" :sm="24">
             <a-form-item label="项目">
